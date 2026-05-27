@@ -1,0 +1,8 @@
+Udah Dibuat Struktur Foldering
+- config
+- db -> masih kosong
+- models -> masih kosong
+- routes
+- controller
+- middleware -> masih kosong
+db nya belum jadi maka db dan models masih kosong, middleware belum ada
