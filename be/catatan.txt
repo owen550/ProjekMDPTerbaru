@@ -6,3 +6,5 @@ Udah Dibuat Struktur Foldering
 - controller
 - middleware -> masih kosong
 db nya belum jadi maka db dan models masih kosong, middleware belum ada
+
+systemInstruction MASIH ERROR, ada di tescontroller
