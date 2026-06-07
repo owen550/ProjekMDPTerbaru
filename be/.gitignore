@@ -1,0 +1,3 @@
+# yang namanya ada di sini akan ter ignore biar gak bisa di push
+.env
+node_modules/

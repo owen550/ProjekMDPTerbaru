@@ -8,3 +8,16 @@ Udah Dibuat Struktur Foldering
 db nya belum jadi maka db dan models masih kosong, middleware belum ada
 
 systemInstruction MASIH ERROR, ada di tescontroller
+
+CronosEdu
+
+// ==== INFORMASI USER ===
+admin :
+- username : a
+- password : a
+teacher : 
+- username : t
+- password : t
+student : 
+- username : s
+- password : s

@@ -45,6 +45,7 @@ CREATE TABLE `admin_messages` (
   `message_body` text NOT NULL,
   `is_read` tinyint(1) DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `admin_id` (`admin_id`),
   KEY `receiver_id` (`receiver_id`),
@@ -66,6 +67,7 @@ CREATE TABLE `course_enrollments` (
   `status` enum('active','completed') DEFAULT 'active',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `student_id` (`student_id`),
   KEY `course_id` (`course_id`),
@@ -88,6 +90,7 @@ CREATE TABLE `course_topics` (
   `content_type` enum('material','quiz') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `course_id` (`course_id`),
   CONSTRAINT `course_topics_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE
@@ -106,6 +109,7 @@ CREATE TABLE `courses` (
   `teacher_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `teacher_id` (`teacher_id`),
   CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
@@ -123,6 +127,7 @@ CREATE TABLE `cs_chatbot_chats` (
   `sender` enum('user','bot') NOT NULL,
   `message` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `cs_chatbot_chats_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
@@ -146,6 +151,7 @@ CREATE TABLE `payments` (
   `status` enum('pending','success','failed','expired') DEFAULT 'pending',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `order_id` (`order_id`),
   KEY `user_id` (`user_id`),
@@ -165,6 +171,7 @@ CREATE TABLE `quiz_questions` (
   `correct_answer` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `quiz_id` (`quiz_id`),
   CONSTRAINT `quiz_questions_ibfk_1` FOREIGN KEY (`quiz_id`) REFERENCES `quizzes` (`id`) ON DELETE CASCADE
@@ -183,6 +190,7 @@ CREATE TABLE `quizzes` (
   `question_type` enum('multiple_choice','essay') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `topic_id` (`topic_id`),
   CONSTRAINT `quizzes_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `course_topics` (`id`) ON DELETE CASCADE
@@ -205,6 +213,7 @@ CREATE TABLE `student_submissions` (
   `status` enum('submitted','graded') DEFAULT 'submitted',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `quiz_id` (`quiz_id`),
   KEY `student_id` (`student_id`),
@@ -225,6 +234,7 @@ CREATE TABLE `topic_materials` (
   `attachment_file` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `topic_id` (`topic_id`),
   CONSTRAINT `topic_materials_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `course_topics` (`id`) ON DELETE CASCADE
@@ -239,6 +249,8 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(150) NOT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `email` varchar(100) NOT NULL,
   `google_id` varchar(255) DEFAULT NULL,
   `birthday_date` date DEFAULT NULL,
@@ -247,11 +259,20 @@ CREATE TABLE `users` (
   `points` int(11) DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `users` */
+
+insert  into `users`(`id`,`name`,`username`,`password`,`email`,`google_id`,`birthday_date`,`role`,`tier`,`points`,`created_at`,`updated_at`,`deleted_at`) values 
+(2,'Admin Chronos','AdminChronosEdu123','$2b$10$fXtoInFA0b2deNcdzZtXfe9l3Ic8B1gddZnpv9tkECMcHkUqzkSiq','admin@chronosedu.com',NULL,NULL,'admin','none',0,'2026-06-07 23:18:17','2026-06-07 23:18:17',NULL),
+(3,'Admin Chronos 2','a','$2b$10$2jpK24YEPS2QYX6j2zPBYOgpOK5Ll2tFlCL23Sbn0QJz1zrySlK52','admin2@chronosedu.com',NULL,NULL,'admin','none',0,'2026-06-07 23:20:00','2026-06-07 23:20:00',NULL),
+(4,'Hamdani Ahmad Hidayat','t','$2b$10$Sar8BPkeyqQtXtKQv1cNG.cCIvzQssD8XwgItOCEhtOC.hxiuhz4i','hamad123@gmail.com',NULL,NULL,'teacher','none',0,'2026-06-07 23:32:19','2026-06-07 23:32:19',NULL),
+(5,'Tirto Ganteng','s','$2b$10$2chpSgw.cjH043yjOpIPvuzXO0/5EvU.CTSFSue4VV/m1clsL2Api','ricTir@istts.edu',NULL,NULL,'student','free',0,'2026-06-07 23:37:07','2026-06-07 23:37:07',NULL),
+(6,'Danny','DannysLearn','$2b$10$s2mgj6/a3mAYp9L85MOaMuf7OiIVHQfNrfvTX5eu.xCQDGKxUkyrC','dny123@istts.edu',NULL,NULL,'student','free',0,'2026-06-08 00:23:32','2026-06-08 00:23:32',NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

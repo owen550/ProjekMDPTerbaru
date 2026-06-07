@@ -10,6 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // ini biar bisa terima body
 
 // === ||| Semua Routes ||| ===
 const TesRoutes = require("../be/routes/tesroutes")
+const UsersRoutes = require("../be/routes/UsersRoutes")
 
 // === ||| Tes API ||| ===
 const port = 3000;
@@ -22,4 +23,6 @@ app.get('/', async(req,res)=>{
 
 // === ||| SEMUA YANG AKAN DIPANGGIL DI API ||| ===
 app.use("/api/test",TesRoutes)
+app.use("/api/users",UsersRoutes)
+
 
