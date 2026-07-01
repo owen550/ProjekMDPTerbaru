@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "frontend_bsua"
+rootProject.name = "m10"
 include(":app")
  

@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">frontend_bsua</string>
+    <string name="app_name">m10</string>
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <string-array name="todo_filter_options">
-        <item>Semua Jadwal</item>
-        <item>Belum Selesai</item>
-        <item>Selesai</item>
-    </string-array>
-
+    <array name="todo_filter_options">
+        <item>Pending</item>
+        <item>Completed</item>
+    </array>
 </resources>

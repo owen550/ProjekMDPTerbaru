@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FragmenShow">
+    app:startDestination="@id/todosFragment">
+
     <fragment
-        android:id="@+id/FragmenShow"
-        android:name="com.example.frontend_bsua.ui.todos.ShowFragmen"
-        android:label="ShowFragmen" >
+        android:id="@+id/todosFragment"
+        android:name="com.example.m10.ui.todos.TodosFragment"
+        android:label="TodosFragment" >
         <action
-            android:id="@+id/action_FragmenShow_to_addJadwal"
-            app:destination="@id/AddJadwal" />
+            android:id="@+id/action_todosFragment_to_todoFormFragment"
+            app:destination="@id/todoFormFragment" />
     </fragment>
     <fragment
-        android:id="@+id/AddJadwal"
-        android:name="com.example.frontend_bsua.ui.todoform.AddJadwal"
-        android:label="fragment_add_jadwal"
-        tools:layout="@layout/fragment_add_jadwal" />
+        android:id="@+id/todoFormFragment"
+        android:name="com.example.m10.ui.todoform.TodoFormFragment"
+        android:label="TodoFormFragment" >
+        <action
+            android:id="@+id/action_todoFormFragment_to_todosFragment"
+            app:destination="@id/todosFragment"
+            app:popUpTo="@id/todoFormFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="todoId"
+            app:argType="string" />
+    </fragment>
 </navigation>
-
