@@ -9,7 +9,7 @@ router.post("/addusers",UserMiddleware.CekKelengkapanDataAddUser,UserController.
 router.get("/alldata",UserController.GetAllUser);
 router.post("/getdatabyid",UserController.GetUserById);
 router.put("/updateuser",UserController.UpdateUserById);
-router.delete("/deleteuser",UserController.DeleteUser);
+router.put("/deleteuser",UserController.DeleteUser);
 
 // === ||| Export ||| ===
 module.exports = router;

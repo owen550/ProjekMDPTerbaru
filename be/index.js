@@ -13,6 +13,8 @@ app.set('trust proxy', true); // buat dapetin ip addrest
 // === ||| Semua Routes ||| ===
 const TesRoutes = require("../be/routes/tesroutes")
 const UsersRoutes = require("../be/routes/UsersRoutes")
+const CourseRoutes = require("../be/routes/CourseRoutes")
+const CourseTopicRoutes = require("../be/routes/CourseTopicRoutes")
 
 // === ||| Tes API ||| ===
 const port = 3000;
@@ -26,5 +28,7 @@ app.get('/', async(req,res)=>{
 // === ||| SEMUA YANG AKAN DIPANGGIL DI API ||| ===
 app.use("/api/test",TesRoutes)
 app.use("/api/users",UsersRoutes)
+app.use("/api/course",CourseRoutes)
+app.use("/api/coursetopic",CourseTopicRoutes)
 
 
