@@ -22,8 +22,8 @@ const ActivityLogs = sequelize.define(
       allowNull: false,
     },
     ip_address: {
-      type: DataTypes.STRING(45),
-      allowNull: false,
+      type: DataTypes.STRING(45), // sementara di kosongi dulu aj
+      allowNull: true,
     },
     created_at: {
       type: DataTypes.DATE,

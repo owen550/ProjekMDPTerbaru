@@ -8,6 +8,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // ini biar bisa terima body !!!
 
+app.set('trust proxy', true); // buat dapetin ip addrest
+
 // === ||| Semua Routes ||| ===
 const TesRoutes = require("../be/routes/tesroutes")
 const UsersRoutes = require("../be/routes/UsersRoutes")

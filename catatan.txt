@@ -1,2 +1,85 @@
+INFO : insert update delete masing masing wajib ada querynya
+
 link figma
 https://www.figma.com/design/F729udjCT3eWXGdBbL4TMe/Proyek-MDP?node-id=0-1&t=TWLeIEawxiDkrJnG-1 
+
+link proporsal
+https://docs.google.com/document/d/1hF90xGNnlhW_VaJbKgqE2pglVeSOeoPwlU_1-ULPU74/edit?tab=t.0
+
+
+INFO DATABASE============================================================================
+1. activity_logs
+- Deskripsi: Tabel ini berfungsi untuk mencatat seluruh jejak audit (audit trail) atau riwayat aktivitas penting yang dilakukan oleh pengguna (siswa maupun admin) di dalam aplikasi.
+- Contoh isi: Catatan saat siswa melakukan login, ketika admin mengubah materi, atau kapan user melakukan ganti password. Sangat berguna untuk keamanan dan analisis perilaku pengguna.
+
+2. admin_messages
+- Deskripsi: Tabel yang digunakan untuk menyimpan pesan, pengumuman, atau notifikasi massal yang dikirimkan oleh admin/pengajar kepada para siswa.
+- Contoh isi: Pengumuman libur kelas, siaran info pemeliharaan sistem (maintenance), atau pesan bantuan langsung dari admin kepada siswa tertentu.
+
+3. course_enrollments
+- Deskripsi: Tabel jembatan (junction table) yang mencatat data pendaftaran siswa ke dalam suatu kursus/kelas tertentu. Tabel ini menghubungkan antara tabel users (siswa) dan tabel courses (kelas).
+- Contoh isi: Data yang menunjukkan bahwa "Siswa A" telah mengambil atau mendaftar di "Kelas Pemrograman Web", lengkap dengan tanggal daftarnya.
+
+4. course_topics
+- Deskripsi: Tabel yang menyimpan data bab, topik, atau pertemuan di dalam sebuah kursus. Karena ChronosEdu berbasis urutan pertemuan (kronologis), tabel ini mengatur struktur pembagian silabus kelas.
+- Contoh isi: Di dalam Kursus Node.js, terdapat topik Pertemuan 1: "Pengenalan Ekosistem JavaScript", Pertemuan 2: "Membuat Server Express", dst.
+
+5. courses
+- Deskripsi: Tabel utama yang menampung daftar seluruh kursus atau kelas pembelajaran yang tersedia di platform ChronosEdu.
+- Contoh isi: Judul kursus, deskripsi kelas, total durasi, status kursus (gratis/premium), nama pembuat kelas, dan harga kursus (jika dijual satuan).
+
+6. cs_chatbot_chats
+- Deskripsi: Tabel yang digunakan untuk menyimpan seluruh riwayat percakapan (chat logs) antara siswa dengan AI Chatbot Customer Service.
+- Contoh isi: Pertanyaan dari siswa, jawaban dari AI chatbot, waktu pengiriman pesan, serta status apakah percakapan tersebut perlu diteruskan ke admin manusia atau tidak.
+
+7. payments
+- Deskripsi: Tabel transaksi keuangan yang mencatat seluruh riwayat pembayaran siswa saat melakukan upgrade ke akun Premium menggunakan Midtrans.
+- Contoh isi: order_id unik, payment_token dari Midtrans, nominal (amount), nomor Virtual Account (va_number) atau URL QRIS, status pembayaran (pending/success/failed), dan waktu transaksi.
+
+8. quizzes
+- Deskripsi: Tabel yang menampung data kuis, latihan soal, atau ujian yang tersedia pada setiap akhir materi atau topik pertemuan tertentu.
+- Contoh isi: Judul kuis, daftar pertanyaan, pilihan jawaban, kunci jawaban, bobot nilai, dan batas waktu pengerjaan kuis.
+
+9. student_submissions
+- Deskripsi: Tabel yang mencatat riwayat pengumpulan tugas, kuis, atau proyek akhir yang telah dikerjakan oleh siswa.
+- Contoh isi: Hasil jawaban kuis siswa, file tugas yang diunggah, nilai yang didapatkan siswa, tanggal mengumpulkan, serta ulasan/umpan balik dari pengajar.
+
+10. topic_materials
+- Deskripsi: Tabel yang menyimpan konten atau bahan ajar spesifik yang ada di dalam suatu topik pertemuan (course_topics).
+- Contoh isi: Teks artikel materi, link video pembelajaran (YouTube/Vimeo), tautan unduh modul PDF, atau instruksi langkah demi langkah proyek praktik pembelajaran.
+
+11. users
+- Deskripsi: Tabel inti yang menyimpan seluruh data profil pengguna yang terdaftar di aplikasi ChronosEdu, baik yang bertindak sebagai siswa (student), pengajar (teacher), maupun administrator (admin).
+- Contoh isi: Nama lengkap, alamat email, password (yang sudah di-hash/enkripsi), level akses (role), serta status akun (free atau premium).
+
+UDAH DIBUAT DI BACKEND ============================================================================
+activity_logs
+- 
+admin_messages
+- 
+course_enrollments
+- 
+course_topics
+- 
+courses 
+- 
+cs_chatbot_chats
+- 
+payments
+- 
+quiz_questions
+- 
+quizzes
+- 
+student_submissions
+- 
+topic_materials
+- 
+users
+- GetAllUser: localhost:3000/api/users/alldata 
+- AddUser: localhost:3000/api/users/addusers 
+- GetUserById: localhost:3000/api/users/getdatabyid 
+- UpdateUserById: localhost:3000/api/users/updateuser 
+- DeleteUser: localhost:3000/api/users/deleteuser 
+
+
