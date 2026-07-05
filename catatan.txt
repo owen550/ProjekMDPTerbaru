@@ -6,6 +6,9 @@ https://www.figma.com/design/F729udjCT3eWXGdBbL4TMe/Proyek-MDP?node-id=0-1&t=TWL
 link proporsal
 https://docs.google.com/document/d/1hF90xGNnlhW_VaJbKgqE2pglVeSOeoPwlU_1-ULPU74/edit?tab=t.0
 
+link excalidraw
+https://excalidraw.com/#json=ywOy-klPA2Ru1KWyCiFma,sygWvfhGl1B0hB6Sags6Hw
+
 
 INFO DATABASE============================================================================
 1. activity_logs +++
@@ -20,7 +23,7 @@ INFO DATABASE===================================================================
 - Deskripsi: Tabel jembatan (junction table) yang mencatat data pendaftaran siswa ke dalam suatu kursus/kelas tertentu. Tabel ini menghubungkan antara tabel users (siswa) dan tabel courses (kelas).
 - Contoh isi: Data yang menunjukkan bahwa "Siswa A" telah mengambil atau mendaftar di "Kelas Pemrograman Web", lengkap dengan tanggal daftarnya.
 
-4. course_topics 
+4. course_topics +++
 - Deskripsi: Tabel yang menyimpan data bab, topik, atau pertemuan di dalam sebuah kursus. Karena ChronosEdu berbasis urutan pertemuan (kronologis), tabel ini mengatur struktur pembagian silabus kelas.
 - Contoh isi: Di dalam Kursus Node.js, terdapat topik Pertemuan 1: "Pengenalan Ekosistem JavaScript", Pertemuan 2: "Membuat Server Express", dst.
  
@@ -36,7 +39,7 @@ INFO DATABASE===================================================================
 - Deskripsi: Tabel transaksi keuangan yang mencatat seluruh riwayat pembayaran siswa saat melakukan upgrade ke akun Premium menggunakan Midtrans.
 - Contoh isi: order_id unik, payment_token dari Midtrans, nominal (amount), nomor Virtual Account (va_number) atau URL QRIS, status pembayaran (pending/success/failed), dan waktu transaksi.
 
-8. quizzes +++
+8. quizzes 
 - Deskripsi: Tabel yang menampung data kuis, latihan soal, atau ujian yang tersedia pada setiap akhir materi atau topik pertemuan tertentu.
 - Contoh isi: Judul kuis, daftar pertanyaan, pilihan jawaban, kunci jawaban, bobot nilai, dan batas waktu pengerjaan kuis.
 
