@@ -40,11 +40,11 @@ const AdminMessages = sequelize.define(
     },
     created_at: {
       type: DataTypes.DATE,
-      field: 'created_at',
+      field: "created_at",
     },
     deleted_at: {
       type: DataTypes.DATE,
-      field: 'deleted_at',
+      field: "deleted_at",
       allowNull: true,
     },
   },
@@ -53,9 +53,9 @@ const AdminMessages = sequelize.define(
     timestamps: true,
     createdAt: "created_at",
     updatedAt: false, // Pesan yang sudah dikirim umumnya tidak di-edit untuk menjaga validitas informasi
-    paranoid: true,   // Mengaktifkan soft delete jika salah satu pihak menghapus pesan dari inbox/outbox
+    paranoid: true, // Mengaktifkan soft delete jika salah satu pihak menghapus pesan dari inbox/outbox
     underscored: true,
-  }
+  },
 );
 
 module.exports = AdminMessages;
