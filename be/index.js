@@ -18,6 +18,8 @@ const CourseRoutes = require("../be/routes/CourseRoutes")
 const CourseTopicRoutes = require("../be/routes/CourseTopicRoutes")
 const TopicMaterialRoutes = require("../be/routes/TopicMaterialRoutes")
 const AdminMessagesRoutes = require("../be/routes/AdminMessagesRoutes");
+const QuizzesRoutes = require("../be/routes/QuizzesRoutes");
+const QuizQuestionsRoutes = require("../be/routes/QuizQuestionsRoutes");
 
 
 // === ||| Tes API ||| ===
@@ -36,3 +38,6 @@ app.use("/api/course",CourseRoutes)
 app.use("/api/coursetopic",CourseTopicRoutes)
 app.use("/api/topicmaterial",TopicMaterialRoutes)
 app.use("/api/adminmessages", AdminMessagesRoutes);
+app.use("/api/quizz",QuizzesRoutes)
+app.use("/api/quizquestions",QuizQuestionsRoutes)
+

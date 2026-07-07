@@ -10,6 +10,7 @@ const StudentSubmissions = require("./StudentSubmissions");
 const CsChatbotChats = require("./CsChatbotChats");
 const ActivityLogs = require("./ActivityLogs");
 const AdminMessages = require("./AdminMessages");
+const QuizQuestionOptions = require("./QuizQuestionOptions");
 
 // ============================================================================
 // RELASI/ASOSIASI ANTAR TABEL
@@ -83,6 +84,18 @@ AdminMessages.belongsTo(Users, { foreignKey: "admin_id", as: "sender_admin" });
 Users.hasMany(AdminMessages, { foreignKey: "receiver_id", as: "received_messages" });
 AdminMessages.belongsTo(Users, { foreignKey: "receiver_id", as: "receiver" });
 
+// Satu pertanyaan memiliki banyak opsi pilihan ganda
+QuizQuestions.hasMany(QuizQuestionOptions, {
+  foreignKey: "quiz_question_id",
+  as: "options",
+});
+
+// Setiap opsi hanya merujuk ke satu pertanyaan
+QuizQuestionOptions.belongsTo(QuizQuestions, {
+  foreignKey: "quiz_question_id",
+  as: "question",
+});
+
 // ============================================================================
 
 module.exports = {
@@ -97,5 +110,6 @@ module.exports = {
   StudentSubmissions,
   CsChatbotChats,
   ActivityLogs,
-  AdminMessages
+  AdminMessages,
+  QuizQuestionOptions
 };
