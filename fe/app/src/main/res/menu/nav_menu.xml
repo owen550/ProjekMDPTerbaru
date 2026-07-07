@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item
+        android:id="@+id/dashboardFragmen"
+        android:title="Home"
+        android:icon="@drawable/ic_launcher_foreground" />
+
+    <item
+        android:id="@+id/coursActivity"
+        android:title="Tes"
+        android:icon="@drawable/ic_launcher_foreground" />
+
+<!--    <item-->
+<!--        android:id="@+id/dashboardFragmen"-->
+<!--        android:title="Home"-->
+<!--        android:icon="@drawable/ic_launcher_foreground" />-->
+
+<!--    <item-->
+<!--        android:id="@+id/dashboardFragmen"-->
+<!--        android:title="Home"-->
+<!--        android:icon="@drawable/ic_launcher_foreground" />-->
 </menu>

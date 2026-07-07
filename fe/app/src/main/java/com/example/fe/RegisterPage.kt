@@ -5,6 +5,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.example.fe.databinding.ActivityLoginPageBinding
 import com.example.fe.databinding.ActivityRegisterPageBinding
 import kotlinx.coroutines.selects.RegistrationFunction
@@ -15,8 +17,10 @@ class RegisterPage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityRegisterPageBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_register_page)
+        setContentView(binding.root)
         // semua kode taruh di bawah !!!
+
+
 
     }
 }

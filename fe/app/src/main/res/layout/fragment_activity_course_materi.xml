@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFDFB">
+
+    <TextView
+        android:id="@+id/txtLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ChronosEdu"
+        android:textColor="#333333"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/imgProfile"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="24dp"
+        android:src="@drawable/ic_launcher_foreground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/txtLogo"
+        app:layout_constraintBottom_toBottomOf="@id/txtLogo"/>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/txtLogo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingBottom="24dp">
+
+            <TextView
+                android:id="@+id/txtDetailTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Activity Title"
+                android:textColor="#555555"
+                android:textStyle="bold"
+                android:textSize="24sp"/>
+
+            <TextView
+                android:id="@+id/txtDetailDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies augue ex, tincidunt eleifend eros maximus id. Suspendisse at semper tellus. Nam odio magna, ullamcorper sed lacinia in, ornare vitae dui. Nulla a neque non augue sagittis fringilla. Integer non quam gravida, iaculis magna ut, rutrum tellus. Duis eu urna diam. Phasellus erat purus, auctor at lacus nec, efficitur porta enim."
+                android:textColor="#444444"
+                android:textSize="15sp"
+                android:lineSpacingMultiplier="1.2"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="24dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="#DDDDDD">
+
+                <VideoView
+                    android:id="@+id/videoPlayer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

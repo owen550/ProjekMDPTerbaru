@@ -13,7 +13,7 @@ class LoginPage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityLoginPageBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_login_page)
+        setContentView(binding.root)
         // semua kode taruh di bawah !!!
 
     }
