@@ -29,7 +29,7 @@ CREATE TABLE `activity_logs` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `activity_logs_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `activity_logs` */
 
@@ -81,7 +81,72 @@ insert  into `activity_logs`(`id`,`user_id`,`activity`,`ip_address`,`created_at`
 (46,10,'Teacher menambahkan materi berjudul Hehe ngak jadi','::1','2026-07-02 00:34:40'),
 (47,10,'Course Penerapan Proporsi Seni Untuk Estetika telah didelete','::1','2026-07-02 00:38:40'),
 (48,4,'Course Topic dengan id 1 diupdate','::1','2026-07-02 00:42:04'),
-(49,4,'Course Topic dengan id 1 diupdate','::1','2026-07-02 00:42:25');
+(49,4,'Course Topic dengan id 1 diupdate','::1','2026-07-02 00:42:25'),
+(50,4,'Get All Topic Materialid','::1','2026-07-06 10:19:00'),
+(51,4,'Get All Topic Materialid','::1','2026-07-06 10:19:03'),
+(52,4,'Get All Topic Materialid','::1','2026-07-06 10:19:50'),
+(53,4,'Get All Topic Materialid','::1','2026-07-06 10:19:52'),
+(54,4,'Get All Topic Materialid','::1','2026-07-06 10:20:28'),
+(55,4,'Get All Topic Materialid','::1','2026-07-06 10:21:03'),
+(56,4,'Get All Topic Materialid','::1','2026-07-06 10:21:46'),
+(57,4,'Get All Topic Materialid','::1','2026-07-06 10:22:02'),
+(58,3,'Get All User','::1','2026-07-06 11:05:44'),
+(59,4,'Get All User','::1','2026-07-06 11:05:57'),
+(60,4,'Membuat Topic Material Baru : File untuk vidio relativitas waktu','::1','2026-07-06 11:19:08'),
+(61,4,'Membuat Topic Material Baru : File untuk vidio relativitas waktu','::1','2026-07-06 11:22:10'),
+(62,4,'Membuat Topic Material Baru : File untuk vidio relativitas waktu','::1','2026-07-06 11:23:12'),
+(63,4,'Membuat Topic Material Baru : File untuk vidio relativitas waktu','::1','2026-07-06 11:26:29'),
+(64,4,'Membuat Topic Material Baru : File untuk vidio relativitas waktu','::1','2026-07-06 11:28:22'),
+(65,4,'Get All Topic Materialid','::1','2026-07-06 12:09:56'),
+(66,4,'Get All Topic Materialid','::1','2026-07-06 12:09:58'),
+(67,4,'Get All Topic Materialid','::1','2026-07-06 12:10:00'),
+(68,4,'Get All Topic Materialid','::1','2026-07-06 12:11:02'),
+(69,4,'Membuat Topic Material Baru : File untuk vidio relativitas waktu','::1','2026-07-06 12:19:40'),
+(70,4,'Get All Topic Material','::1','2026-07-06 12:20:50'),
+(71,4,'Get Topic Material By ID','::1','2026-07-06 12:22:31'),
+(72,4,'Get Topic Material By ID','::1','2026-07-06 12:23:04'),
+(73,4,'Get Topic Material By ID','::1','2026-07-06 12:24:16'),
+(74,4,'Get Topic Material By ID','::1','2026-07-06 12:24:24'),
+(75,4,'Get Topic Material By ID','::1','2026-07-06 12:24:36'),
+(76,4,'Get Topic Material By ID','::1','2026-07-06 12:28:08'),
+(77,4,'Get All Topic Material','::1','2026-07-06 17:55:43'),
+(78,4,'Get All Topic Material','::1','2026-07-06 18:04:05'),
+(79,4,'Get All Quizzes','::1','2026-07-06 18:04:27'),
+(80,4,'Get All Quizzes','::1','2026-07-06 18:04:28'),
+(81,4,'Get All Quizzes','::1','2026-07-06 18:04:51'),
+(82,4,'Get All Quizzes','::1','2026-07-06 18:16:17'),
+(83,4,'Teacher menambahkan materi berjudul Kuis Siapa Itu Enstein dan Waktu','::1','2026-07-07 10:20:51'),
+(84,4,'Membuat Quizz Baru Dengan ID : 1','::1','2026-07-07 10:26:40'),
+(85,4,'Get All Quizzes','::1','2026-07-07 10:26:54'),
+(86,4,'Get All Quizzes','::1','2026-07-07 10:27:47'),
+(87,4,'Get All Quizzes','::1','2026-07-07 10:28:41'),
+(88,4,'Get All Quizzes','::1','2026-07-07 10:32:20'),
+(89,4,'Get Quizz By ID','::1','2026-07-07 10:32:32'),
+(90,4,'Teacher menambahkan materi berjudul Proyek Relativitas Waktu','::1','2026-07-07 10:41:34'),
+(91,4,'Course Topic dengan id 7 diupdate','::1','2026-07-07 10:45:15'),
+(92,4,'Membuat Quizz Baru Dengan ID : 2','::1','2026-07-07 10:45:29'),
+(93,4,'Get All Quiz Questions','::1','2026-07-07 11:00:48'),
+(94,4,'Membuat Quiz Question Baru Dengan ID : 1','::1','2026-07-07 11:24:21'),
+(95,4,'Quiz Question dengan id : 1 telah dirubah','::1','2026-07-07 11:26:20'),
+(96,4,'Quiz Question dengan id 1 telah didelete','::1','2026-07-07 11:27:09'),
+(97,4,'Membuat Quiz Question Baru Dengan ID : 2','::1','2026-07-07 11:27:17'),
+(98,4,'Get Quiz Question By ID','::1','2026-07-07 11:27:31'),
+(99,4,'Get All Quiz Question Options','::1','2026-07-07 12:25:27'),
+(100,4,'Membuat Quiz Question Option Baru Dengan ID : 1','::1','2026-07-07 12:29:09'),
+(101,4,'Membuat Quiz Question Option Baru Dengan ID : 2','::1','2026-07-07 12:29:18'),
+(102,4,'Membuat Quiz Question Option Baru Dengan ID : 3','::1','2026-07-07 12:29:24'),
+(103,4,'Membuat Quiz Question Option Baru Dengan ID : 4','::1','2026-07-07 12:29:37'),
+(104,4,'Quiz Question Option dengan id : 2 telah dirubah','::1','2026-07-07 12:48:23'),
+(105,4,'Quiz Question Option dengan id : 2 telah dirubah','::1','2026-07-07 12:48:35'),
+(106,4,'Quiz Question Option dengan id : 2 telah dirubah','::1','2026-07-07 12:48:46'),
+(107,4,'Quiz Question Option dengan id : 2 telah dirubah','::1','2026-07-07 12:49:06'),
+(108,4,'Quiz Question Option dengan id : 3 telah dirubah','::1','2026-07-07 12:49:16'),
+(109,4,'Quiz Question Option dengan id : 4 telah dirubah','::1','2026-07-07 12:49:30'),
+(110,4,'Quiz Question Option dengan id : 4 telah dirubah','::1','2026-07-07 12:56:02'),
+(111,4,'Quiz Question Option dengan id : 4 telah dirubah','::1','2026-07-07 12:56:07'),
+(112,4,'Membuat Quiz Question Option Baru Dengan ID : 5','::1','2026-07-07 12:57:33'),
+(113,4,'Quiz Question Option dengan id 5 telah didelete','::1','2026-07-07 12:57:54'),
+(114,4,'Get All Student Submissions','::1','2026-07-07 13:05:53');
 
 /*Table structure for table `admin_messages` */
 
@@ -144,7 +209,7 @@ CREATE TABLE `course_topics` (
   PRIMARY KEY (`id`),
   KEY `course_id` (`course_id`),
   CONSTRAINT `course_topics_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `course_topics` */
 
@@ -153,7 +218,9 @@ insert  into `course_topics`(`id`,`course_id`,`topic_number`,`title`,`descriptio
 (2,2,2,'Memahami Apa Itu Waktu','Waktu sangat dekat dengan kehidupan kita, jam perlahan berdetak, tahun silih berganti namun sebenarnya apa itu waktu ? ','material','2026-07-01 23:40:22','2026-07-01 23:40:22',NULL),
 (3,5,0,'Konsep Proporsi','Kenapa gambarmu terlalu hampa ? Kamu menambahkan detail namun sekarang kamu melihat gambarmu over detailing ? Mungkin kamu harus memahamu proporsi','material','2026-07-02 00:27:14','2026-07-02 00:27:14',NULL),
 (4,5,0,'Konsep Keseimbagan dan Kesetaraan','Kiri kanan sama berat itu seimbag ? Sayangnya seni bukan timbagan. Mari kita pahami apa itu Keseimbagan dalam seni rupa','material','2026-07-02 00:28:50','2026-07-02 00:28:50',NULL),
-(5,5,0,'Hehe ngak jadi','lorem ipsum 10 kali . . . ','material','2026-07-02 00:34:40','2026-07-02 00:37:11','2026-07-02 00:37:11');
+(5,5,0,'Hehe ngak jadi','lorem ipsum 10 kali . . . ','material','2026-07-02 00:34:40','2026-07-02 00:37:11','2026-07-02 00:37:11'),
+(6,2,0,'Kuis Siapa Itu Enstein dan Waktu','Pada pertemuan ini akan diadqakan kuiss','quiz','2026-07-07 10:20:51','2026-07-07 10:20:51',NULL),
+(7,2,0,'Latihan 2 Relativitas Waktu','Kita akan melakukan latihan lagi','quiz','2026-07-07 10:41:34','2026-07-07 10:45:15',NULL);
 
 /*Table structure for table `courses` */
 
@@ -226,6 +293,32 @@ CREATE TABLE `payments` (
 
 /*Data for the table `payments` */
 
+/*Table structure for table `quiz_question_options` */
+
+DROP TABLE IF EXISTS `quiz_question_options`;
+
+CREATE TABLE `quiz_question_options` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `quiz_question_id` int(11) NOT NULL,
+  `option_letter` enum('A','B','C','D') NOT NULL,
+  `option_text` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `quiz_question_id` (`quiz_question_id`),
+  CONSTRAINT `quiz_question_options_ibfk_1` FOREIGN KEY (`quiz_question_id`) REFERENCES `quiz_questions` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Data for the table `quiz_question_options` */
+
+insert  into `quiz_question_options`(`id`,`quiz_question_id`,`option_letter`,`option_text`,`created_at`,`updated_at`,`deleted_at`) values 
+(1,2,'A','Seorang Fisikawan','2026-07-07 12:29:09','2026-07-07 12:29:09',NULL),
+(2,2,'B','Seorang Teolog','2026-07-07 12:29:18','2026-07-07 12:49:06',NULL),
+(3,2,'C','Seorang Pendekar','2026-07-07 12:29:24','2026-07-07 12:49:16',NULL),
+(4,2,'D','Seorang yang Mencari Jati Diri','2026-07-07 12:29:37','2026-07-07 12:56:07',NULL),
+(5,2,'','Seorang yang Mencari Jati Diri','2026-07-07 12:57:33','2026-07-07 12:57:54','2026-07-07 12:57:54');
+
 /*Table structure for table `quiz_questions` */
 
 DROP TABLE IF EXISTS `quiz_questions`;
@@ -241,9 +334,13 @@ CREATE TABLE `quiz_questions` (
   PRIMARY KEY (`id`),
   KEY `quiz_id` (`quiz_id`),
   CONSTRAINT `quiz_questions_ibfk_1` FOREIGN KEY (`quiz_id`) REFERENCES `quizzes` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `quiz_questions` */
+
+insert  into `quiz_questions`(`id`,`quiz_id`,`question_text`,`correct_answer`,`created_at`,`updated_at`,`deleted_at`) values 
+(1,2,'Mana pernyataan Albert Ensten yang Benar di Bawah Ini','A','2026-07-07 11:24:21','2026-07-07 11:27:09','2026-07-07 11:27:09'),
+(2,2,'Siapa Itu Albert Enstein ?','A','2026-07-07 11:27:17','2026-07-07 11:27:17',NULL);
 
 /*Table structure for table `quizzes` */
 
@@ -260,9 +357,13 @@ CREATE TABLE `quizzes` (
   PRIMARY KEY (`id`),
   KEY `topic_id` (`topic_id`),
   CONSTRAINT `quizzes_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `course_topics` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `quizzes` */
+
+insert  into `quizzes`(`id`,`topic_id`,`quiz_category`,`question_type`,`created_at`,`updated_at`,`deleted_at`) values 
+(1,6,'latihan','multiple_choice','2026-07-07 10:26:40','2026-07-07 10:40:15','2026-07-07 10:40:15'),
+(2,7,'latihan','multiple_choice','2026-07-07 10:45:29','2026-07-07 10:45:29',NULL);
 
 /*Table structure for table `student_submissions` */
 
@@ -304,9 +405,13 @@ CREATE TABLE `topic_materials` (
   PRIMARY KEY (`id`),
   KEY `topic_id` (`topic_id`),
   CONSTRAINT `topic_materials_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `course_topics` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `topic_materials` */
+
+insert  into `topic_materials`(`id`,`topic_id`,`video_url`,`attachment_file`,`created_at`,`updated_at`,`deleted_at`) values 
+(7,2,'https://youtu.be/PjZaETZYJ8A?si=JipfkiHv7dn91czY','Siapa itu enstein','2026-07-06 11:28:22','2026-07-06 12:16:26',NULL),
+(8,1,'https://youtu.be/8pYhgt28Tj0?si=RxlOyaZZMBp_SgKo','Vidio apa itu waktu','2026-07-06 12:19:40','2026-07-06 12:29:03',NULL);
 
 /*Table structure for table `users` */
 
