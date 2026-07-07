@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://tools.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:id="@+id/tvLoginTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="Welcome Back!"
+        android:textColor="#A0522D"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvLoginSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Login to continue to your account"
+        android:textColor="#757575"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLoginTitle" />
+
+    <EditText
+        android:id="@+id/etLoginIdentifier"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/bg_rounded_input"
+        android:hint="Email atau Username"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLoginSubtitle" />
+
+    <EditText
+        android:id="@+id/etLoginPassword"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/bg_rounded_input"
+        android:hint="Password"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etLoginIdentifier" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="#A0522D"
+        android:text="MASUK"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etLoginPassword" />
+
+    <LinearLayout
+        android:id="@+id/lytDivider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="#E0E0E0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="atau"
+            android:textColor="#757575"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="#E0E0E0" />
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnGoogleLogin"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="#FFFFFF"
+        android:text="Masuk dengan Google"
+        android:textColor="#757575"
+        app:cornerRadius="4dp"
+        app:strokeColor="#DADCE0"
+        app:strokeWidth="1dp"
+        app:iconTint="@null"
+        app:iconGravity="textStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lytDivider" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Belum punya akun? "
+            android:textColor="#757575" />
+
+        <TextView
+            android:id="@+id/tvToRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daftar Sekarang"
+            android:textColor="#A0522D"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

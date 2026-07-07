@@ -5,15 +5,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.fe.databinding.ActivityMainBinding
+import com.example.fe.databinding.ActivityLoginPageBinding
 
-class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+class LoginPage : AppCompatActivity() {
+    lateinit var binding: ActivityLoginPageBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_main)
-        // !!! Main Code
+        binding = ActivityLoginPageBinding.inflate(layoutInflater)
+        setContentView(R.layout.activity_login_page)
+        // semua kode taruh di bawah !!!
+
     }
 }
