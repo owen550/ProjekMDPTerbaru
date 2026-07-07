@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="24dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="4dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:strokeColor="#F2DFCE"
+    app:strokeWidth="1.5dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/imgCourseIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_launcher_foreground"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/txtCourseTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Introduction to Programming"
+            android:textColor="#333333"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintStart_toEndOf="@id/imgCourseIcon"
+            app:layout_constraintTop_toTopOf="@id/imgCourseIcon"
+            app:layout_constraintBottom_toTopOf="@id/txtCoursePoints"
+            app:layout_constraintEnd_toStartOf="@id/layoutScore"
+            app:layout_constraintVertical_chainStyle="packed"/>
+
+        <TextView
+            android:id="@+id/txtCoursePoints"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="★ 720 Points"
+            android:textColor="#EAA235"
+            android:textSize="11sp"
+            android:layout_marginTop="2dp"
+            app:layout_constraintTop_toBottomOf="@id/txtCourseTitle"
+            app:layout_constraintStart_toStartOf="@id/txtCourseTitle"
+            app:layout_constraintEnd_toStartOf="@id/layoutScore"
+            app:layout_constraintBottom_toBottomOf="@id/imgCourseIcon"/>
+
+        <LinearLayout
+            android:id="@+id/layoutScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/txtScoreValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="420"
+                android:textColor="#EAA235"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Points"
+                android:textColor="#777777"
+                android:textSize="11sp"/>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

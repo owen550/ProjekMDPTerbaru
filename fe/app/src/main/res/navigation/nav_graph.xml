@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_dashboardFragmen_to_coursActivity"
             app:destination="@id/coursActivity" />
+        <action
+            android:id="@+id/action_dashboardFragmen_to_profileFragmen"
+            app:destination="@id/profileFragmen" />
     </fragment>
     <fragment
         android:id="@+id/activityCourseMateriFragmen"
@@ -24,4 +27,8 @@
             android:id="@+id/action_coursActivity_to_activityCourseMateriFragmen"
             app:destination="@id/activityCourseMateriFragmen" />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragmen"
+        android:name="com.example.fe.ui.todo.ProfileFragmen"
+        android:label="ProfileFragmen" />
 </navigation>
