@@ -1,0 +1,30 @@
+package com.example.fe.ui.todoform
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.example.fe.R
+import com.example.fe.databinding.FragmentDashboardBinding
+import com.example.fe.databinding.FragmentQuizzEsayDanProyekBinding
+
+//item_esay = untuk esay dan proyek
+//item_pilgan = untuk pilgan
+
+class QuizzEsayDanProyekFragmen : Fragment() {
+    lateinit var binding: FragmentQuizzEsayDanProyekBinding // ini tolong disesiuaikan di masing masing !!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentQuizzEsayDanProyekBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // main code di sini
+    }
+}
