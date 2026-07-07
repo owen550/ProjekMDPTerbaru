@@ -23,6 +23,7 @@ const QuizQuestionsRoutes = require("../be/routes/QuizQuestionsRoutes");
 const CsChatbotChatsRoutes = require("../be/routes/CsChatbotChatsRoutes");
 const PaymentsRoutes = require("../be/routes/PaymentsRoutes");
 const CourseEnrollmentsRoutes = require("../be/routes/CourseEnrollmentsRoutes");
+const QuizQuestionOptionsRoutes = require("../be/routes/QuizQuestionOptionsRoutes");
 
 // === ||| Tes API ||| ===
 const port = 3000;
@@ -45,5 +46,4 @@ app.use("/api/quizquestions",QuizQuestionsRoutes)
 app.use("/api/chatbot", CsChatbotChatsRoutes);
 app.use("/api/payments", PaymentsRoutes);
 app.use("/api/courseenrollments", CourseEnrollmentsRoutes);
-
-
+app.use("/api/quizquestionoptions", QuizQuestionOptionsRoutes);
