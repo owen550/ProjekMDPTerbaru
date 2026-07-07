@@ -12,15 +12,17 @@ app.set("trust proxy", true); // buat dapetin ip addrest
 
 // === ||| Semua Routes ||| ===
 
-const TesRoutes = require("../be/routes/tesroutes")
-const UsersRoutes = require("../be/routes/UsersRoutes")
-const CourseRoutes = require("../be/routes/CourseRoutes")
-const CourseTopicRoutes = require("../be/routes/CourseTopicRoutes")
-const TopicMaterialRoutes = require("../be/routes/TopicMaterialRoutes")
+const TesRoutes = require("../be/routes/tesroutes");
+const UsersRoutes = require("../be/routes/UsersRoutes");
+const CourseRoutes = require("../be/routes/CourseRoutes");
+const CourseTopicRoutes = require("../be/routes/CourseTopicRoutes");
+const TopicMaterialRoutes = require("../be/routes/TopicMaterialRoutes");
 const AdminMessagesRoutes = require("../be/routes/AdminMessagesRoutes");
 const QuizzesRoutes = require("../be/routes/QuizzesRoutes");
 const QuizQuestionsRoutes = require("../be/routes/QuizQuestionsRoutes");
-
+const CsChatbotChatsRoutes = require("../be/routes/CsChatbotChatsRoutes");
+const PaymentsRoutes = require("../be/routes/PaymentsRoutes");
+const CourseEnrollmentsRoutes = require("../be/routes/CourseEnrollmentsRoutes");
 
 // === ||| Tes API ||| ===
 const port = 3000;
@@ -32,12 +34,16 @@ app.get("/", async (req, res) => {
 });
 
 // === ||| SEMUA YANG AKAN DIPANGGIL DI API ||| ===
-app.use("/api/test",TesRoutes)
-app.use("/api/users",UsersRoutes)
-app.use("/api/course",CourseRoutes)
-app.use("/api/coursetopic",CourseTopicRoutes)
-app.use("/api/topicmaterial",TopicMaterialRoutes)
+app.use("/api/test", TesRoutes);
+app.use("/api/users", UsersRoutes);
+app.use("/api/course", CourseRoutes);
+app.use("/api/coursetopic", CourseTopicRoutes);
+app.use("/api/topicmaterial", TopicMaterialRoutes);
 app.use("/api/adminmessages", AdminMessagesRoutes);
 app.use("/api/quizz",QuizzesRoutes)
 app.use("/api/quizquestions",QuizQuestionsRoutes)
+app.use("/api/chatbot", CsChatbotChatsRoutes);
+app.use("/api/payments", PaymentsRoutes);
+app.use("/api/courseenrollments", CourseEnrollmentsRoutes);
+
 
