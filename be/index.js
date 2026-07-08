@@ -25,6 +25,7 @@ const PaymentsRoutes = require("../be/routes/PaymentsRoutes");
 const CourseEnrollmentsRoutes = require("../be/routes/CourseEnrollmentsRoutes");
 const QuizQuestionOptionsRoutes = require("../be/routes/QuizQuestionOptionsRoutes");
 const StudentSubmissionsRoutes = require("../be/routes/StudentSubmissionsRoutes");
+const ActivityLogRoutes = require("../be/routes/ActivityLogRoutes");
 
 
 // === ||| Tes API ||| ===
@@ -50,5 +51,7 @@ app.use("/api/payments", PaymentsRoutes);
 app.use("/api/courseenrollments", CourseEnrollmentsRoutes);
 app.use("/api/quizquestionoptions", QuizQuestionOptionsRoutes);
 app.use("/api/studentsubmissionsroutes", StudentSubmissionsRoutes);
+app.use("/api/activitylogroutes", ActivityLogRoutes);
+
 
 
