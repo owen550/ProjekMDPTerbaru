@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const UsersMiddleware = require("../middleware/UsersMiddleware");
-const ActivityLogsController = require("../controllers/ActivityLogsController");
+const ActivityLogsController = require("../controllers/ActivityLogController");
 
 // === Get Semua Activity Log ===
 router.post(
