@@ -12,7 +12,7 @@ router.post(
 
 router.get(
   "/all/:userId",
-  CourseEnrollmentsMiddleware.validateEnrollmentAccess,
+  CourseEnrollmentsMiddleware.validateEnrollmentuserId,
   CourseEnrollmentsController.getAllEnrollments,
 );
 

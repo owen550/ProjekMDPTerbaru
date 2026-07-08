@@ -27,8 +27,8 @@ class RetrofitDataSource(
                 username = user.username,
                 password = user.password,
                 email = user.email,
-                googleId = user.googleId,
-                birthdayDate = user.birthdayDate,
+                googleId = user.google_id,
+                birthdayDate = user.birthday_date,
                 role = user.role,
                 tier = user.tier
             )
@@ -68,8 +68,8 @@ class RetrofitDataSource(
                 username = user.username,
                 password = user.password,
                 email = user.email,
-                googleId = user.googleId,
-                birthdayDate = user.birthdayDate,
+                googleId = user.google_id,
+                birthdayDate = user.birthday_date,
                 role = user.role,
                 tier = user.tier
             )
