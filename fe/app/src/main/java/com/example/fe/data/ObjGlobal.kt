@@ -7,47 +7,47 @@ data class User(
     val username: String?,
     val password: String?,
     val email: String,
-    val googleId: String?,
-    val birthdayDate: String?,
+    val google_id: String?,
+    val birthday_date: String?,
     val role: String,
     val tier: String,
     val points: Int,
-    val createdAt: String,
-    val updatedAt: String,
-    val deletedAt: String?
+    val created_at: String,
+    val updated_at: String,
+    val deleted_at: String?
 )
 
 // === ActivityLog ===
 data class ActivityLog(
     val id: Int,
-    val userId: Int,
+    val user_id: Int,
     val activity: String,
-    val ipAddress: String,
-    val createdAt: String
+    val ip_address: String,
+    val created_at: String
 )
 
 // === AdminMessage ===
 data class AdminMessage(
     val id: Int,
-    val adminId: Int,
-    val receiverId: Int,
-    val messageTitle: String,
-    val messageBody: String,
-    val isRead: Boolean,
-    val createdAt: String,
-    val deletedAt: String?
+    val admin_id: Int,
+    val receiver_id: Int,
+    val message_title: String,
+    val message_body: String,
+    val is_read: Boolean,
+    val created_at: String,
+    val deleted_at: String?
 )
 
 // === CourseEnrollment ===
 data class CourseEnrollment(
     val id: Int,
-    val studentId: Int,
-    val courseId: Int,
-    val isBookmarked: Boolean,
+    val student_id: Int,
+    val course_id: Int,
+    val is_bookmarked: Boolean,
     val status: String,
-    val createdAt: String,
-    val updatedAt: String,
-    val deletedAt: String?
+    val created_at: String,
+    val updated_at: String,
+    val deleted_at: String?
 )
 
 // === Course ===
@@ -55,105 +55,106 @@ data class Course(
     val id: Int,
     val title: String,
     val category: String,
-    val teacherId: Int,
-    val createdAt: String,
-    val updatedAt: String,
-    val deletedAt: String?
+    val teacher_id: Int,
+    val created_at: String,
+    val updated_at: String,
+    val deleted_at: String?
 )
 
 // === CourseTopic ===
 data class CourseTopic(
     val id: Int,
-    val courseId: Int,
-    val topicNumber: Int,
+    val course_id: Int,
+    val topic_number: Int,
     val title: String,
     val description: String,
-    val contentType: String,
-    val createdAt: String,
-    val deletedAt: String?
+    val content_type: String,
+    val created_at: String,
+    val updated_at: String,
+    val deleted_at: String?
 )
 
 // === CourseTopic ===
 data class CsChatbotChat(
     val id: Int,
-    val userId: Int,
+    val user_id: Int,
     val sender: String,
     val message: String,
-    val createdAt: String,
-    val deletedAt: String?
+    val created_at: String,
+    val deleted_at: String?
 )
 
 // === Payment ===
 data class Payment(
     val id: Int,
-    val userId: Int,
-    val orderId: String,
-    val paymentToken: String,
+    val user_id: Int,
+    val order_id: String,
+    val payment_token: String,
     val amount: Double,
-    val paymentMethod: String,
-    val vaNumber: String?,
-    val qrUrl: String?,
+    val payment_method: String,
+    val va_number: String?,
+    val qr_url: String?,
     val status: String,
-    val createdAt: String,
-    val updatedAt: String,
-    val deletedAt: String?
+    val created_at: String,
+    val updated_at: String,
+    val deleted_at: String?
 )
 
 // === QuizQuestion ===
 data class QuizQuestion(
     val id: Int,
-    val quizId: Int,
-    val questionText: String,
-    val correctAnswer: String?,
-    val createdAt: String,
-    val updatedAt: String,
-    val deletedAt: String?
+    val quiz_id: Int,
+    val question_text: String,
+    val correct_answer: String?,
+    val created_at: String,
+    val updated_at: String,
+    val deleted_at: String?
 )
 
 // === Quiz ===
-data class Quiz(
+data class Quizzes(
     val id: Int,
-    val topicId: Int,
-    val quizCategory: String,
-    val questionType: String,
-    val createdAt: String,
-    val updatedAt: String,
-    val deletedAt: String?
+    val topic_id: Int,
+    val quiz_category: String,
+    val question_type: String,
+    val created_at: String,
+    val updated_at: String,
+    val deleted_at: String?
 )
 
 // === StudentSubmission ===
 data class StudentSubmission(
     val id: Int,
-    val quizId: Int,
-    val studentId: Int,
-    val essayAnswer: String?,
-    val fileUrl: String?,
+    val quiz_id: Int,
+    val student_id: Int,
+    val essay_answer: String?,
+    val file_url: String?,
     val score: Int?,
-    val teacherComment: String?,
+    val teacher_comment: String?,
     val status: String,
-    val createdAt: String,
-    val updatedAt: String,
-    val deletedAt: String?
+    val created_at: String,
+    val updated_at: String,
+    val deleted_at: String?
 )
 
 // === TopicMaterial ===
 data class TopicMaterial(
     val id: Int,
-    val topicId: Int,
-    val videoUrl: String?,
-    val attachmentFile: String?,
-    val createdAt: String,
-    val updatedAt: String,
-    val deletedAt: String?
+    val topic_id: Int,
+    val video_url: String?,
+    val attachment_file: String?,
+    val created_at: String,
+    val updated_at: String,
+    val deleted_at: String?
 )
 
 // === QuizQuestionOption ===
 data class QuizQuestionOption(
     val id: Int,
-    val quizQuestionId: Int,
-    val optionLetter: String,
-    val optionText: String,
-    val createdAt: String,
-    val updatedAt: String,
-    val deletedAt: String?
+    val quiz_question_id: Int,
+    val option_letter: String,
+    val option_text: String,
+    val created_at: String,
+    val updated_at: String,
+    val deleted_at: String?
 )
