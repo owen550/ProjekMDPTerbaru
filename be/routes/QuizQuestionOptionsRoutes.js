@@ -6,7 +6,7 @@ const QuizQuestionOptionsController = require("../controllers/QuizQuestionOption
 // === ||| semua routes ||| ====
 
 // Get All
-router.get(
+router.post(
     "/alldata",
     CourseUser.CekUserIDTakKosong,
     CourseUser.CekUserItuAda,
@@ -15,7 +15,7 @@ router.get(
 );
 
 // Get By ID
-router.get(
+router.post(
     "/getbyid",
     CourseUser.CekUserIDTakKosong,
     CourseUser.CekUserItuAda,

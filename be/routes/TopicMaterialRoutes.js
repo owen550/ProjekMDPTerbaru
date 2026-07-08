@@ -8,7 +8,7 @@ const CourseTopicMiddleware = require("../middleware/CourseTopicMiddleware")
 const TopicMaterialController = require("../controllers/TopicMaterialController");
 
 // === ||| semua routes ||| ====
-router.get( // update
+router.post( // update
     "/alldata",
     CourseUser.CekUserIDTakKosong, // userid
     CourseUser.CekUserItuAda,
@@ -16,7 +16,7 @@ router.get( // update
     TopicMaterialController.GetAllTopicMaterial
 );
 
-router.get( // update
+router.post( // update
     "/getbyid",
     CourseUser.CekUserIDTakKosong, // userid
     CourseUser.CekUserItuAda,

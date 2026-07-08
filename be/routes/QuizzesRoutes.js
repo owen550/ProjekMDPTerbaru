@@ -8,14 +8,14 @@ const CourseTopicMiddleware = require("../middleware/CourseTopicMiddleware")
 const QuizzesController = require("../controllers/QuizzesController");
 
 // === ||| semua routes ||| ====
-router.get( // get all
+router.post( // get all
     "/alldata",
     CourseUser.CekUserIDTakKosong,
     CourseUser.CekUserItuAda,
     CourseUser.CekUserAdalahGuru,
     QuizzesController.GetAllQuizzesByTopicId
 );
-router.get( // get by id
+router.post( // get by id
     "/getbyid",
     CourseUser.CekUserIDTakKosong,
     CourseUser.CekUserItuAda,

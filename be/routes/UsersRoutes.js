@@ -6,7 +6,7 @@ const UserController = require("../controllers/UsersController");
 
 // === ||| semua routes ||| ====
 router.post("/addusers",UserMiddleware.CekKelengkapanDataAddUser,UserController.AddUser);
-router.get("/alldata",UserController.GetAllUser);
+router.post("/alldata",UserController.GetAllUser);
 router.post("/getdatabyid",UserController.GetUserById);
 router.put("/updateuser",UserController.UpdateUserById);
 router.put("/deleteuser",UserController.DeleteUser);

@@ -6,11 +6,11 @@ const CourseMiddleware = require("../middleware/CourseMiddleware")
 const CourseController = require("../controllers/CourseController");
 
 // === ||| semua routes ||| ====
-router.get( // get all
+router.post( 
     "/alldata",
     CourseController.GetAllCourse
 );
-router.get( // get by id
+router.post( // get by id
     "/getbyid",
     CourseController.GetCourseById
 );
