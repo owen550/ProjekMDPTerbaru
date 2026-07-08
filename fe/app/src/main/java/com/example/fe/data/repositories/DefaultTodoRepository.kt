@@ -30,4 +30,11 @@ class DefaultTodoRepository(
     override suspend fun deleteUser(userId: Int): Result<User> {
         return remoteDataSource.deleteUser(userId)
     }
+
+    override suspend fun doLogin(
+        usernameoremail: String,
+        password: String
+    ): Result<User> {
+        return remoteDataSource.doLogin(usernameoremail,password)
+    }
 }

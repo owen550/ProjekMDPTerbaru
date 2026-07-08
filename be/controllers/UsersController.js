@@ -43,9 +43,10 @@ exports.AddUser = async (req, res) => {
     
     // === cek jika ada nama user yang sama ? tolak 
     let allUserData = await Users.findOne({where: {username}})
-    if(allUserData != null){
+    let allUserDataEmail = await Users.findOne({where: {username}})
+    if(allUserData != null || allUserDataEmail != null){
       return res.status(400).json({
-        message: "Username Telah Dipakai !!!",
+        message: "Username Atau Email Telah Dipakai !!!",
       });
     }
 
@@ -179,7 +180,6 @@ exports.LoginUser = async (req, res) => {
     }
 
     let userdata = false
-    let iduser = null
 
     // cek username
     let cariuserbyusername = await Users.findOne({
@@ -213,23 +213,17 @@ exports.LoginUser = async (req, res) => {
         message: "Login Gagal"
       })
     }
-    // klo sampek sini berarti berhasil
-    return res.status(200).json({
-      message: "Login Berhasil",
-      user: userdata
-    })
 
     // === activity log ===
     await ActivityLogs.create({
-      user_id: finduserbyid.id,
-      activity: `User dengan id ${iduser} Login`,
+      user_id: userdata.id,
+      activity: `User dengan id ${userdata.id} Login`,
       ip_address: req.ip // cara dapetin ip clien
     })
 
-    return res.status(200).json({
-      message: "Berhasil Login",
-      data: finduserbyid
-    });
+    // klo sampek sini berarti berhasil
+    return res.status(200).json(userdata)
+    
   } catch (error) {
     return res.status(500).json(error);
   }

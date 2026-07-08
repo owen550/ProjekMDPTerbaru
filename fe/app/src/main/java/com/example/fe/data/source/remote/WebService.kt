@@ -55,6 +55,13 @@ interface WebService {
     ): Response<User>
 
     @FormUrlEncoded
+    @POST("api/users/login")
+    suspend fun doLogin(
+        @Field("usernameoremail") usernameoremail: String,
+        @Field("password") password: String
+    ): Response<User>
+
+    @FormUrlEncoded
     @PUT("api/users/updateuser")
     suspend fun updateUser(
         @Field("userid") userId: Int,

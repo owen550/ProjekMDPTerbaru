@@ -1,3 +1,5 @@
 package com.example.fe
 
-var id = 0;
+import com.example.fe.data.User
+
+var user: User ?= null // simpan user di sini

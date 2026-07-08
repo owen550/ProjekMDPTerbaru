@@ -97,4 +97,20 @@ class RetrofitDataSource(
             Result.failure(e)
         }
     }
+
+    override suspend fun doLogin(
+        usernameoremail: String,
+        password: String
+    ): Result<User> {
+        return try {
+            val response = retrofitService.doLogin(usernameoremail,password)
+            if (response.isSuccessful && response.body() != null) {
+                Result.success(response.body()!!)
+            } else {
+                Result.failure(Exception(response.message()))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }

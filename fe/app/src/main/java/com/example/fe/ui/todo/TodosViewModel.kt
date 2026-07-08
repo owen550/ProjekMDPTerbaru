@@ -10,7 +10,9 @@ import com.example.fe.data.User
 import com.example.fe.data.repositories.TodoRepository
 import kotlinx.coroutines.launch
 
-class TodosViewModel(private val todoRepository: TodoRepository): ViewModel() {
+class TodosViewModel(
+    private val todoRepository: TodoRepository
+): ViewModel() {
 
     // === variabel ===
     private val _message = MutableLiveData<String>();

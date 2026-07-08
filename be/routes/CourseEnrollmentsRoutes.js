@@ -10,11 +10,11 @@ router.post(
   CourseEnrollmentsController.createEnrollment,
 );
 
-router.get(
-  "/all/:userId",
-  CourseEnrollmentsMiddleware.validateEnrollmentuserId,
-  CourseEnrollmentsController.getAllEnrollments,
-);
+// router.get(
+//   "/all/:userId",
+//   CourseEnrollmentsMiddleware.validateEnrollmentuserId,
+//   CourseEnrollmentsController.getAllEnrollments,
+// );
 
 router.get(
   "/:userId/:studentId",

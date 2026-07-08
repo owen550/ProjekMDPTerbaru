@@ -1,6 +1,7 @@
 package com.example.fe.data.remote
 
 import com.example.fe.data.User
+import retrofit2.http.Field
 
 interface RemoteDataSource {
 
@@ -27,5 +28,10 @@ interface RemoteDataSource {
 
     suspend fun deleteUser(
         userId: Int
+    ): Result<User>
+
+    suspend fun doLogin(
+        usernameoremail: String,
+        password: String
     ): Result<User>
 }

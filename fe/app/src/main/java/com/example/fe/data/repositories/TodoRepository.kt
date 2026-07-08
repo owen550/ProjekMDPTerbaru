@@ -16,4 +16,9 @@ interface TodoRepository {
     ): Result<User>
     suspend fun updateUser(user: User): Result<User>
     suspend fun deleteUser(userId: Int): Result<User>
+    suspend fun doLogin(
+        usernameoremail: String,
+        password: String
+    ): Result<User>
+
 }
