@@ -170,3 +170,67 @@ exports.DeleteUser = async (req, res) => {
     return res.status(500).json(error);
   }
 };
+
+exports.LoginUser = async (req, res) => {
+  try {
+    let { usernameoremail,password } = req.body 
+    if(usernameoremail == null || password == ""){
+      return res.status(400).json({message: "Usermname/Email/Password Tidak Valid"})
+    }
+
+    let userdata = false
+    let iduser = null
+
+    // cek username
+    let cariuserbyusername = await Users.findOne({
+      where:{
+        username: usernameoremail,
+      }
+    })
+    // simpan user
+    if(cariuserbyusername != null){
+      userdata = cariuserbyusername
+    }
+    let cariuserbyemail= await Users.findOne({
+      where:{
+        email: usernameoremail,
+      }
+    })
+    // simpan user
+    if(cariuserbyemail != null){
+      userdata = cariuserbyemail
+    }
+    // cek kalau keduanya kosong maka g ketemu
+    if(userdata == null){
+      return res.status(400).json({
+        message: "Login Gagal"
+      })
+    }
+    // berarti ketemu, lakukan bcry
+    let passcomp = await bcrypt.compare(password,userdata.password)
+    if(!passcomp){ // berarti gagal login
+      return res.status(400).json({
+        message: "Login Gagal"
+      })
+    }
+    // klo sampek sini berarti berhasil
+    return res.status(200).json({
+      message: "Login Berhasil",
+      user: userdata
+    })
+
+    // === activity log ===
+    await ActivityLogs.create({
+      user_id: finduserbyid.id,
+      activity: `User dengan id ${iduser} Login`,
+      ip_address: req.ip // cara dapetin ip clien
+    })
+
+    return res.status(200).json({
+      message: "Berhasil Login",
+      data: finduserbyid
+    });
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
