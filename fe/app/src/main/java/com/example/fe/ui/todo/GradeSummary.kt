@@ -6,19 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.fe.R
+import com.example.fe.databinding.FragmentDashboardBinding
+import com.example.fe.databinding.FragmentGradeSummaryBinding
 
 
 class GradeSummary : Fragment() {
-
+    lateinit var binding: FragmentGradeSummaryBinding // ini tolong disesiuaikan di masing masing !!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_grade_summary, container, false)
+        binding = FragmentGradeSummaryBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // main code
     }
 }
