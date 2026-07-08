@@ -1,0 +1,73 @@
+package com.example.a223117101_m6.Fragmen
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import com.example.a223117101_m6.R
+import com.example.a223117101_m6.ViewModel.UtamaPageViewModel
+import com.example.a223117101_m6.databinding.ActivityMainBinding
+import com.example.a223117101_m6.databinding.FragmentUtamaPageBinding
+import com.example.a223117101_m6.loginUser
+
+class UtamaPage : Fragment() {
+    lateinit var binding: FragmentUtamaPageBinding
+    val ViewModel: UtamaPageViewModel by viewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        binding = FragmentUtamaPageBinding.inflate(inflater,container,false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // === main code ===
+        setupUI()
+        onObserve()
+        onListener()
+    }
+
+    fun setupUI(){
+        var saldo = loginUser!!.user_saldo
+        binding.tvHalo.setText("Halo, ${loginUser!!.user_username}")
+        binding.tvSaldo.setText("${ViewModel.perThreeDigit(saldo)} Koin")
+        binding.etUsername.setText("")
+        binding.etJumlah.setText("")
+    }
+
+    fun onObserve(){
+        ViewModel.message.observe(requireActivity()){ msg ->
+            if(msg.isNotBlank() && msg.isNotEmpty()){
+                Toast.makeText(requireContext(),msg, Toast.LENGTH_SHORT).show()
+                ViewModel.reset()
+                setupUI()
+            }
+        }
+    }
+
+    fun onListener(){
+        // === kirim koin ke username ...
+        binding.btnKirim.setOnClickListener {
+            var nominal = binding.etJumlah.text.toString()
+            var username = binding.etUsername.text.toString()
+            if(nominal.isNotEmpty()){
+                ViewModel.kirimKoinKeUsernameTarget(nominal.toInt(),username)
+                // set ulang tampilan
+                setupUI()
+            }
+            else{
+                Toast.makeText(requireActivity(),"Isi Informasi Dengan Benar !!!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
+}
