@@ -12,8 +12,8 @@
             android:id="@+id/action_dashboardFragmen_to_coursActivity"
             app:destination="@id/coursActivity" />
         <action
-            android:id="@+id/action_dashboardFragmen_to_profileFragmen"
-            app:destination="@id/profileFragmen" />
+            android:id="@+id/action_dashboardFragmen_to_gradeSummary"
+            app:destination="@id/gradeSummary" />
     </fragment>
     <fragment
         android:id="@+id/activityCourseMateriFragmen"
@@ -31,4 +31,20 @@
         android:id="@+id/profileFragmen"
         android:name="com.example.fe.ui.todo.ProfileFragmen"
         android:label="ProfileFragmen" />
+    <fragment
+        android:id="@+id/gradeSummary"
+        android:name="com.example.fe.ui.todo.GradeSummary"
+        android:label="GradeSummary" >
+        <action
+            android:id="@+id/action_gradeSummary_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.fe.ui.todoform.ChatFragment"
+        android:label="ChatFragment" >
+        <action
+            android:id="@+id/action_chatFragment_to_profileFragmen"
+            app:destination="@id/profileFragmen" />
+    </fragment>
 </navigation>

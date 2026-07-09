@@ -95,7 +95,6 @@ class TodoFormViewModel(
                 _loading.value = false
             }
         }
-
     }
 
     fun reset(){
