@@ -18,11 +18,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/profileFragmen"
-        android:name="com.example.fe.ui.todo.ProfileFragmen"
-        android:label="Profile" />
-
-    <fragment
         android:id="@+id/activityCourseMateriFragmen"
         android:name="com.example.fe.ui.todo.ActivityCourseMateriFragmen"
         android:label="Course Material" />
@@ -60,4 +55,8 @@
         android:id="@+id/profileFragmen"
         android:name="com.example.fe.ui.todo.ProfileFragmen"
         android:label="ProfileFragmen" />
+    <fragment
+        android:id="@+id/chatFragment2"
+        android:name="com.example.fe.ui.todoform.ChatFragment"
+        android:label="ChatFragment" />
 </navigation>
