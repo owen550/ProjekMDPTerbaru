@@ -60,11 +60,7 @@ exports.AddUser = async (req, res) => {
       ip_address: req.ip // cara dapetin ip clien
     })
     
-    return res.status(200).json({
-      message: "Berhasil Add User",
-      status: '201',
-      newUser
-    });
+    return res.status(200).json(newUser);
   } catch (error) {
     return res.status(500).json({ 
       message: error.message,
