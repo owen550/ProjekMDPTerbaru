@@ -17,7 +17,7 @@ class TodoApplication: Application(){
         val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
         val retrofit = Retrofit.Builder().addConverterFactory(
             MoshiConverterFactory.create(moshi)
-        ).baseUrl("http://192.168.110.9:3000/").build()
+        ).baseUrl("http://10.10.5.202:3000/").build()
         val retrofitService = retrofit.create(WebService::class.java)
         todoRepository = DefaultTodoRepository(
             //RoomDataSource(AppDatabase.getInstance(baseContext)),

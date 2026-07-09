@@ -489,7 +489,6 @@ interface WebService {
     ): Response<Unit>
 //==========================================================
 //StudentSubmission==================================================
-interface StudentSubmissionService {
 
     @FormUrlEncoded
     @POST("api/studentsubmissionsroutes/alldata")
@@ -535,7 +534,7 @@ interface StudentSubmissionService {
         @Field("userid") userId: Int,
         @Field("id") submissionId: Int
     ): Response<Unit>
-}
+
 //============================================================
 
 }
