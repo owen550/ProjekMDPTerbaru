@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class TodosViewModel(
     private val todoRepository: TodoRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _message = MutableLiveData<String>()
     val message: LiveData<String> = _message
@@ -26,32 +26,35 @@ class TodosViewModel(
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
 
-
     // === get data ====
-    private val _oneuser = MutableLiveData<User>()
-    private val _gradesumary = MutableLiveData<GradeSummary>();
-    var gradesumary: LiveData<GradeSummary> = _gradesumary
+    private val _oneuser = MutableLiveData<User?>()
+    val oneuser: LiveData<User?> = _oneuser
 
-    private val _oneuser = MutableLiveData<User>();
-    var oneuser: LiveData<User> = _oneuser
+    private val _gradesumary = MutableLiveData<GradeSummary>()
+    val gradesumary: LiveData<GradeSummary> = _gradesumary
 
     private val _course = MutableLiveData<List<Course>>()
-    var course: LiveData<List<Course>> = _course
+    val course: LiveData<List<Course>> = _course
 
-    private val _coursedetail = MutableLiveData<List<CourseTopic>>();
-    var coursedetail: LiveData<List<CourseTopic>> = _coursedetail
+    private val _coursedetail = MutableLiveData<List<CourseTopic>>()
+    val coursedetail: LiveData<List<CourseTopic>> = _coursedetail
 
-    private val _onetopicmaterial = MutableLiveData<TopicMaterial>();
-    var onetopicmaterial: LiveData<TopicMaterial> = _onetopicmaterial
+    private val _onetopicmaterial = MutableLiveData<TopicMaterial?>()
+    val onetopicmaterial: LiveData<TopicMaterial?> = _onetopicmaterial
 
     // ==== other func =======
     fun getTopicMaterialByIDCourseTopic(
-        topic_id: Int
-    ){
+        topicId: Int
+    ) {
+        val userId = user?.id
+        if (userId == null) {
+            _message.value = "User session invalid"
+            return
+        }
         viewModelScope.launch {
             _loading.value = true
             try {
-                var result = todoRepository.getMaterialById(user!!.id,topic_id)
+                val result = todoRepository.getMaterialById(userId, topicId)
                 result
                     .onSuccess { topicmaterialdata ->
                         _onetopicmaterial.value = topicmaterialdata
@@ -59,11 +62,9 @@ class TodosViewModel(
                     .onFailure { err ->
                         _message.value = err.message
                     }
-            }
-            catch (e: Exception){
+            } catch (e: Exception) {
                 _message.value = "Terjadi Kesalahan Pada Backend"
-            }
-            finally {
+            } finally {
                 _loading.value = false
             }
         }
@@ -78,8 +79,7 @@ class TodosViewModel(
         viewModelScope.launch {
             _loading.value = true
             try {
-                // Gunakan !! untuk memastikan Int dilempar ke repository
-                val result = todoRepository.getAllCourses(userId!!)
+                val result = todoRepository.getAllCourses(userId)
                 result
                     .onSuccess { coursedata ->
                         _course.value = coursedata
@@ -95,11 +95,16 @@ class TodosViewModel(
         }
     }
 
-    fun getAllCourseTopicByID(courseid: Int){
+    fun getAllCourseTopicByID(courseid: Int) {
+        val userId = user?.id
+        if (userId == null) {
+            _message.value = "User session invalid"
+            return
+        }
         viewModelScope.launch {
             _loading.value = true
             try {
-                var result = todoRepository.getAllTopics(user!!.id,courseid)
+                val result = todoRepository.getAllTopics(userId, courseid)
                 result
                     .onSuccess { coursedata ->
                         _coursedetail.value = coursedata
@@ -107,11 +112,9 @@ class TodosViewModel(
                     .onFailure { exception ->
                         _message.value = exception.message ?: "Terjadi Kesalahan Pada Saat Load Data"
                     }
-            }
-            catch (e: Exception){
+            } catch (e: Exception) {
                 _message.value = "Terjadi Kesalahan Pada Backend"
-            }
-            finally {
+            } finally {
                 _loading.value = false
             }
         }
@@ -126,7 +129,7 @@ class TodosViewModel(
 
         viewModelScope.launch {
             try {
-                val result = todoRepository.getUserById(userId!!, userId!!)
+                val result = todoRepository.getUserById(userId, userId)
                 result
                     .onSuccess { user ->
                         _oneuser.value = user
@@ -146,7 +149,7 @@ class TodosViewModel(
         _loading.value = true
         viewModelScope.launch {
             try {
-                val result = todoRepository.getUserById(targetUserId, adminId!!)
+                val result = todoRepository.getUserById(targetUserId, adminId)
                 result
                     .onSuccess { user ->
                         _oneuser.value = user
@@ -162,14 +165,12 @@ class TodosViewModel(
         }
     }
 
-
     // ============================
     // ADMIN ACTIVITY LOG
     // ============================
 
     private val _activityLogs = MutableLiveData<List<ActivityLog>>()
     val activityLogs: LiveData<List<ActivityLog>> = _activityLogs
-
 
     fun fetchAllActivityLogs() {
         val userId = currentUserId
@@ -181,7 +182,7 @@ class TodosViewModel(
 
         viewModelScope.launch {
             try {
-                val result = todoRepository.getAllActivityLogs(userId!!)
+                val result = todoRepository.getAllActivityLogs(userId)
                 result
                     .onSuccess { logs ->
                         _activityLogs.value = logs
@@ -217,7 +218,7 @@ class TodosViewModel(
 
         viewModelScope.launch {
             try {
-                val result = todoRepository.getAllPayments(userId!!)
+                val result = todoRepository.getAllPayments(userId)
                 result
                     .onSuccess { list ->
                         _payments.value = list
@@ -274,7 +275,7 @@ class TodosViewModel(
 
         viewModelScope.launch {
             try {
-                val result = todoRepository.getAllUser(userId!!)
+                val result = todoRepository.getAllUser(userId)
                 result
                     .onSuccess { list ->
                         _users.value = list
@@ -347,7 +348,6 @@ class TodosViewModel(
             }
         }
     }
-
 
     fun reset() {
         _message.value = ""
