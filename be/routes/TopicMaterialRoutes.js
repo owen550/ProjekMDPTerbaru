@@ -12,7 +12,6 @@ router.post( // update
     "/alldata",
     CourseUser.CekUserIDTakKosong, // userid
     CourseUser.CekUserItuAda,
-    CourseUser.CekUserAdalahGuru,
     TopicMaterialController.GetAllTopicMaterial
 );
 
@@ -20,7 +19,6 @@ router.post( // update
     "/getbyid",
     CourseUser.CekUserIDTakKosong, // userid
     CourseUser.CekUserItuAda,
-    CourseUser.CekUserAdalahGuru,
     TopicMaterialController.GetTopicMaterialById
 );
 

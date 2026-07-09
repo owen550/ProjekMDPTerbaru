@@ -78,7 +78,10 @@ interface RemoteDataSource {
     // Course Topic
     // =======================
 
-    suspend fun getAllTopics(): Result<List<CourseTopic>>
+    suspend fun getAllTopics(
+        userid: Int,
+        courseid: Int
+    ): Result<List<CourseTopic>>
 
     suspend fun insertTopic(
         userId: Int,
@@ -107,7 +110,8 @@ interface RemoteDataSource {
     ): Result<List<TopicMaterial>>
 
     suspend fun getMaterialById(
-        userId: Int
+        userId: Int,
+        topic_id: Int
     ): Result<TopicMaterial>
 
     suspend fun insertMaterial(

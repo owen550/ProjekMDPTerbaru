@@ -11,9 +11,11 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fe.R
 import com.example.fe.TodoViewModelFactory
+import com.example.fe.courseDetail
 import com.example.fe.data.Course
 import com.example.fe.databinding.FragmentDashboardBinding
 import com.example.fe.user
@@ -52,10 +54,21 @@ class DashboardFragmen : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        courseAdapter = CourseAdapter { course ->
-            Toast.makeText(requireContext(), "Click: ${course.title}", Toast.LENGTH_SHORT).show()
-        }
+        // bagian siapin rv nya
+        courseAdapter = CourseAdapter(object : CourseAdapter.OnCourseClickListener {
+            override fun onBookmark(course: Course) {
+                // add ke course_enrolment
+                Toast.makeText(requireContext(), "Bookmark: ${course.title}", Toast.LENGTH_SHORT).show()
+            }
 
+            override fun onOpenDetail(course: Course) {
+                // buka activity nya
+                courseDetail = course
+                findNavController().navigate(R.id.coursActivity)
+            }
+        })
+
+        // bagian pasanh ke rv nya
         binding.rvCourse.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = courseAdapter

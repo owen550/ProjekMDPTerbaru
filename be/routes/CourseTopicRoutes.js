@@ -12,7 +12,6 @@ router.post( // update
     "/alldata",
     CourseUser.CekUserIDTakKosong,
     CourseUser.CekUserItuAda,
-    CourseUser.CekUserAdalahGuru,
     CourseMiddleware.CariCourseByID,
     CourseTopicController.GetAllCourseTopicByID
 );

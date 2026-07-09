@@ -17,14 +17,17 @@
         <action
             android:id="@+id/action_dashboardFragmen_to_gradeSummary"
             app:destination="@id/gradeSummary" />
-
     </fragment>
 
 
     <fragment
         android:id="@+id/profileFragmen"
         android:name="com.example.fe.ui.todo.ProfileFragmen"
-        android:label="Profile" />
+        android:label="Profile" >
+        <action
+            android:id="@+id/action_profileFragmen_to_paymentDetailFragment"
+            app:destination="@id/paymentDetailFragment" />
+    </fragment>
 
 
     <fragment
@@ -90,6 +93,11 @@
         android:label="Grades" />
 
 
+    <fragment
+
+        android:id="@+id/profileFragmen"
+        android:name="com.example.fe.ui.todo.ProfileFragmen"
+        android:label="ProfileFragmen" />
     <fragment
         android:id="@+id/chatFragment2"
         android:name="com.example.fe.ui.todoform.ChatFragment"

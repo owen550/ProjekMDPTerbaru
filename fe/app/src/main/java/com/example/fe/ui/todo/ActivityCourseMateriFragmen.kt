@@ -1,18 +1,20 @@
 package com.example.fe.ui.todo
 
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.MediaController
+import com.example.fe.courseTopic
 import com.example.fe.databinding.FragmentActivityCourseMateriBinding
+import com.example.fe.materialTopic
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import java.util.regex.Pattern
 
 class ActivityCourseMateriFragmen : Fragment() {
 
     private var _binding: FragmentActivityCourseMateriBinding? = null
-    // Menggunakan backing property agar aman dari memory leak di Fragmen
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -26,22 +28,41 @@ class ActivityCourseMateriFragmen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // === ntik vidio didapet dri sini Tentukan link video online (pastikan link langsung mengarah ke file video, misal format .mp4)
-        val videoUrl = "https://www.w3schools.com/html/mov_bbb.mp4"
-        val uri = Uri.parse(videoUrl)
+        uiSetup()
 
-        // === Set URI video ke VideoView via binding
-        binding.videoPlayer.setVideoURI(uri)
+        lifecycle.addObserver(binding.youtubePlayerView)
 
-        // === Tambahkan MediaController (Tombol Play, Pause, Seekbar)
-        // Menggunakan context dari activity karena MediaController butuh token window WindowManager
-        val mediaController = MediaController(requireActivity())
-        mediaController.setAnchorView(binding.videoPlayer)
-        binding.videoPlayer.setMediaController(mediaController)
+        binding.youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                val videoUrl = "https://www.youtube.com/watch?v=aqz-KE-bpKQ"//materialTopic!!.video_url
+                val videoId = extractYoutubeId(videoUrl)
 
-        // === Jalankan video secara otomatis setelah selesai proses buffering awal
-        binding.videoPlayer.setOnPreparedListener {
-            binding.videoPlayer.start()
+                if (!videoId.isNullOrEmpty()) {
+                    youTubePlayer.cueVideo(videoId, 0f)
+                }
+            }
+        })
+    }
+
+    fun uiSetup(){
+        binding.txtDetailTitle.setText(courseTopic?.title ?: "No Title")
+        binding.txtDetailDesc.setText(materialTopic?.attachment_file ?: "No Attachment")
+    }
+
+    private fun extractYoutubeId(ytUrl: String?): String? {
+        if (ytUrl.isNullOrEmpty()) return null
+
+        return when {
+            ytUrl.contains("watch?v=") ->
+                ytUrl.substringAfter("watch?v=").substringBefore("&")
+
+            ytUrl.contains("youtu.be/") ->
+                ytUrl.substringAfter("youtu.be/").substringBefore("?")
+
+            ytUrl.contains("embed/") ->
+                ytUrl.substringAfter("embed/").substringBefore("?")
+
+            else -> null
         }
     }
 

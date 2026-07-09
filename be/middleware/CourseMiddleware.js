@@ -31,11 +31,11 @@ let CariCourseByID = async (req, res, next) => {
         message: `Course dengan id ${courseid} tidak ditemukan`,
       });
     }
-    if(finddatabase.teacher_id != user.id){
-      return res.status(400).send({
-        message: `Tak Dapat Merubah,Anda Bukan Pembuat Course Ini`,
-      });
-    }
+    // if(finddatabase.teacher_id != user.id){
+    //   return res.status(400).send({
+    //     message: `Tak Dapat Merubah,Anda Bukan Pembuat Course Ini`,
+    //   });
+    // }
 
     // simpan klo ketemu
     req.course = finddatabase

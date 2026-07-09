@@ -8,6 +8,8 @@ import com.example.fe.data.ActivityLog
 import com.example.fe.data.AdminMessage
 import com.example.fe.data.Payment
 import com.example.fe.data.Course
+import com.example.fe.data.CourseTopic
+import com.example.fe.data.TopicMaterial
 import com.example.fe.data.User
 import com.example.fe.data.repositories.TodoRepository
 import com.example.fe.ui.todoform.currentUserId
@@ -27,11 +29,45 @@ class TodosViewModel(
 
     // === get data ====
     private val _oneuser = MutableLiveData<User>()
+    private val _gradesumary = MutableLiveData<GradeSummary>();
+    var gradesumary: LiveData<GradeSummary> = _gradesumary
+
+    private val _oneuser = MutableLiveData<User>();
     var oneuser: LiveData<User> = _oneuser
 
     private val _course = MutableLiveData<List<Course>>()
     var course: LiveData<List<Course>> = _course
 
+    private val _coursedetail = MutableLiveData<List<CourseTopic>>();
+    var coursedetail: LiveData<List<CourseTopic>> = _coursedetail
+
+    private val _onetopicmaterial = MutableLiveData<TopicMaterial>();
+    var onetopicmaterial: LiveData<TopicMaterial> = _onetopicmaterial
+
+    // ==== other func =======
+    fun getTopicMaterialByIDCourseTopic(
+        topic_id: Int
+    ){
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                var result = todoRepository.getMaterialById(user!!.id,topic_id)
+                result
+                    .onSuccess { topicmaterialdata ->
+                        _onetopicmaterial.value = topicmaterialdata
+                    }
+                    .onFailure { err ->
+                        _message.value = err.message
+                    }
+            }
+            catch (e: Exception){
+                _message.value = "Terjadi Kesalahan Pada Backend"
+            }
+            finally {
+                _loading.value = false
+            }
+        }
+    }
 
     fun getAllCourse() {
         val userId = currentUserId
@@ -54,6 +90,28 @@ class TodosViewModel(
             } catch (e: Exception) {
                 _message.value = "Terjadi Kesalahan Pada Backend"
             } finally {
+                _loading.value = false
+            }
+        }
+    }
+
+    fun getAllCourseTopicByID(courseid: Int){
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                var result = todoRepository.getAllTopics(user!!.id,courseid)
+                result
+                    .onSuccess { coursedata ->
+                        _coursedetail.value = coursedata
+                    }
+                    .onFailure { exception ->
+                        _message.value = exception.message ?: "Terjadi Kesalahan Pada Saat Load Data"
+                    }
+            }
+            catch (e: Exception){
+                _message.value = "Terjadi Kesalahan Pada Backend"
+            }
+            finally {
                 _loading.value = false
             }
         }
@@ -299,5 +357,6 @@ class TodosViewModel(
         _users.value = emptyList()
         _oneuser.value = null
         _messages.value = emptyList()
+        _onetopicmaterial.value = null
     }
 }

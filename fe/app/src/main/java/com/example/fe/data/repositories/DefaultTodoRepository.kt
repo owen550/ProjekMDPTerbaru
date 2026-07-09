@@ -78,8 +78,11 @@ class DefaultTodoRepository(
     // Course Topic
     // =======================
 
-    override suspend fun getAllTopics(): Result<List<CourseTopic>> {
-        return remoteDataSource.getAllTopics()
+    override suspend fun getAllTopics(
+        userid: Int,
+        courseid: Int
+    ): Result<List<CourseTopic>> {
+        return remoteDataSource.getAllTopics(userid,courseid)
     }
 
     override suspend fun insertTopic(
@@ -114,8 +117,11 @@ class DefaultTodoRepository(
         return remoteDataSource.getAllMaterials(userId)
     }
 
-    override suspend fun getMaterialById(userId: Int): Result<TopicMaterial> {
-        return remoteDataSource.getMaterialById(userId)
+    override suspend fun getMaterialById(
+        userId: Int,
+        topic_id: Int
+    ): Result<TopicMaterial> {
+        return remoteDataSource.getMaterialById(userId,topic_id)
     }
 
     override suspend fun insertMaterial(
