@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
     app:startDestination="@id/dashboardFragmen">
 
     <fragment
         android:id="@+id/dashboardFragmen"
         android:name="com.example.fe.ui.todo.DashboardFragmen"
-        android:label="DashboardFragmen" >
+        android:label="Dashboard" >
         <action
             android:id="@+id/action_dashboardFragmen_to_coursActivity"
             app:destination="@id/coursActivity" />
@@ -15,20 +16,49 @@
             android:id="@+id/action_dashboardFragmen_to_profileFragmen"
             app:destination="@id/profileFragmen" />
     </fragment>
+
+    <fragment
+        android:id="@+id/profileFragmen"
+        android:name="com.example.fe.ui.todo.ProfileFragmen"
+        android:label="Profile" />
+
     <fragment
         android:id="@+id/activityCourseMateriFragmen"
         android:name="com.example.fe.ui.todo.ActivityCourseMateriFragmen"
-        android:label="ActivityCourseMateriFragmen" />
+        android:label="Course Material" />
+
     <fragment
         android:id="@+id/coursActivity"
         android:name="com.example.fe.ui.todo.CoursActivity"
-        android:label="CoursActivity" >
+        android:label="Courses" >
         <action
             android:id="@+id/action_coursActivity_to_activityCourseMateriFragmen"
             app:destination="@id/activityCourseMateriFragmen" />
     </fragment>
+
     <fragment
-        android:id="@+id/profileFragmen"
-        android:name="com.example.fe.ui.todo.ProfileFragmen"
-        android:label="ProfileFragmen" />
+        android:id="@+id/adminUserListFragment"
+        android:name="com.example.fe.ui.todo.AdminUserListFragment"
+        android:label="Users" />
+
+    <fragment
+        android:id="@+id/adminLogFragment"
+        android:name="com.example.fe.ui.todo.AdminLogFragment"
+        android:label="Logs" />
+
+    <fragment
+        android:id="@+id/adminPaymentFragment"
+        android:name="com.example.fe.ui.todo.AdminPaymentFragment"
+        android:label="Payments" />
+
+    <fragment
+        android:id="@+id/gradeSummary"
+        android:name="com.example.fe.ui.todo.GradeSummary"
+        android:label="Grades" />
+
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.fe.ui.todoform.ChatFragment"
+        android:label="AI Chat" />
+
 </navigation>
