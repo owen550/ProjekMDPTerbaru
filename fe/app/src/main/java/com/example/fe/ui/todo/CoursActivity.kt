@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fe.R
 import com.example.fe.TodoViewModelFactory
 import com.example.fe.courseDetail
+import com.example.fe.courseTopic
 import com.example.fe.data.CourseTopic
 import com.example.fe.data.TopicMaterial
 import com.example.fe.databinding.FragmentCoursActivityBinding
@@ -91,7 +92,12 @@ class CoursActivity : Fragment() {
     }
 
     fun gotoCourseMaterial(topic: CourseTopic){
-        Log.d("CLICK", "Berhasil diklik ID: ${topic.id}")
-        viewModel.getTopicMaterialByIDCourseTopic(topic.id)
+        courseTopic = topic
+        if(topic.content_type == "material" ){ // Materi
+            viewModel.getTopicMaterialByIDCourseTopic(topic.id)
+        }
+        else{ // Quizz
+            Toast.makeText(requireContext(),"COMING SOON", Toast.LENGTH_SHORT).show()
+        }
     }
 }
