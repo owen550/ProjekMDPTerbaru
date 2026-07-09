@@ -72,74 +72,258 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
-                <TextView android:layout_width="220dp" android:layout_height="wrap_content" android:text="Transaction ID:" android:textColor="@color/black" android:textSize="16sp" />
-                <TextView android:id="@+id/tvTransactionIdValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:id="@+id/tvPaymentIdLabel"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:text="Payment ID:"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/tvPaymentIdValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
             </LinearLayout>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
-                <TextView android:layout_width="220dp" android:layout_height="wrap_content" android:text="Order ID:" android:textColor="@color/black" android:textSize="16sp" />
-                <TextView android:id="@+id/tvOrderIdValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:id="@+id/tvUserIdLabel"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:text="User ID:"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tvUserIdValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
-                <TextView android:layout_width="220dp" android:layout_height="wrap_content" android:text="Gross Amount:" android:textColor="@color/black" android:textSize="16sp" />
-                <TextView android:id="@+id/tvGrossAmountValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:id="@+id/tvOrderIdLabel"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:text="Order ID:"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tvOrderIdValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
-                <TextView android:layout_width="220dp" android:layout_height="wrap_content" android:text="Payment Type:" android:textColor="@color/black" android:textSize="16sp" />
-                <TextView android:id="@+id/tvPaymentTypeValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:id="@+id/tvPaymentTokenLabel"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:text="Payment Token:"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tvPaymentTokenValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
-                <TextView android:layout_width="220dp" android:layout_height="wrap_content" android:text="Transaction Time:" android:textColor="@color/black" android:textSize="16sp" />
-                <TextView android:id="@+id/tvTransactionTimeValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:id="@+id/tvAmountLabel"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:text="Amount:"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tvAmountValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
-                <TextView android:layout_width="220dp" android:layout_height="wrap_content" android:text="Transaction Status:" android:textColor="@color/black" android:textSize="16sp" />
-                <TextView android:id="@+id/tvTransactionStatusValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:id="@+id/tvPaymentMethodLabel"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:text="Payment Method:"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tvPaymentMethodValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
-                <TextView android:layout_width="220dp" android:layout_height="wrap_content" android:text="Fraud Status:" android:textColor="@color/black" android:textSize="16sp" />
-                <TextView android:id="@+id/tvFraudStatusValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:id="@+id/tvVaNumberLabel"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:text="VA Number:"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tvVaNumberValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
-                <TextView android:layout_width="220dp" android:layout_height="wrap_content" android:text="Currency:" android:textColor="@color/black" android:textSize="16sp" />
-                <TextView android:id="@+id/tvCurrencyValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:id="@+id/tvQrUrlLabel"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:text="QR URL:"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tvQrUrlValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
-                <TextView android:layout_width="220dp" android:layout_height="wrap_content" android:text="Merchant ID:" android:textColor="@color/black" android:textSize="16sp" />
-                <TextView android:id="@+id/tvMerchantIdValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:id="@+id/tvStatusLabel"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:text="Status:"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tvStatusValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
-                <TextView android:layout_width="220dp" android:layout_height="wrap_content" android:text="Bank Name:" android:textColor="@color/black" android:textSize="16sp" />
-                <TextView android:id="@+id/tvBankNameValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:id="@+id/tvCreatedAtLabel"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:text="Created At:"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tvCreatedAtValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
-                <TextView android:layout_width="220dp" android:layout_height="wrap_content" android:text="VA Number:" android:textColor="@color/black" android:textSize="16sp" />
-                <TextView android:id="@+id/tvVaNumberValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:id="@+id/tvUpdatedAtLabel"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:text="Updated At:"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tvUpdatedAtValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
-                <TextView android:layout_width="220dp" android:layout_height="wrap_content" android:text="Card Number (masked):" android:textColor="@color/black" android:textSize="16sp" />
-                <TextView android:id="@+id/tvCardNumberValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
-            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
-                <TextView android:layout_width="220dp" android:layout_height="wrap_content" android:text="Payment Code / QR Code URL:" android:textColor="@color/black" android:textSize="16sp" />
-                <TextView android:id="@+id/tvPaymentCodeValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/tvDeletedAtLabel"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:text="Deleted At:"
+                    android:textSize="16sp"/>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
-                <TextView android:layout_width="220dp" android:layout_height="wrap_content" android:text="Expiry Time:" android:textColor="@color/black" android:textSize="16sp" />
-                <TextView android:id="@+id/tvExpiryTimeValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvDeletedAtValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
         </LinearLayout>

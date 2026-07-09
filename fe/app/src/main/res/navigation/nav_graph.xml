@@ -8,23 +8,17 @@
     <fragment
         android:id="@+id/dashboardFragmen"
         android:name="com.example.fe.ui.todo.DashboardFragmen"
-        android:label="Dashboard" >
+        android:label="Dashboard">
+
         <action
             android:id="@+id/action_dashboardFragmen_to_coursActivity"
             app:destination="@id/coursActivity" />
+
         <action
             android:id="@+id/action_dashboardFragmen_to_gradeSummary"
             app:destination="@id/gradeSummary" />
-        <action
-            android:id="@+id/action_dashboardFragmen_to_profileFragmen2"
-            app:destination="@id/profileFragmen" />
-        <action
-            android:id="@+id/action_dashboardFragmen_to_profileFragmen3"
-            app:destination="@id/profileFragmen" />
-        <action
-            android:id="@+id/action_dashboardFragmen_to_profileFragmen4"
-            app:destination="@id/profileFragmen" />
     </fragment>
+
 
     <fragment
         android:id="@+id/profileFragmen"
@@ -35,42 +29,69 @@
             app:destination="@id/paymentDetailFragment" />
     </fragment>
 
+
     <fragment
         android:id="@+id/activityCourseMateriFragmen"
         android:name="com.example.fe.ui.todo.ActivityCourseMateriFragmen"
         android:label="Course Material" />
 
+
     <fragment
         android:id="@+id/coursActivity"
         android:name="com.example.fe.ui.todo.CoursActivity"
-        android:label="Courses" >
+        android:label="Courses">
+
         <action
             android:id="@+id/action_coursActivity_to_activityCourseMateriFragmen"
             app:destination="@id/activityCourseMateriFragmen" />
+
     </fragment>
+
 
     <fragment
         android:id="@+id/adminUserListFragment"
         android:name="com.example.fe.ui.todo.AdminUserListFragment"
         android:label="Users" />
 
+
     <fragment
         android:id="@+id/adminLogFragment"
         android:name="com.example.fe.ui.todo.AdminLogFragment"
         android:label="Logs" />
 
+
     <fragment
         android:id="@+id/adminPaymentFragment"
         android:name="com.example.fe.ui.todo.AdminPaymentFragment"
-        android:label="Payments" />
+        android:label="Payments">
+
+        <action
+            android:id="@+id/action_adminPaymentFragment_to_paymentDetailFragment"
+            app:destination="@id/paymentDetailFragment" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/paymentDetailFragment"
+        android:name="com.example.fe.ui.todo.PaymentDetailFragment"
+        android:label="Payment Detail" />
+
 
     <fragment
         android:id="@+id/gradeSummary"
         android:name="com.example.fe.ui.todo.GradeSummary"
         android:label="Grades" />
 
+
     <fragment
-        android:id="@+id/paymentDetailFragment"
-        android:name="com.example.fe.ui.todo.PaymentDetailFragment"
-        android:label="PaymentDetailFragment" />
+
+        android:id="@+id/profileFragmen"
+        android:name="com.example.fe.ui.todo.ProfileFragmen"
+        android:label="ProfileFragmen" />
+    <fragment
+        android:id="@+id/chatFragment2"
+        android:name="com.example.fe.ui.todoform.ChatFragment"
+        android:label="ChatFragment" />
+
 </navigation>

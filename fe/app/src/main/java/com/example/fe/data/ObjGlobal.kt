@@ -1,5 +1,12 @@
 package com.example.fe.data
 
+// Generic Response Wrapper
+data class DataResponse<T>(
+    val status: String?,
+    val message: String?,
+    val data: T?
+)
+
 // === Users ===
 data class User(
     val id: Int,
