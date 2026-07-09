@@ -13,8 +13,8 @@
             android:id="@+id/action_dashboardFragmen_to_coursActivity"
             app:destination="@id/coursActivity" />
         <action
-            android:id="@+id/action_dashboardFragmen_to_profileFragmen"
-            app:destination="@id/profileFragmen" />
+            android:id="@+id/action_dashboardFragmen_to_gradeSummary"
+            app:destination="@id/gradeSummary" />
     </fragment>
 
     <fragment
@@ -57,8 +57,7 @@
         android:label="Grades" />
 
     <fragment
-        android:id="@+id/chatFragment"
-        android:name="com.example.fe.ui.todoform.ChatFragment"
-        android:label="AI Chat" />
-
+        android:id="@+id/profileFragmen"
+        android:name="com.example.fe.ui.todo.ProfileFragmen"
+        android:label="ProfileFragmen" />
 </navigation>

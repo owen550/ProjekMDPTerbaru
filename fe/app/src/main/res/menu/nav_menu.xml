@@ -8,17 +8,18 @@
         android:icon="@drawable/ic_launcher_foreground" />
 
     <item
+        android:id="@+id/gradeSummary"
+        android:title="Grade"
+        android:icon="@drawable/ic_launcher_foreground" />
+
+    <item
+        android:id="@+id/chatFragment"
+        android:title="Chat"
+        android:icon="@drawable/ic_launcher_foreground" />
+
+    <item
         android:id="@+id/profileFragmen"
         android:title="Profile"
         android:icon="@drawable/ic_launcher_foreground" />
 
-<!--    <item-->
-<!--        android:id="@+id/dashboardFragmen"-->
-<!--        android:title="Home"-->
-<!--        android:icon="@drawable/ic_launcher_foreground" />-->
-
-<!--    <item-->
-<!--        android:id="@+id/dashboardFragmen"-->
-<!--        android:title="Home"-->
-<!--        android:icon="@drawable/ic_launcher_foreground" />-->
 </menu>

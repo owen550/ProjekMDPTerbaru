@@ -23,6 +23,14 @@ class TodosViewModel(
     private val _oneuser = MutableLiveData<User>()
     val oneuser: LiveData<User> = _oneuser
 
+    // === ini cuma buat tes ====
+    private val _oneuser = MutableLiveData<User>();
+    var oneuser: LiveData<User> = _oneuser
+
+    private val _course = MutableLiveData<User>();
+    var course: LiveData<User> = _course
+
+
 
     fun getOneUserByID() {
 
