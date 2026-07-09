@@ -1,12 +1,12 @@
 package com.example.fe.data.source.remote
 
-import android.os.Message
 import com.example.fe.data.ActivityLog
 import com.example.fe.data.AdminMessage
 import com.example.fe.data.Course
 import com.example.fe.data.CourseEnrollment
 import com.example.fe.data.CourseTopic
 import com.example.fe.data.CsChatbotChat
+import com.example.fe.data.DataResponse
 import com.example.fe.data.Payment
 import com.example.fe.data.QuizQuestion
 import com.example.fe.data.QuizQuestionOption
@@ -383,60 +383,54 @@ interface WebService {
         ): Response<Unit>
     //==========================================================
     //Payment==================================================
+    @FormUrlEncoded
+    @POST("api/payments/{userId}")
+    suspend fun createPayment(
+        @Path("userId") userId: Int,
+        @Field("order_id") orderId: String,
+        @Field("payment_token") paymentToken: String,
+        @Field("amount") amount: Double,
+        @Field("payment_method") paymentMethod: String,
+        @Field("va_number") vaNumber: String? = null,
+        @Field("qr_url") qrUrl: String? = null,
+        @Field("status") status: String? = null
+    ): Response<DataResponse<Payment>>
 
-        @FormUrlEncoded
-        @POST("api/payments/{userId}")
-        suspend fun createPayment(
-            @Path("userId") userId: Int,
-            @Field("order_id") orderId: String,
-            @Field("payment_token") paymentToken: String,
-            @Field("amount") amount: Double,
-            @Field("payment_method") paymentMethod: String,
-            @Field("va_number") vaNumber: String? = null,
-            @Field("qr_url") qrUrl: String? = null,
-            @Field("status") status: String? = null
-        ): Response<Payment>
+    @GET("api/payments/all/{userId}")
+    suspend fun getAllPayments(
+        @Path("userId") userId: Int
+    ): Response<DataResponse<List<Payment>>>
 
-        @GET("api/payments/all/{userId}")
-        suspend fun getAllPayments(
-            @Path("userId") userId: Int
-        ): Response<List<Payment>>
+    @GET("api/payments/{userId}")
+    suspend fun getPayments(
+        @Path("userId") userId: Int
+    ): Response<DataResponse<List<Payment>>>
 
-        @GET("api/payments/{userId}")
-        suspend fun getPayments(
-            @Path("userId") userId: Int
-        ): Response<List<Payment>>
+    @GET("api/payments/{userId}/{paymentId}")
+    suspend fun getPaymentDetail(
+        @Path("userId") userId: Int,
+        @Path("paymentId") paymentId: Int
+    ): Response<DataResponse<Payment>>
 
-        @GET("api/payments/{userId}/{paymentId}")
-        suspend fun getPaymentDetail(
-            @Path("userId") userId: Int,
-            @Path("paymentId") paymentId: Int
-        ): Response<Payment>
+    @FormUrlEncoded
+    @PUT("api/payments/{userId}/{paymentId}")
+    suspend fun updatePayment(
+        @Path("userId") userId: Int,
+        @Path("paymentId") paymentId: Int,
+        @Field("order_id") orderId: String,
+        @Field("payment_token") paymentToken: String,
+        @Field("amount") amount: Double,
+        @Field("payment_method") paymentMethod: String,
+        @Field("status") status: String? = null,
+        @Field("va_number") vaNumber: String? = null,
+        @Field("qr_url") qrUrl: String? = null
+    ): Response<DataResponse<Payment>>
 
-        @FormUrlEncoded
-        @PUT("api/payments/{userId}/{paymentId}")
-        suspend fun updatePayment(
-            @Path("userId") userId: Int,
-            @Path("paymentId") paymentId: Int,
-
-            // Required by validatePaymentInput
-            @Field("order_id") orderId: String,
-            @Field("payment_token") paymentToken: String,
-            @Field("amount") amount: Double,
-            @Field("payment_method") paymentMethod: String,
-
-            // Optional fields used by controller
-            @Field("status") status: String? = null,
-            @Field("va_number") vaNumber: String? = null,
-            @Field("qr_url") qrUrl: String? = null
-        ): Response<Payment>
-
-        @DELETE("api/payments/{userId}/{paymentId}")
-        suspend fun deletePayment(
-            @Path("userId") userId: Int,
-            @Path("paymentId") paymentId: Int
-        ): Response<Unit>
-
+    @DELETE("api/payments/{userId}/{paymentId}")
+    suspend fun deletePayment(
+        @Path("userId") userId: Int,
+        @Path("paymentId") paymentId: Int
+    ): Response<DataResponse<Unit>>
 
     //==========================================================
     //CourseEnrollment==================================================

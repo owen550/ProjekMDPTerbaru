@@ -730,7 +730,6 @@ class RetrofitDataSource(
     // =======================
     // Payment
     // =======================
-
     override suspend fun createPayment(
         userId: Int,
         orderId: String,
@@ -742,11 +741,23 @@ class RetrofitDataSource(
         status: String?
     ): Result<Payment> {
         return try {
-            val response = retrofitService.createPayment(userId, orderId, paymentToken, amount, paymentMethod, vaNumber, qrUrl, status)
-            if (response.isSuccessful && response.body() != null) {
-                Result.success(response.body()!!)
+            val response = retrofitService.createPayment(
+                userId,
+                orderId,
+                paymentToken,
+                amount,
+                paymentMethod,
+                vaNumber,
+                qrUrl,
+                status
+            )
+
+            val body = response.body()
+
+            if (response.isSuccessful && body?.data != null) {
+                Result.success(body.data!!)
             } else {
-                Result.failure(Exception(response.message()))
+                Result.failure(Exception(body?.message ?: response.message()))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -756,10 +767,12 @@ class RetrofitDataSource(
     override suspend fun getAllPayments(userId: Int): Result<List<Payment>> {
         return try {
             val response = retrofitService.getAllPayments(userId)
-            if (response.isSuccessful && response.body() != null) {
-                Result.success(response.body()!!)
+            val body = response.body()
+
+            if (response.isSuccessful && body?.data != null) {
+                Result.success(body.data!!)
             } else {
-                Result.failure(Exception(response.message()))
+                Result.failure(Exception(body?.message ?: response.message()))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -769,23 +782,30 @@ class RetrofitDataSource(
     override suspend fun getPayments(userId: Int): Result<List<Payment>> {
         return try {
             val response = retrofitService.getPayments(userId)
-            if (response.isSuccessful && response.body() != null) {
-                Result.success(response.body()!!)
+            val body = response.body()
+
+            if (response.isSuccessful && body?.data != null) {
+                Result.success(body.data!!)
             } else {
-                Result.failure(Exception(response.message()))
+                Result.failure(Exception(body?.message ?: response.message()))
             }
         } catch (e: Exception) {
             Result.failure(e)
         }
     }
 
-    override suspend fun getPaymentDetail(userId: Int, paymentId: Int): Result<Payment> {
+    override suspend fun getPaymentDetail(
+        userId: Int,
+        paymentId: Int
+    ): Result<Payment> {
         return try {
             val response = retrofitService.getPaymentDetail(userId, paymentId)
-            if (response.isSuccessful && response.body() != null) {
-                Result.success(response.body()!!)
+            val body = response.body()
+
+            if (response.isSuccessful && body?.data != null) {
+                Result.success(body.data!!)
             } else {
-                Result.failure(Exception(response.message()))
+                Result.failure(Exception(body?.message ?: response.message()))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -804,30 +824,47 @@ class RetrofitDataSource(
         qrUrl: String?
     ): Result<Payment> {
         return try {
-            val response = retrofitService.updatePayment(userId, paymentId, orderId, paymentToken, amount, paymentMethod, status, vaNumber, qrUrl)
-            if (response.isSuccessful && response.body() != null) {
-                Result.success(response.body()!!)
+            val response = retrofitService.updatePayment(
+                userId,
+                paymentId,
+                orderId,
+                paymentToken,
+                amount,
+                paymentMethod,
+                status,
+                vaNumber,
+                qrUrl
+            )
+
+            val body = response.body()
+
+            if (response.isSuccessful && body?.data != null) {
+                Result.success(body.data!!)
             } else {
-                Result.failure(Exception(response.message()))
+                Result.failure(Exception(body?.message ?: response.message()))
             }
         } catch (e: Exception) {
             Result.failure(e)
         }
     }
 
-    override suspend fun deletePayment(userId: Int, paymentId: Int): Result<Unit> {
+    override suspend fun deletePayment(
+        userId: Int,
+        paymentId: Int
+    ): Result<Unit> {
         return try {
             val response = retrofitService.deletePayment(userId, paymentId)
+            val body = response.body()
+
             if (response.isSuccessful) {
                 Result.success(Unit)
             } else {
-                Result.failure(Exception(response.message()))
+                Result.failure(Exception(body?.message ?: response.message()))
             }
         } catch (e: Exception) {
             Result.failure(e)
         }
     }
-
     // =======================
     // Course Enrollment
     // =======================

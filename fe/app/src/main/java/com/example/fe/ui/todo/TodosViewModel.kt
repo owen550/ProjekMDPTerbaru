@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fe.data.ActivityLog
+import com.example.fe.data.Payment
 import com.example.fe.data.User
 import com.example.fe.data.repositories.TodoRepository
 import com.example.fe.ui.todoform.currentUserId
@@ -69,14 +70,11 @@ class TodosViewModel(
 
 
     fun fetchAllActivityLogs() {
-
         val userId = currentUserId
-
         if (userId == null) {
             _message.value = "User belum login"
             return
         }
-
         _loading.value = true
 
         viewModelScope.launch {
@@ -106,10 +104,73 @@ class TodosViewModel(
         }
     }
 
+    // ============================
+    // ADMIN PAYMENTS
+    // ============================
+
+    private val _payments = MutableLiveData<List<Payment>>()
+    val payments: LiveData<List<Payment>> = _payments
+
+    private val _paymentDetail = MutableLiveData<Payment>()
+    val paymentDetail: LiveData<Payment> = _paymentDetail
+
+    fun fetchAllPayments() {
+        val userId = currentUserId
+        if (userId == null) {
+            _message.value = "User belum login"
+            return
+        }
+        _loading.value = true
+
+        viewModelScope.launch {
+            try {
+                val result = todoRepository.getAllPayments(userId)
+                result
+                    .onSuccess { list ->
+                        _payments.value = list
+                    }
+                    .onFailure { error ->
+                        _message.value = error.message ?: "Failed to fetch payments"
+                    }
+            } catch (e: Exception) {
+                _message.value = e.message ?: "Terjadi kesalahan"
+            } finally {
+                _loading.value = false
+            }
+        }
+    }
+
+    fun fetchPaymentDetail(
+        userId: Int,
+        paymentId: Int
+    ) {
+        _loading.value = true
+
+        viewModelScope.launch {
+            try {
+                val result = todoRepository.getPaymentDetail(userId, paymentId)
+
+                result
+                    .onSuccess { payment ->
+                        _paymentDetail.value = payment
+                    }
+                    .onFailure { error ->
+                        _message.value = error.message ?: "Failed to fetch payment detail"
+                    }
+
+            } catch (e: Exception) {
+                _message.value = e.message ?: "Terjadi kesalahan"
+            } finally {
+                _loading.value = false
+            }
+        }
+    }
+
 
     fun reset() {
         _message.value = ""
         _loading.value = false
         _activityLogs.value = emptyList()
+        _payments.value = emptyList()
     }
 }
