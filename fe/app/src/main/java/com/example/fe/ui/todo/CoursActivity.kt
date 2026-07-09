@@ -18,6 +18,7 @@ import com.example.fe.data.CourseTopic
 import com.example.fe.data.TopicMaterial
 import com.example.fe.databinding.FragmentCoursActivityBinding
 import com.example.fe.materialTopic
+import com.example.fe.user
 
 class CoursActivity : Fragment() {
     private var _binding: FragmentCoursActivityBinding? = null
@@ -41,6 +42,7 @@ class CoursActivity : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         uiSetup()
+        setupRoleUI()
         setupRV()
         onObserve()
         onListener()
@@ -58,6 +60,15 @@ class CoursActivity : Fragment() {
             binding.txtCourseCategory.text = it.category
             // Description placeholder as it's not in the data model yet
             binding.txtCourseDescription.text = "Welcome to ${it.title}. This course will guide you through all the necessary steps to master this subject."
+        }
+    }
+
+    private fun setupRoleUI() {
+        val currentUser = user ?: return
+        if (currentUser.role.lowercase() == "teacher") {
+            binding.fabAddCourse.visibility = View.VISIBLE
+        } else {
+            binding.fabAddCourse.visibility = View.GONE
         }
     }
 
@@ -82,15 +93,19 @@ class CoursActivity : Fragment() {
             }
         }
 
-        viewModel.coursedetail.observe(viewLifecycleOwner) {
-            viewModel.coursedetail.observe(viewLifecycleOwner) { topics ->
+        viewModel.coursedetail.observe(viewLifecycleOwner) { topics ->
+            if (topics != null) {
+                val currentCourse = courseDetail
 
-                if (topics != null) {
-
-                    topicAdapter.submitList(topics)
-
-                    binding.txtTotalTopics.text =
-                        "${topics.size} Topics"
+                if (currentCourse != null) {
+                    val filteredTopics = topics.filter { topic ->
+                        topic.course_id == currentCourse.id
+                    }
+                    topicAdapter.submitList(filteredTopics)
+                    binding.txtTotalTopics.text = "${filteredTopics.size} Topics"
+                } else {
+                    topicAdapter.submitList(emptyList())
+                    binding.txtTotalTopics.text = "0 Topics"
                 }
             }
         }
@@ -119,6 +134,11 @@ class CoursActivity : Fragment() {
 
         binding.imgProfile.setOnClickListener {
             findNavController().navigate(R.id.profileFragmen)
+        }
+
+        binding.fabAddCourse.setOnClickListener {
+            // Sesuaikan ID action ini dengan nama transisi ke form tambah materi/topik di nav_graph.xml Anda
+            findNavController().navigate(R.id.action_coursActivity_to_addCourseTopicFragment)
         }
     }
 

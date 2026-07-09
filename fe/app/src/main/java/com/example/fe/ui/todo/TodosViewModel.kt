@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fe.courseTopic
 import com.example.fe.data.ActivityLog
 import com.example.fe.data.AdminMessage
 import com.example.fe.data.Payment
@@ -12,6 +13,7 @@ import com.example.fe.data.CourseTopic
 import com.example.fe.data.TopicMaterial
 import com.example.fe.data.User
 import com.example.fe.data.repositories.TodoRepository
+import com.example.fe.materialTopic
 import com.example.fe.ui.todoform.currentUserId
 import com.example.fe.user
 import kotlinx.coroutines.launch
@@ -41,6 +43,9 @@ class TodosViewModel(
 
     private val _onetopicmaterial = MutableLiveData<TopicMaterial?>()
     val onetopicmaterial: LiveData<TopicMaterial?> = _onetopicmaterial
+
+    private val _insertSuccess = MutableLiveData<Boolean>()
+    val insertSuccess: LiveData<Boolean> = _insertSuccess
 
     // ==== other func =======
     fun getTopicMaterialByIDCourseTopic(
@@ -159,6 +164,123 @@ class TodosViewModel(
                     }
             } catch (e: Exception) {
                 _message.value = e.message ?: "Terjadi kesalahan"
+            } finally {
+                _loading.value = false
+            }
+        }
+    }
+
+    fun insertCourse(title: String, category: String) {
+        val userId = currentUserId
+        if (userId == null) {
+            _message.value = "User session invalid"
+            return
+        }
+
+        val isDuplicate = _course.value?.any { it.title.equals(title, ignoreCase = true) } == true
+        if (isDuplicate) {
+            _message.value = "Judul kursus sudah digunakan, silakan cari judul lain!"
+            return
+        }
+
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                val result = todoRepository.insertCourse(userId, title, category)
+                result
+                    .onSuccess {
+                        _message.value = "Kursus berhasil ditambahkan!"
+                        _insertSuccess.value = true
+                        getAllCourse()
+                    }
+                    .onFailure { err ->
+                        _message.value = err.message ?: "Gagal menyimpan kursus"
+                        _insertSuccess.value = false
+                    }
+            } catch (e: Exception) {
+                _message.value = "Terjadi Kesalahan Pada Backend"
+                _insertSuccess.value = false
+            } finally {
+                _loading.value = false
+            }
+        }
+    }
+
+    fun insertCourseTopic(
+        courseId: Int,
+        title: String,
+        description: String,
+        contentType: String,
+        onSuccessRoute: () -> Unit
+    ) {
+        val userId = currentUserId
+        if (userId == null) {
+            _message.value = "User session invalid"
+            return
+        }
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                val result = todoRepository.insertTopic(
+                    userId,
+                    courseId,
+                    0,
+                    title,
+                    description,
+                    contentType
+                )
+                result
+                    .onSuccess {topicData->
+                        reset()
+                        courseTopic = topicData
+                        getAllCourseTopicByID(courseId)
+                        _message.value = "Topic berhasil ditambahkan"
+                        getAllCourseTopicByID(courseId)
+                        onSuccessRoute()
+                    }
+                    .onFailure { err ->
+                        _message.value = err.message ?: "Gagal menambahkan topic"
+                    }
+            } catch (e: Exception) {
+                _message.value = "Terjadi Kesalahan Pada Backend"
+            } finally {
+                _loading.value = false
+            }
+        }
+    }
+
+    fun insertTopicMaterials(
+        videoUrl: String,
+        attachmentFile: String,
+        topicId: Int,
+        onSuccessRoute: () -> Unit
+    ) {
+        val userId = currentUserId
+        if (userId == null) {
+            _message.value = "User session invalid"
+            return
+        }
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                val result = todoRepository.insertMaterial(
+                    userId,
+                    videoUrl,
+                    attachmentFile,
+                    topicId
+                )
+                result
+                    .onSuccess { materialData ->
+                        _message.value = "Material berhasil ditambahkan"
+                        materialTopic = materialData
+                        getTopicMaterialByIDCourseTopic(topicId)
+                        onSuccessRoute()
+                    }
+                    .onFailure { err ->
+                        _message.value = err.message ?: "Gagal menambahkan material"
+                    }
+            } catch (e: Exception) {
+                _message.value = "Terjadi Kesalahan Pada Backend"
             } finally {
                 _loading.value = false
             }
@@ -349,6 +471,7 @@ class TodosViewModel(
         }
     }
 
+
     fun reset() {
         _message.value = ""
         _loading.value = false
@@ -356,7 +479,7 @@ class TodosViewModel(
         _payments.value = emptyList()
         _users.value = emptyList()
         _oneuser.value = null
-        _messages.value = emptyList()
         _onetopicmaterial.value = null
+        _insertSuccess.value = false
     }
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fe.data.Course
 import com.example.fe.data.User
 import com.example.fe.data.repositories.TodoRepository
 import com.example.fe.user
@@ -23,8 +24,6 @@ class TodoFormViewModel(
 
     private val _login = MutableLiveData<Boolean>(false)
     val login: LiveData<Boolean> = _login
-
-
     fun doLogin(usernameoremail:String, password:String){
         _loading.value = true
         viewModelScope.launch {

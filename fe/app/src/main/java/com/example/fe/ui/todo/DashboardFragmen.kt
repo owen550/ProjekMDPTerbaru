@@ -142,16 +142,24 @@ class DashboardFragmen : Fragment() {
 
         viewModel.course.observe(viewLifecycleOwner) { courseList ->
             if (courseList != null) {
-                originalList = courseList
+                val currentUser = user
+
+                if (currentUser != null && currentUser.role.lowercase() == "teacher") {
+                    originalList = courseList.filter { course -> course.teacher_id == currentUser.id }
+                } else {
+                    originalList = courseList
+                }
+
                 applyFilterAndSort()
             }
         }
-    }
+        }
+
 
     private fun onListen() {
         binding.btnMyCourse.setOnClickListener {
             if (user?.role?.lowercase() == "teacher") {
-                Toast.makeText(requireContext(), "Add Course Clicked", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_dashboardFragmen_to_addCourseFragment)
             } else {
                 Toast.makeText(requireContext(), "My Courses Clicked", Toast.LENGTH_SHORT).show()
             }
