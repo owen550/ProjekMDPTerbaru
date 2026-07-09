@@ -144,4 +144,5 @@ const validateEnrollmentAccess = async (req, res, next) => {
 module.exports = {
   validateEnrollmentInput,
   validateEnrollmentAccess,
+  validateEnrollmentuserId: validateEnrollmentUser,
 };
