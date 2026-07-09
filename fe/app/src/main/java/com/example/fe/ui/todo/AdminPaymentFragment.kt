@@ -1,5 +1,6 @@
 package com.example.fe.ui.todo
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.fe.LoginPage
 import com.example.fe.R
 import com.example.fe.TodoViewModelFactory
 import com.example.fe.databinding.FragmentAdminPaymentBinding
+import com.example.fe.ui.todoform.currentUserId
+import com.example.fe.user
 
 class AdminPaymentFragment : Fragment() {
 
@@ -48,6 +52,15 @@ class AdminPaymentFragment : Fragment() {
         observeViewModel()
 
         viewModel.fetchAllPayments()
+
+        binding.imgProfile.setOnClickListener {
+            // Logout logic
+            user = null
+            currentUserId = null
+            val intent = Intent(requireContext(), LoginPage::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
 
         binding.btnStopServer.setOnClickListener {
             Toast.makeText(

@@ -1,5 +1,6 @@
 package com.example.fe.ui.todo
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,8 +9,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.fe.LoginPage
 import com.example.fe.TodoViewModelFactory
 import com.example.fe.databinding.FragmentAdminLogBinding
+import com.example.fe.ui.todoform.currentUserId
+import com.example.fe.user
 
 class AdminLogFragment : Fragment() {
     private var _binding: FragmentAdminLogBinding? = null
@@ -31,14 +35,9 @@ class AdminLogFragment : Fragment() {
 
         setupRecyclerView()
         observeViewModel()
+        setupListeners()
 
-        // Fetch logs for admin (assuming admin ID is 1 for now or handled by session)
-        // You might want to get the actual user ID from your session manager
         viewModel.fetchAllActivityLogs()
-
-        binding.btnStopServer.setOnClickListener {
-            Toast.makeText(requireContext(), "Stopping server...", Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun setupRecyclerView() {
@@ -49,13 +48,28 @@ class AdminLogFragment : Fragment() {
         }
     }
 
+    private fun setupListeners() {
+        binding.imgProfile.setOnClickListener {
+            // Logout logic
+            user = null
+            currentUserId = null
+            val intent = Intent(requireContext(), LoginPage::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+
+        binding.btnStopServer.setOnClickListener {
+            Toast.makeText(requireContext(), "Stopping server...", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun observeViewModel() {
         viewModel.activityLogs.observe(viewLifecycleOwner) { logs ->
             logAdapter.submitList(logs)
         }
 
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
-            // Handle loading state if you have a progress bar
+            // Handle loading state
         }
 
         viewModel.message.observe(viewLifecycleOwner) { message ->

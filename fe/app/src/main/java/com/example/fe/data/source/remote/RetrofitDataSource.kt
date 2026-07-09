@@ -354,10 +354,11 @@ class RetrofitDataSource(
     ): Result<AdminMessage> {
         return try {
             val response = retrofitService.sendMessageFromAdmin(adminId, receiverId, title, body)
-            if (response.isSuccessful && response.body() != null) {
-                Result.success(response.body()!!)
+            val responseBody = response.body()
+            if (response.isSuccessful && responseBody?.data != null) {
+                Result.success(responseBody.data!!)
             } else {
-                Result.failure(Exception(response.message()))
+                Result.failure(Exception(responseBody?.message ?: response.message()))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -372,10 +373,11 @@ class RetrofitDataSource(
     ): Result<AdminMessage> {
         return try {
             val response = retrofitService.sendMessageFromUser(userId, adminId, title, body)
-            if (response.isSuccessful && response.body() != null) {
-                Result.success(response.body()!!)
+            val responseBody = response.body()
+            if (response.isSuccessful && responseBody?.data != null) {
+                Result.success(responseBody.data!!)
             } else {
-                Result.failure(Exception(response.message()))
+                Result.failure(Exception(responseBody?.message ?: response.message()))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -385,10 +387,12 @@ class RetrofitDataSource(
     override suspend fun getMessagesById(userId: Int, adminId: Int): Result<List<AdminMessage>> {
         return try {
             val response = retrofitService.getMessagesById(userId, adminId)
-            if (response.isSuccessful && response.body() != null) {
-                Result.success(response.body()!!)
+            val responseBody = response.body()
+            if (response.isSuccessful && responseBody?.data != null) {
+                Result.success(responseBody.data!!)
             } else {
-                Result.failure(Exception(response.message()))
+                // Return empty list if no messages found (assuming data is null in that case)
+                Result.success(emptyList())
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -398,10 +402,11 @@ class RetrofitDataSource(
     override suspend fun getAdminChatList(adminId: Int): Result<List<AdminMessage>> {
         return try {
             val response = retrofitService.getAdminChatList(adminId)
-            if (response.isSuccessful && response.body() != null) {
-                Result.success(response.body()!!)
+            val responseBody = response.body()
+            if (response.isSuccessful && responseBody?.data != null) {
+                Result.success(responseBody.data!!)
             } else {
-                Result.failure(Exception(response.message()))
+                Result.success(emptyList())
             }
         } catch (e: Exception) {
             Result.failure(e)

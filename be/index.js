@@ -27,7 +27,6 @@ const QuizQuestionOptionsRoutes = require("../be/routes/QuizQuestionOptionsRoute
 const StudentSubmissionsRoutes = require("../be/routes/StudentSubmissionsRoutes");
 const ActivityLogRoutes = require("../be/routes/ActivityLogRoutes");
 
-
 // === ||| Tes API ||| ===
 const port = 3000;
 app.listen(port, () => {
@@ -44,14 +43,11 @@ app.use("/api/course", CourseRoutes);
 app.use("/api/coursetopic", CourseTopicRoutes);
 app.use("/api/topicmaterial", TopicMaterialRoutes);
 app.use("/api/adminmessages", AdminMessagesRoutes);
-app.use("/api/quizz",QuizzesRoutes)
-app.use("/api/quizquestions",QuizQuestionsRoutes)
+app.use("/api/quizz", QuizzesRoutes);
+app.use("/api/quizquestions", QuizQuestionsRoutes);
 app.use("/api/chatbot", CsChatbotChatsRoutes);
 app.use("/api/payments", PaymentsRoutes);
 app.use("/api/courseenrollments", CourseEnrollmentsRoutes);
 app.use("/api/quizquestionoptions", QuizQuestionOptionsRoutes);
 app.use("/api/studentsubmissionsroutes", StudentSubmissionsRoutes);
 app.use("/api/activitylogroutes", ActivityLogRoutes);
-
-
-

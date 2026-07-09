@@ -197,7 +197,7 @@ interface WebService {
         @Field("receiver_id") receiverId: Int,
         @Field("message_title") title: String,
         @Field("message_body") body: String
-    ): Response<AdminMessage>
+    ): Response<DataResponse<AdminMessage>>
 
 
     @FormUrlEncoded
@@ -207,20 +207,20 @@ interface WebService {
         @Field("admin_id") adminId: Int,
         @Field("message_title") title: String,
         @Field("message_body") body: String
-    ): Response<AdminMessage>
+    ): Response<DataResponse<AdminMessage>>
 
 
     @GET("api/adminmessages/getbyid/{userId}/{adminId}")
     suspend fun getMessagesById(
         @Path("userId") userId: Int,
         @Path("adminId") adminId: Int
-    ): Response<List<AdminMessage>>
+    ): Response<DataResponse<List<AdminMessage>>>
 
 
     @GET("api/adminmessages/adminchatlist/{adminId}")
     suspend fun getAdminChatList(
         @Path("adminId") adminId: Int
-    ): Response<List<AdminMessage>>
+    ): Response<DataResponse<List<AdminMessage>>>
 
     //==========================================================
     //Quizzes=====================================================

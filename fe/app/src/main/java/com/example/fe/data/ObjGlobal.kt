@@ -9,19 +9,19 @@ data class DataResponse<T>(
 
 // === Users ===
 data class User(
-    val id: Int,
+    val id: Int? = null,
     val name: String,
-    val username: String?,
-    val password: String?,
+    val username: String? = null,
+    val password: String? = null,
     val email: String,
-    val google_id: String?,
-    val birthday_date: String?,
+    val google_id: String? = null,
+    val birthday_date: String? = null,
     val role: String,
-    val tier: String,
-    val points: Int,
-    val created_at: String,
-    val updated_at: String,
-    val deleted_at: String?
+    val tier: String? = null,
+    val points: Int? = null,
+    val created_at: String? = null,
+    val updated_at: String? = null,
+    val deleted_at: String? = null
 )
 
 // === ActivityLog ===

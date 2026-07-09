@@ -48,7 +48,16 @@
     <fragment
         android:id="@+id/adminUserListFragment"
         android:name="com.example.fe.ui.todo.AdminUserListFragment"
-        android:label="Users" />
+        android:label="Users">
+        <action
+            android:id="@+id/action_adminUserListFragment_to_userDetailFragment"
+            app:destination="@id/userDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userDetailFragment"
+        android:name="com.example.fe.ui.todo.UserDetailFragment"
+        android:label="User Detail" />
 
 
     <fragment
@@ -81,10 +90,6 @@
         android:label="Grades" />
 
 
-    <fragment
-        android:id="@+id/profileFragmen"
-        android:name="com.example.fe.ui.todo.ProfileFragmen"
-        android:label="ProfileFragmen" />
     <fragment
         android:id="@+id/chatFragment2"
         android:name="com.example.fe.ui.todoform.ChatFragment"
