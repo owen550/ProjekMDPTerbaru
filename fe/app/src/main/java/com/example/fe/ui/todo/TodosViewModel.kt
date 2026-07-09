@@ -19,9 +19,7 @@ class TodosViewModel(
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
-
-    private val _oneuser = MutableLiveData<User>()
-    val oneuser: LiveData<User> = _oneuser
+    
 
     // === ini cuma buat tes ====
     private val _oneuser = MutableLiveData<User>();
