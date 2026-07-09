@@ -164,7 +164,8 @@ interface WebService {
         @FormUrlEncoded
         @POST("api/topicmaterial/getbyid")
         suspend fun getMaterialById(
-            @Field("userid") userId: Int
+            @Field("userid") userId: Int,
+            @Field("topic_id") topic_id: Int
         ): Response<TopicMaterial>
 
         @FormUrlEncoded

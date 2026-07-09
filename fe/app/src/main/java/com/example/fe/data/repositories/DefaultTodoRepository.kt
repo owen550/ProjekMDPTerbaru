@@ -117,8 +117,11 @@ class DefaultTodoRepository(
         return remoteDataSource.getAllMaterials(userId)
     }
 
-    override suspend fun getMaterialById(userId: Int): Result<TopicMaterial> {
-        return remoteDataSource.getMaterialById(userId)
+    override suspend fun getMaterialById(
+        userId: Int,
+        topic_id: Int
+    ): Result<TopicMaterial> {
+        return remoteDataSource.getMaterialById(userId,topic_id)
     }
 
     override suspend fun insertMaterial(

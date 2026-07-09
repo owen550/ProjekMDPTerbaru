@@ -8,6 +8,7 @@ import com.example.fe.data.ActivityLog
 import com.example.fe.data.Payment
 import com.example.fe.data.Course
 import com.example.fe.data.CourseTopic
+import com.example.fe.data.TopicMaterial
 import com.example.fe.data.User
 import com.example.fe.data.repositories.TodoRepository
 import com.example.fe.ui.todoform.currentUserId
@@ -37,6 +38,34 @@ class TodosViewModel(
 
     private val _coursedetail = MutableLiveData<List<CourseTopic>>();
     var coursedetail: LiveData<List<CourseTopic>> = _coursedetail
+
+    private val _onetopicmaterial = MutableLiveData<TopicMaterial>();
+    var onetopicmaterial: LiveData<TopicMaterial> = _onetopicmaterial
+
+    // ==== other func =======
+    fun getTopicMaterialByIDCourseTopic(
+        topic_id: Int
+    ){
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                var result = todoRepository.getMaterialById(user!!.id,topic_id)
+                result
+                    .onSuccess { topicmaterialdata ->
+                        _onetopicmaterial.value = topicmaterialdata
+                    }
+                    .onFailure { err ->
+                        _message.value = err.message
+                    }
+            }
+            catch (e: Exception){
+                _message.value = "Terjadi Kesalahan Pada Backend"
+            }
+            finally {
+                _loading.value = false
+            }
+        }
+    }
 
     fun getAllCourse(){
         viewModelScope.launch {
@@ -223,5 +252,6 @@ class TodosViewModel(
         _loading.value = false
         _activityLogs.value = emptyList()
         _payments.value = emptyList()
+        _onetopicmaterial.value = null
     }
 }

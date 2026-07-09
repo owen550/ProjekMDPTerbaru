@@ -110,7 +110,8 @@ interface RemoteDataSource {
     ): Result<List<TopicMaterial>>
 
     suspend fun getMaterialById(
-        userId: Int
+        userId: Int,
+        topic_id: Int
     ): Result<TopicMaterial>
 
     suspend fun insertMaterial(

@@ -78,9 +78,14 @@ interface TodoRepository {
     // Topic Material
     // =======================
 
-    suspend fun getAllMaterials(userId: Int): Result<List<TopicMaterial>>
+    suspend fun getAllMaterials(
+        userId: Int
+    ): Result<List<TopicMaterial>>
 
-    suspend fun getMaterialById(userId: Int): Result<TopicMaterial>
+    suspend fun getMaterialById(
+        userId: Int,
+        topic_id: Int
+    ): Result<TopicMaterial>
 
     suspend fun insertMaterial(
         userId: Int,

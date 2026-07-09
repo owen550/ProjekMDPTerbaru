@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fe.data.CourseTopic
+import com.example.fe.data.TopicMaterial
 import com.example.fe.databinding.ItemActivityBinding
 
 // iki gawe course topic, namane item_activirty lek gak salah
@@ -25,7 +26,10 @@ class CourseTopicDiffCallback : DiffUtil.ItemCallback<CourseTopic>() {
     }
 }
 
-class CourseTopicAdapter : ListAdapter<CourseTopic, CourseTopicAdapter.CourseTopicViewHolder>(CourseTopicDiffCallback()) {
+// ======================== FUNCTION =========================
+class CourseTopicAdapter(
+    private val onItemClick: (CourseTopic) -> Unit
+) : ListAdapter<CourseTopic, CourseTopicAdapter.CourseTopicViewHolder>(CourseTopicDiffCallback()) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -47,6 +51,11 @@ class CourseTopicAdapter : ListAdapter<CourseTopic, CourseTopicAdapter.CourseTop
             // === edit isinya ===
              binding.txtActivityTitle.setText(topic.title)
              binding.txtActivityDesc.setText(topic.description)
+
+            // === fitur binding ===
+            binding.outer.setOnClickListener { // kalau di run dapatkan course topic saat ini
+                onItemClick(topic)
+            }
         }
     }
 }

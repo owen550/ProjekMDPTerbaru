@@ -283,9 +283,12 @@ class RetrofitDataSource(
         }
     }
 
-    override suspend fun getMaterialById(userId: Int): Result<TopicMaterial> {
+    override suspend fun getMaterialById(
+        userId: Int,
+        topic_id: Int
+    ): Result<TopicMaterial> {
         return try {
-            val response = retrofitService.getMaterialById(userId)
+            val response = retrofitService.getMaterialById(userId,topic_id)
             if (response.isSuccessful && response.body() != null) {
                 Result.success(response.body()!!)
             } else {

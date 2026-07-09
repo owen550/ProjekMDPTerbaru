@@ -23,7 +23,9 @@ class CourseDiffCallback : DiffUtil.ItemCallback<Course>() {
     }
 }
 
-class CourseAdapter(private val listener: OnCourseClickListener) : ListAdapter<Course, CourseAdapter.CourseViewHolder>(CourseDiffCallback()) {
+class CourseAdapter(
+    private val listener: OnCourseClickListener
+) : ListAdapter<Course, CourseAdapter.CourseViewHolder>(CourseDiffCallback()) {
 
     interface OnCourseClickListener {
         fun onBookmark(course: Course)

@@ -1,17 +1,22 @@
 package com.example.fe.ui.todo
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fe.R
 import com.example.fe.TodoViewModelFactory
 import com.example.fe.courseDetail
+import com.example.fe.data.CourseTopic
+import com.example.fe.data.TopicMaterial
 import com.example.fe.databinding.FragmentCoursActivityBinding
+import com.example.fe.materialTopic
 
 class CoursActivity : Fragment() {
     lateinit var binding: FragmentCoursActivityBinding
@@ -39,7 +44,10 @@ class CoursActivity : Fragment() {
     }
 
     fun setupRV() {
-        topicAdapter = CourseTopicAdapter()
+        topicAdapter = CourseTopicAdapter(
+            { topic -> gotoCourseMaterial(topic) }
+        )
+
         binding.rvActivity.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = topicAdapter
@@ -58,8 +66,32 @@ class CoursActivity : Fragment() {
                 topicAdapter.submitList(topicList)
             }
         }
+
+//        viewModel.onetopicmaterial.observe(viewLifecycleOwner) { onetopicmaterial ->
+//            if (onetopicmaterial != null) {
+//                materialTopic = onetopicmaterial
+//                findNavController().navigate(R.id.activityCourseMateriFragmen)
+//                viewModel.reset()
+//            }
+//        }
+
+        viewModel.onetopicmaterial.observe(viewLifecycleOwner) { material ->
+            Log.d("FRAGMENT", "Observer dipanggil: $material")
+
+            if (material != null) {
+                materialTopic = material
+                findNavController().navigate(R.id.activityCourseMateriFragmen)
+                viewModel.reset()
+            }
+        }
+
     }
 
     fun onListener() {
+    }
+
+    fun gotoCourseMaterial(topic: CourseTopic){
+        Log.d("CLICK", "Berhasil diklik ID: ${topic.id}")
+        viewModel.getTopicMaterialByIDCourseTopic(topic.id)
     }
 }
