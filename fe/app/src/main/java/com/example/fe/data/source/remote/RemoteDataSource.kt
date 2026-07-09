@@ -2,6 +2,7 @@ package com.example.fe.data.remote
 
 import com.example.fe.data.ActivityLog
 import com.example.fe.data.AdminMessage
+import com.example.fe.data.AiChatResponse
 import com.example.fe.data.Course
 import com.example.fe.data.CourseEnrollment
 import com.example.fe.data.CourseTopic
@@ -422,4 +423,10 @@ interface RemoteDataSource {
     suspend fun getAllActivityLogs(
         userId: Int
     ): Result<List<ActivityLog>>
+
+    //==========================
+    suspend fun chatWithAi(
+        role: String,
+        pesan: String
+    ): Result<AiChatResponse>
 }

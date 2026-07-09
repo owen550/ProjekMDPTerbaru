@@ -165,3 +165,12 @@ data class QuizQuestionOption(
     val updated_at: String,
     val deleted_at: String?
 )
+data class AiChatRequest(
+    val role: String,
+    val pesan: String
+)
+data class AiChatResponse(
+    val success: Boolean,
+    val message: String,
+    val data: String
+)

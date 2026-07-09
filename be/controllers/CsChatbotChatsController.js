@@ -7,7 +7,6 @@ const createChat = async (req, res) => {
 
     if (!userId || !sender || !message) {
       return res.status(400).json({
-        status: "error",
         message: "user_id, sender, and message are required",
       });
     }
@@ -24,14 +23,10 @@ const createChat = async (req, res) => {
       ip_address: req.ip,
     });
 
-    return res.status(201).json({
-      status: "success",
-      data: newChat,
-    });
+    return res.status(201).json(newChat);
   } catch (error) {
     console.error("CsChatbotChatsController.createChat", error);
     return res.status(500).json({
-      status: "error",
       message: "Failed to create chat",
       details: error.message,
     });
@@ -44,7 +39,6 @@ const getChatsByUser = async (req, res) => {
 
     if (!userId) {
       return res.status(400).json({
-        status: "error",
         message: "user_id is required",
       });
     }
@@ -56,14 +50,10 @@ const getChatsByUser = async (req, res) => {
       order: [["created_at", "ASC"]],
     });
 
-    return res.status(200).json({
-      status: "success",
-      data: chats,
-    });
+    return res.status(200).json(chats);
   } catch (error) {
     console.error("CsChatbotChatsController.getChatsByUser", error);
     return res.status(500).json({
-      status: "error",
       message: "Failed to get chats",
       details: error.message,
     });
@@ -76,7 +66,6 @@ const getAllChats = async (req, res) => {
 
     if (!userId) {
       return res.status(400).json({
-        status: "error",
         message: "user_id is required",
       });
     }
@@ -91,14 +80,10 @@ const getAllChats = async (req, res) => {
       ip_address: req.ip,
     });
 
-    return res.status(200).json({
-      status: "success",
-      data: chats,
-    });
+    return res.status(200).json(chats);
   } catch (error) {
     console.error("CsChatbotChatsController.getAllChats", error);
     return res.status(500).json({
-      status: "error",
       message: "Failed to get all chats",
       details: error.message,
     });
@@ -112,7 +97,6 @@ const getChatById = async (req, res) => {
 
     if (!chatId || !userId) {
       return res.status(400).json({
-        status: "error",
         message: "chat_id and user_id are required",
       });
     }
@@ -126,19 +110,14 @@ const getChatById = async (req, res) => {
 
     if (!chat) {
       return res.status(404).json({
-        status: "error",
         message: "Chat tidak ditemukan",
       });
     }
 
-    return res.status(200).json({
-      status: "success",
-      data: chat,
-    });
+    return res.status(200).json(chat);
   } catch (error) {
     console.error("CsChatbotChatsController.getChatById", error);
     return res.status(500).json({
-      status: "error",
       message: "Failed to get chat",
       details: error.message,
     });
@@ -153,14 +132,12 @@ const updateChat = async (req, res) => {
 
     if (!chatId || !userId) {
       return res.status(400).json({
-        status: "error",
         message: "chat_id and user_id are required",
       });
     }
 
     if (!message) {
       return res.status(400).json({
-        status: "error",
         message: "message is required",
       });
     }
@@ -174,7 +151,6 @@ const updateChat = async (req, res) => {
 
     if (!chat) {
       return res.status(404).json({
-        status: "error",
         message: "Chat tidak ditemukan",
       });
     }
@@ -188,14 +164,10 @@ const updateChat = async (req, res) => {
       ip_address: req.ip,
     });
 
-    return res.status(200).json({
-      status: "success",
-      data: chat,
-    });
+    return res.status(200).json(chat);
   } catch (error) {
     console.error("CsChatbotChatsController.updateChat", error);
     return res.status(500).json({
-      status: "error",
       message: "Failed to update chat",
       details: error.message,
     });
@@ -209,7 +181,6 @@ const deleteChat = async (req, res) => {
 
     if (!chatId || !userId) {
       return res.status(400).json({
-        status: "error",
         message: "chat_id and user_id are required",
       });
     }
@@ -223,7 +194,6 @@ const deleteChat = async (req, res) => {
 
     if (!chat) {
       return res.status(404).json({
-        status: "error",
         message: "Chat tidak ditemukan",
       });
     }
@@ -236,17 +206,10 @@ const deleteChat = async (req, res) => {
       ip_address: req.ip,
     });
 
-    return res.status(200).json({
-      status: "success",
-      data: {
-        id: Number(chatId),
-        deleted: true,
-      },
-    });
+    return res.sendStatus(200);
   } catch (error) {
     console.error("CsChatbotChatsController.deleteChat", error);
     return res.status(500).json({
-      status: "error",
       message: "Failed to delete chat",
       details: error.message,
     });

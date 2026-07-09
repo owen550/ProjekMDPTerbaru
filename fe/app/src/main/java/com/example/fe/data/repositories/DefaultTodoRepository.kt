@@ -2,6 +2,7 @@ package com.example.fe.data.repositories
 
 import com.example.fe.data.ActivityLog
 import com.example.fe.data.AdminMessage
+import com.example.fe.data.AiChatResponse
 import com.example.fe.data.Course
 import com.example.fe.data.CourseEnrollment
 import com.example.fe.data.CourseTopic
@@ -492,5 +493,13 @@ class DefaultTodoRepository(
 
     override suspend fun getAllActivityLogs(userId: Int): Result<List<ActivityLog>> {
         return remoteDataSource.getAllActivityLogs(userId)
+    }
+
+    //==============
+    override suspend fun chatWithAi(
+        role: String,
+        pesan: String
+    ): Result<AiChatResponse> {
+        return remoteDataSource.chatWithAi(role, pesan)
     }
 }

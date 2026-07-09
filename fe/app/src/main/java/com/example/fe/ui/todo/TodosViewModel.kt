@@ -10,6 +10,7 @@ import com.example.fe.data.AdminMessage
 import com.example.fe.data.Payment
 import com.example.fe.data.Course
 import com.example.fe.data.CourseTopic
+import com.example.fe.data.CsChatbotChat
 import com.example.fe.data.TopicMaterial
 import com.example.fe.data.User
 import com.example.fe.data.repositories.TodoRepository
@@ -465,6 +466,81 @@ class TodosViewModel(
                     .onFailure { error ->
                         _message.value = error.message ?: "Gagal mengirim pesan"
                     }
+            } catch (e: Exception) {
+                _message.value = e.message ?: "Terjadi kesalahan"
+            }
+        }
+    }
+    // ============================
+// CHATBOT
+// ============================
+
+    private val _chatbotMessages = MutableLiveData<List<CsChatbotChat>>()
+    val chatbotMessages: LiveData<List<CsChatbotChat>> = _chatbotMessages
+
+    fun getChatbotMessages(userId: Int) {
+        viewModelScope.launch {
+            try {
+                val result = todoRepository.getChats(userId)
+
+                result
+                    .onSuccess { chats ->
+                        _chatbotMessages.value = chats
+                    }
+                    .onFailure { error ->
+                        _message.value = error.message ?: "Failed to load chatbot messages"
+                    }
+
+            } catch (e: Exception) {
+                _message.value = e.message ?: "Terjadi kesalahan"
+            }
+        }
+    }
+
+    fun sendAiMessage(
+        userId: Int,
+        role: String,
+        message: String
+    ) {
+        viewModelScope.launch {
+            try {
+
+                // 1. Save user's message
+                todoRepository.createChat(
+                    userId = userId,
+                    sender = "user",
+                    message = message
+                )
+
+                // 2. Ask AI
+                val aiResult = todoRepository.chatWithAi(role, message)
+
+                aiResult
+                    .onSuccess { aiResponse ->
+
+                        // 3. Save AI reply
+                        todoRepository.createChat(
+                            userId = userId,
+                            sender = "ai",
+                            message = aiResponse.data
+                        )
+
+                        // 4. Reload conversation
+                        val chatResult = todoRepository.getChats(userId)
+
+                        chatResult
+                            .onSuccess { chats ->
+                                _chatbotMessages.value = chats
+                            }
+                            .onFailure { error ->
+                                _message.value =
+                                    error.message ?: "Failed to refresh chat"
+                            }
+                    }
+                    .onFailure { error ->
+                        _message.value = error.message ?: "AI request failed"
+                    }
+
             } catch (e: Exception) {
                 _message.value = e.message ?: "Terjadi kesalahan"
             }

@@ -2,6 +2,7 @@ package com.example.fe.data.source.remote
 
 import com.example.fe.data.ActivityLog
 import com.example.fe.data.AdminMessage
+import com.example.fe.data.AiChatResponse
 import com.example.fe.data.Course
 import com.example.fe.data.CourseEnrollment
 import com.example.fe.data.CourseTopic
@@ -546,4 +547,12 @@ interface WebService {
         @Field("userid") userId: Int
     ): Response<List<ActivityLog>>
 
+
+    //================================================
+    @FormUrlEncoded
+    @POST("api/test/ai")
+    suspend fun chatWithAi(
+        @Field("role") role: String,
+        @Field("pesan") pesan: String
+    ): Response<AiChatResponse>
 }

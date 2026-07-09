@@ -106,8 +106,8 @@
 
     <fragment
         android:id="@+id/chatFragment2"
-        android:name="com.example.fe.ui.todoform.ChatFragment"
-        android:label="ChatFragment" />
+        android:name="com.example.fe.ui.todoform.ChatbotFragment"
+        android:label="AI Chat" />
 
     <fragment
         android:id="@+id/adminListFragment"
