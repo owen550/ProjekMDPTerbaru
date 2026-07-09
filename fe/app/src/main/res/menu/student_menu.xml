@@ -9,7 +9,7 @@
         android:title="Grade"
         android:icon="@android:drawable/ic_menu_manage" />
     <item
-        android:id="@+id/chatFragment"
+        android:id="@+id/chatFragment2"
         android:title="AI Chat"
         android:icon="@android:drawable/ic_menu_send" />
     <item

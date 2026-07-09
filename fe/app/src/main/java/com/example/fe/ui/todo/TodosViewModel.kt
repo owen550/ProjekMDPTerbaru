@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fe.data.ActivityLog
 import com.example.fe.data.Payment
+import com.example.fe.data.Course
 import com.example.fe.data.User
 import com.example.fe.data.repositories.TodoRepository
 import com.example.fe.ui.todoform.currentUserId
+import com.example.fe.user
 import kotlinx.coroutines.launch
 
 class TodosViewModel(
@@ -20,16 +22,37 @@ class TodosViewModel(
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
-    
 
-    // === ini cuma buat tes ====
+
+    // === get data ====
     private val _oneuser = MutableLiveData<User>();
     var oneuser: LiveData<User> = _oneuser
 
-    private val _course = MutableLiveData<User>();
-    var course: LiveData<User> = _course
+    private val _course = MutableLiveData<List<Course>>();
+    var course: LiveData<List<Course>> = _course
 
 
+    fun getAllCourse(){
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                var result = todoRepository.getAllCourses(user!!.id)
+                result
+                    .onSuccess { coursedata ->
+                        _course.value = coursedata
+                    }
+                    .onFailure {
+                        _message.value = "Terjadi Kesalahan Pada Saat Load Data"
+                    }
+            }
+            catch (e: Exception){
+                _message.value = "Terjadi Kesalahan Pada Backend"
+            }
+            finally {
+                _loading.value = false
+            }
+        }
+    }
 
     fun getOneUserByID() {
 

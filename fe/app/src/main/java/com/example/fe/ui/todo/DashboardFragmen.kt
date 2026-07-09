@@ -2,6 +2,8 @@ package com.example.fe.ui.todo
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,14 +11,19 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fe.R
 import com.example.fe.TodoViewModelFactory
+import com.example.fe.data.Course
 import com.example.fe.databinding.FragmentDashboardBinding
 import com.example.fe.user
 
 class DashboardFragmen : Fragment() {
 
     private lateinit var binding: FragmentDashboardBinding
+    private lateinit var courseAdapter: CourseAdapter
+
+    private var originalList: List<Course> = emptyList()
 
     private val viewModel: TodosViewModel by viewModels {
         TodoViewModelFactory
@@ -34,38 +41,78 @@ class DashboardFragmen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupRecyclerView()
         setupRoleUI()
+
+        viewModel.getAllCourse()
+
         onObserve()
         onListen()
+        setupFilter()
+    }
 
-        // Ambil data courses (asumsi ada fungsi ini di viewModel)
-        // viewModel.getAllCourses()
+    private fun setupRecyclerView() {
+        courseAdapter = CourseAdapter { course ->
+            Toast.makeText(requireContext(), "Click: ${course.title}", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.rvCourse.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = courseAdapter
+        }
+    }
+
+    private fun setupFilter() {
+        val textWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                applyFilterAndSort()
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        }
+
+        binding.etCategory.addTextChangedListener(textWatcher)
+        binding.etTitle.addTextChangedListener(textWatcher)
+    }
+
+    private fun applyFilterAndSort() {
+        val searchCategory = binding.etCategory.text.toString().trim()
+        val searchTitle = binding.etTitle.text.toString().trim()
+
+        val filteredList = originalList.filter { course ->
+            val matchCategory = course.category.contains(searchCategory, ignoreCase = true)
+            val matchTitle = course.title.contains(searchTitle, ignoreCase = true)
+            matchCategory && matchTitle
+        }.sortedWith(
+            compareBy<Course> { it.category.lowercase() }
+                .thenBy { it.title.lowercase() }
+        )
+
+        courseAdapter.submitList(filteredList)
     }
 
     private fun setupRoleUI() {
         val currentUser = user ?: return
-        
+
         when (currentUser.role.lowercase()) {
             "teacher" -> {
-                // Tema Hijau untuk Guru
                 val primaryColor = ContextCompat.getColor(requireContext(), R.color.admin_green_primary)
                 val secondaryColor = ContextCompat.getColor(requireContext(), R.color.admin_green_secondary)
-                
+
                 binding.btnSort.backgroundTintList = ColorStateList.valueOf(secondaryColor)
                 binding.btnSort.setTextColor(primaryColor)
-                
+
                 binding.btnMyCourse.text = "Add Course"
                 binding.btnMyCourse.backgroundTintList = ColorStateList.valueOf(secondaryColor)
                 binding.btnMyCourse.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
             }
             "student" -> {
-                // Tema Orange untuk Siswa
                 val primaryColor = ContextCompat.getColor(requireContext(), R.color.user_orange_primary)
                 val secondaryColor = ContextCompat.getColor(requireContext(), R.color.user_orange_secondary)
-                
+
                 binding.btnSort.backgroundTintList = ColorStateList.valueOf(secondaryColor)
                 binding.btnSort.setTextColor(primaryColor)
-                
+
                 binding.btnMyCourse.text = "My Courses"
                 binding.btnMyCourse.backgroundTintList = ColorStateList.valueOf(secondaryColor)
                 binding.btnMyCourse.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
@@ -79,15 +126,20 @@ class DashboardFragmen : Fragment() {
                 Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
             }
         }
+
+        viewModel.course.observe(viewLifecycleOwner) { courseList ->
+            if (courseList != null) {
+                originalList = courseList
+                applyFilterAndSort()
+            }
+        }
     }
 
     private fun onListen() {
         binding.btnMyCourse.setOnClickListener {
             if (user?.role?.lowercase() == "teacher") {
-                // Logika tambah course
                 Toast.makeText(requireContext(), "Add Course Clicked", Toast.LENGTH_SHORT).show()
             } else {
-                // Logika lihat course saya
                 Toast.makeText(requireContext(), "My Courses Clicked", Toast.LENGTH_SHORT).show()
             }
         }
