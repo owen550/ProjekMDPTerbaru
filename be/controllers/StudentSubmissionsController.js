@@ -1,5 +1,6 @@
 // === semua model yang dipakai ===
 require("dotenv").config();
+const { where } = require("sequelize");
 const {
   StudentSubmissions,
   Quizzes,
@@ -28,7 +29,11 @@ exports.GetAllStudentSubmissions = async (req, res) => {
     }
 
     // === get all ===
-    let allsubmission = await StudentSubmissions.findAll();
+    let allsubmission = await StudentSubmissions.findAll({
+      where:{
+        student_id: userid
+      }
+    });
 
     // === activity log ===
     await ActivityLogs.create({

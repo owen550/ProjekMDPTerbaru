@@ -199,9 +199,12 @@ class RetrofitDataSource(
     // Course Topic
     // =======================
 
-    override suspend fun getAllTopics(): Result<List<CourseTopic>> {
+    override suspend fun getAllTopics(
+        userid: Int,
+        courseid: Int
+    ): Result<List<CourseTopic>> {
         return try {
-            val response = retrofitService.getAllTopics()
+            val response = retrofitService.getAllTopics(userid,courseid)
             if (response.isSuccessful && response.body() != null) {
                 Result.success(response.body()!!)
             } else {

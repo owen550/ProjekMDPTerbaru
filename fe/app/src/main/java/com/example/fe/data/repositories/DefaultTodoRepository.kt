@@ -78,8 +78,11 @@ class DefaultTodoRepository(
     // Course Topic
     // =======================
 
-    override suspend fun getAllTopics(): Result<List<CourseTopic>> {
-        return remoteDataSource.getAllTopics()
+    override suspend fun getAllTopics(
+        userid: Int,
+        courseid: Int
+    ): Result<List<CourseTopic>> {
+        return remoteDataSource.getAllTopics(userid,courseid)
     }
 
     override suspend fun insertTopic(

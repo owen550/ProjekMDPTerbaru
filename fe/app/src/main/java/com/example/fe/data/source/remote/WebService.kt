@@ -121,8 +121,12 @@ interface WebService {
     //==========================================================
     //COURSE TOPIC==================================================
 
+        @FormUrlEncoded
         @POST("api/coursetopic/alldata")
-        suspend fun getAllTopics(): Response<List<CourseTopic>>
+        suspend fun getAllTopics(
+            @Field("userid") userid: Int,
+            @Field("courseid") courseid: Int,
+        ): Response<List<CourseTopic>>
 
         @FormUrlEncoded
         @POST("api/coursetopic/insert")

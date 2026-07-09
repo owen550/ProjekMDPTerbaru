@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fe.data.ActivityLog
 import com.example.fe.data.Course
+import com.example.fe.data.CourseTopic
 import com.example.fe.data.User
 import com.example.fe.data.repositories.TodoRepository
 import com.example.fe.ui.todoform.currentUserId
@@ -24,12 +25,17 @@ class TodosViewModel(
 
 
     // === get data ====
+    private val _gradesumary = MutableLiveData<GradeSummary>();
+    var gradesumary: LiveData<GradeSummary> = _gradesumary
+
     private val _oneuser = MutableLiveData<User>();
     var oneuser: LiveData<User> = _oneuser
 
     private val _course = MutableLiveData<List<Course>>();
     var course: LiveData<List<Course>> = _course
 
+    private val _coursedetail = MutableLiveData<List<CourseTopic>>();
+    var coursedetail: LiveData<List<CourseTopic>> = _coursedetail
 
     fun getAllCourse(){
         viewModelScope.launch {
@@ -42,6 +48,28 @@ class TodosViewModel(
                     }
                     .onFailure {
                         _message.value = "Terjadi Kesalahan Pada Saat Load Data"
+                    }
+            }
+            catch (e: Exception){
+                _message.value = "Terjadi Kesalahan Pada Backend"
+            }
+            finally {
+                _loading.value = false
+            }
+        }
+    }
+
+    fun getAllCourseTopicByID(courseid: Int){
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                var result = todoRepository.getAllTopics(user!!.id,courseid)
+                result
+                    .onSuccess { coursedata ->
+                        _coursedetail.value = coursedata
+                    }
+                    .onFailure { exception ->
+                        _message.value = exception.message ?: "Terjadi Kesalahan Pada Saat Load Data"
                     }
             }
             catch (e: Exception){

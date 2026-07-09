@@ -12,7 +12,6 @@ router.post(
     "/alldata",
     CourseUser.CekUserIDTakKosong,
     CourseUser.CekUserItuAda,
-    CourseUser.CekUserAdalahGuru,
     StudentSubmissionsController.GetAllStudentSubmissions
 );
 
@@ -21,7 +20,6 @@ router.post(
     "/getbyid",
     CourseUser.CekUserIDTakKosong,
     CourseUser.CekUserItuAda,
-    CourseUser.CekUserAdalahGuru,
     StudentSubmissionsController.GetStudentSubmissionById
 );
 
@@ -30,7 +28,6 @@ router.post(
     "/insert",
     CourseUser.CekUserIDTakKosong,
     CourseUser.CekUserItuAda,
-    CourseUser.CekUserAdalahGuru,
     StudentSubmissionsController.InsertStudentSubmission
 );
 
@@ -39,7 +36,6 @@ router.put(
     "/update",
     CourseUser.CekUserIDTakKosong,
     CourseUser.CekUserItuAda,
-    CourseUser.CekUserAdalahGuru,
     StudentSubmissionsController.UpdateStudentSubmission
 );
 
@@ -48,7 +44,6 @@ router.put(
     "/delete",
     CourseUser.CekUserIDTakKosong,
     CourseUser.CekUserItuAda,
-    CourseUser.CekUserAdalahGuru,
     StudentSubmissionsController.DeleteStudentSubmission
 );
 

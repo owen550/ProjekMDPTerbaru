@@ -15,12 +15,25 @@
         <action
             android:id="@+id/action_dashboardFragmen_to_gradeSummary"
             app:destination="@id/gradeSummary" />
+        <action
+            android:id="@+id/action_dashboardFragmen_to_profileFragmen2"
+            app:destination="@id/profileFragmen" />
+        <action
+            android:id="@+id/action_dashboardFragmen_to_profileFragmen3"
+            app:destination="@id/profileFragmen" />
+        <action
+            android:id="@+id/action_dashboardFragmen_to_profileFragmen4"
+            app:destination="@id/profileFragmen" />
     </fragment>
 
     <fragment
         android:id="@+id/profileFragmen"
         android:name="com.example.fe.ui.todo.ProfileFragmen"
-        android:label="Profile" />
+        android:label="Profile" >
+        <action
+            android:id="@+id/action_profileFragmen_to_paymentDetailFragment"
+            app:destination="@id/paymentDetailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/activityCourseMateriFragmen"
@@ -57,7 +70,7 @@
         android:label="Grades" />
 
     <fragment
-        android:id="@+id/profileFragmen"
-        android:name="com.example.fe.ui.todo.ProfileFragmen"
-        android:label="ProfileFragmen" />
+        android:id="@+id/paymentDetailFragment"
+        android:name="com.example.fe.ui.todo.PaymentDetailFragment"
+        android:label="PaymentDetailFragment" />
 </navigation>

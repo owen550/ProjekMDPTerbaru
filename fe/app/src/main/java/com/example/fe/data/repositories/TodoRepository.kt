@@ -51,7 +51,10 @@ interface TodoRepository {
     // Course Topic
     // =======================
 
-    suspend fun getAllTopics(): Result<List<CourseTopic>>
+    suspend fun getAllTopics(
+        userid: Int,
+        courseid: Int
+    ): Result<List<CourseTopic>>
 
     suspend fun insertTopic(
         userId: Int,
