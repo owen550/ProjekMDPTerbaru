@@ -20,6 +20,7 @@ class TodoApplication: Application(){
 
         ).baseUrl("http://192.168.1.39:3000/").build()//  10.10.5.202 || 192.168.110.9
 
+
         val retrofitService = retrofit.create(WebService::class.java)
         todoRepository = DefaultTodoRepository(
             //RoomDataSource(AppDatabase.getInstance(baseContext)),

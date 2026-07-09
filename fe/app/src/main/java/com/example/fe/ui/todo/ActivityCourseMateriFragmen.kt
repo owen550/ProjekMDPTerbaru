@@ -1,16 +1,16 @@
 package com.example.fe.ui.todo
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.MediaController
+import android.widget.Toast
 import com.example.fe.courseTopic
 import com.example.fe.databinding.FragmentActivityCourseMateriBinding
 import com.example.fe.materialTopic
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import java.util.regex.Pattern
 
 class ActivityCourseMateriFragmen : Fragment() {
 
@@ -30,40 +30,34 @@ class ActivityCourseMateriFragmen : Fragment() {
 
         uiSetup()
 
-        lifecycle.addObserver(binding.youtubePlayerView)
+        val videoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
 
-        binding.youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-            override fun onReady(youTubePlayer: YouTubePlayer) {
-                val videoUrl = "https://www.youtube.com/watch?v=aqz-KE-bpKQ"//materialTopic!!.video_url
-                val videoId = extractYoutubeId(videoUrl)
+        try {
+            val uri = Uri.parse(videoUrl)
+            binding.videoPlayer.setVideoURI(uri)
 
-                if (!videoId.isNullOrEmpty()) {
-                    youTubePlayer.cueVideo(videoId, 0f)
-                }
+            val mediaController = MediaController(requireContext())
+            mediaController.setAnchorView(binding.videoPlayer)
+            binding.videoPlayer.setMediaController(mediaController)
+
+            binding.videoPlayer.requestFocus()
+
+            binding.videoPlayer.setOnPreparedListener { mediaPlayer ->
+                mediaPlayer.start()
             }
-        })
+
+            binding.videoPlayer.setOnErrorListener { _, what, extra ->
+                Toast.makeText(requireContext(), "Error: $what, Extra: $extra", Toast.LENGTH_SHORT).show()
+                true
+            }
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "Error load video", Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun uiSetup(){
         binding.txtDetailTitle.setText(courseTopic?.title ?: "No Title")
         binding.txtDetailDesc.setText(materialTopic?.attachment_file ?: "No Attachment")
-    }
-
-    private fun extractYoutubeId(ytUrl: String?): String? {
-        if (ytUrl.isNullOrEmpty()) return null
-
-        return when {
-            ytUrl.contains("watch?v=") ->
-                ytUrl.substringAfter("watch?v=").substringBefore("&")
-
-            ytUrl.contains("youtu.be/") ->
-                ytUrl.substringAfter("youtu.be/").substringBefore("?")
-
-            ytUrl.contains("embed/") ->
-                ytUrl.substringAfter("embed/").substringBefore("?")
-
-            else -> null
-        }
     }
 
     override fun onDestroyView() {
