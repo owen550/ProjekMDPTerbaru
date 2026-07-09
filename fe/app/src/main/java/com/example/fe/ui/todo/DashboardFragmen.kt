@@ -2,6 +2,8 @@ package com.example.fe.ui.todo
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fe.R
 import com.example.fe.TodoViewModelFactory
+import com.example.fe.data.Course
 import com.example.fe.databinding.FragmentDashboardBinding
 import com.example.fe.user
 
@@ -19,6 +22,8 @@ class DashboardFragmen : Fragment() {
 
     private lateinit var binding: FragmentDashboardBinding
     private lateinit var courseAdapter: CourseAdapter
+
+    private var originalList: List<Course> = emptyList()
 
     private val viewModel: TodosViewModel by viewModels {
         TodoViewModelFactory
@@ -43,6 +48,7 @@ class DashboardFragmen : Fragment() {
 
         onObserve()
         onListen()
+        setupFilter()
     }
 
     private fun setupRecyclerView() {
@@ -54,6 +60,35 @@ class DashboardFragmen : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = courseAdapter
         }
+    }
+
+    private fun setupFilter() {
+        val textWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                applyFilterAndSort()
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        }
+
+        binding.etCategory.addTextChangedListener(textWatcher)
+        binding.etTitle.addTextChangedListener(textWatcher)
+    }
+
+    private fun applyFilterAndSort() {
+        val searchCategory = binding.etCategory.text.toString().trim()
+        val searchTitle = binding.etTitle.text.toString().trim()
+
+        val filteredList = originalList.filter { course ->
+            val matchCategory = course.category.contains(searchCategory, ignoreCase = true)
+            val matchTitle = course.title.contains(searchTitle, ignoreCase = true)
+            matchCategory && matchTitle
+        }.sortedWith(
+            compareBy<Course> { it.category.lowercase() }
+                .thenBy { it.title.lowercase() }
+        )
+
+        courseAdapter.submitList(filteredList)
     }
 
     private fun setupRoleUI() {
@@ -94,7 +129,8 @@ class DashboardFragmen : Fragment() {
 
         viewModel.course.observe(viewLifecycleOwner) { courseList ->
             if (courseList != null) {
-                courseAdapter.submitList(courseList)
+                originalList = courseList
+                applyFilterAndSort()
             }
         }
     }
