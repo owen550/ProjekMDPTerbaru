@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://tools.android.com/tools"
     android:id="@+id/navigation_graph"
     app:startDestination="@id/dashboardFragmen">
 
@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_dashboardFragmen_to_gradeSummary"
             app:destination="@id/gradeSummary" />
+        <action
+            android:id="@+id/action_dashboardFragmen_to_addCourseFragment"
+            app:destination="@id/addCourseFragment" />
     </fragment>
 
 
@@ -50,6 +53,9 @@
         <action
             android:id="@+id/action_coursActivity_to_activityCourseMateriFragmen"
             app:destination="@id/activityCourseMateriFragmen" />
+        <action
+            android:id="@+id/action_coursActivity_to_addCourseTopicFragment"
+            app:destination="@id/addCourseTopicFragment" />
 
     </fragment>
 
@@ -107,9 +113,37 @@
         android:id="@+id/adminListFragment"
         android:name="com.example.fe.ui.todo.AdminListFragment"
         android:label="Support Admin" />
+
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.example.fe.ui.todoform.EditProfileFragment"
         android:label="EditProfileFragment" />
+
+    <fragment
+        android:id="@+id/addCourseFragment"
+        android:name="com.example.fe.ui.todo.AddCourseFragment"
+        android:label="AddCourseFragment" />
+
+    <fragment
+        android:id="@+id/addCourseTopicFragment"
+        android:name="com.example.fe.ui.todo.AddCourseTopicFragment"
+        android:label="AddCourseTopicFragment" >
+        <action
+            android:id="@+id/action_addCourseTopicFragment_to_topicMaterialsFragment"
+            app:destination="@id/topicMaterialsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/topicMaterialsFragment"
+        android:name="com.example.fe.ui.todo.TopicMaterialsFragment"
+        android:label="TopicMaterialsFragment" >
+        <argument
+            android:name="courseTopicId"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_topicMaterialsFragment_to_coursActivity"
+            app:destination="@id/coursActivity" />
+    </fragment>
 
 </navigation>

@@ -63,9 +63,9 @@ data class Course(
     val title: String,
     val category: String,
     val teacher_id: Int,
-    val created_at: String,
-    val updated_at: String,
-    val deleted_at: String?
+    val createdAt: String,
+    val updatedAt: String,
+    val deletedAt: String?
 )
 
 // === CourseTopic ===
@@ -76,9 +76,9 @@ data class CourseTopic(
     val title: String,
     val description: String,
     val content_type: String,
-    val created_at: String,
-    val updated_at: String,
-    val deleted_at: String?
+    val createdAt: String,
+    val updatedAt: String,
+    val deletedAt: String?
 )
 
 // === CourseTopic ===
@@ -150,9 +150,9 @@ data class TopicMaterial(
     val topic_id: Int,
     val video_url: String?,
     val attachment_file: String?,
-    val created_at: String,
-    val updated_at: String,
-    val deleted_at: String?
+    val createdAt: String,
+    val updatedAt: String,
+    val deletedAt: String?
 )
 
 // === QuizQuestionOption ===
