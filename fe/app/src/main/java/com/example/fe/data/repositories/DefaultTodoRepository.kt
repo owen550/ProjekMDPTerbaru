@@ -14,9 +14,10 @@ import com.example.fe.data.StudentSubmission
 import com.example.fe.data.TopicMaterial
 import com.example.fe.data.User
 import com.example.fe.data.remote.RemoteDataSource
+import com.example.fe.data.source.local.LocalDataSource
 
 class DefaultTodoRepository(
-//    val localDataSource: LocalDataSource,
+    val localDataSource: LocalDataSource,
     val remoteDataSource: RemoteDataSource
 ) : TodoRepository {
 
@@ -24,7 +25,13 @@ class DefaultTodoRepository(
         return remoteDataSource.getAllUser(userId)
     }
 
-    override suspend fun addUser(user: User): Result<User> {
+    // === kalau room udah masukin juga ke sini
+    override suspend fun addUser(
+        user: User
+    ): Result<User> {
+        // add user ke room
+        localDataSource.insert(user) // ntik ke konfert otomatis
+        // add user ke ws
         return remoteDataSource.addUser(user)
     }
 
@@ -43,10 +50,12 @@ class DefaultTodoRepository(
         return remoteDataSource.deleteUser(userId)
     }
 
+
     override suspend fun doLogin(
         usernameoremail: String,
         password: String
     ): Result<User> {
+        // masuk ke remot
         return remoteDataSource.doLogin(usernameoremail,password)
     }
 
