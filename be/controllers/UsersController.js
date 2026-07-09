@@ -43,7 +43,7 @@ exports.AddUser = async (req, res) => {
     
     // === cek jika ada nama user yang sama ? tolak 
     let allUserData = await Users.findOne({where: {username}})
-    let allUserDataEmail = await Users.findOne({where: {username}})
+    let allUserDataEmail = await Users.findOne({where: {email}})
     if(allUserData != null || allUserDataEmail != null){
       return res.status(400).json({
         message: "Username Atau Email Telah Dipakai !!!",
