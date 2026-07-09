@@ -28,6 +28,33 @@ class TodoFormViewModel(
     private val _userlokal = MutableLiveData<User>()
     val userlokal: LiveData<User> = _userlokal
 
+    fun updateUser(
+        name: String,
+        username: String,
+    ){
+        _loading.value = true
+        viewModelScope.launch {
+            try {
+                val updatedUsers = user?.copy(
+                    username = username,
+                    name = name
+                )
+                var result = todoRepository.updateUser(updatedUsers!!)
+                .onSuccess {
+                    user = updatedUsers // ganti update usernya
+                    _message.value = "Berhasil Mengupate User"
+                }
+                .onFailure { error ->
+                    _message.value = "Gagal : " + error.message
+                }
+            } catch (e: Exception){
+                _message.value = "" // jangan munculin apa apa
+            }
+            finally {
+                _loading.value = false
+            }
+        }
+    }
     fun getUserTerakhir(){
         _loading.value = true
         viewModelScope.launch {
@@ -119,7 +146,6 @@ class TodoFormViewModel(
             }
         }
     }
-
 
     fun reset(){
         _message.value = ""

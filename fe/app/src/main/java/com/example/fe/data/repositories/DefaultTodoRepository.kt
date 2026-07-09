@@ -44,7 +44,11 @@ class DefaultTodoRepository(
     }
 
     override suspend fun updateUser(user: User): Result<User> {
-        return remoteDataSource.updateUser(user)
+        var update = remoteDataSource.updateUser(user)
+        .onSuccess { // kalau berhasil add ke local sotage
+            localDataSource.insert(user)
+        }
+        return update
     }
 
     override suspend fun deleteUser(userId: Int): Result<User> {

@@ -41,6 +41,10 @@ class ProfileFragmen : Fragment() {
     }
 
     fun onListener(){
+        // edit prof
+        binding.btnEditProfile.setOnClickListener {
+            findNavController().navigate(R.id.editProfileFragment)
+        }
         // my courses
         binding.btnMyCourses.setOnClickListener {
 

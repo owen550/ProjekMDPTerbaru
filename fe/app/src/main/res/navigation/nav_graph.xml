@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_profileFragmen_to_adminListFragment"
             app:destination="@id/adminListFragment" />
+        <action
+            android:id="@+id/action_profileFragmen_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
     </fragment>
 
 
@@ -104,5 +107,9 @@
         android:id="@+id/adminListFragment"
         android:name="com.example.fe.ui.todo.AdminListFragment"
         android:label="Support Admin" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.fe.ui.todoform.EditProfileFragment"
+        android:label="EditProfileFragment" />
 
 </navigation>
