@@ -24,6 +24,10 @@ class LoginPage : AppCompatActivity() {
         binding = ActivityLoginPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // === trigger pencarianb lokal di sini lek wes jadi ===
+        viewModel.getUserTerakhir()
+
+        // === observe dan listener ====
         onObserve()
         onListener()
     }
@@ -34,15 +38,23 @@ class LoginPage : AppCompatActivity() {
                  Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
              }
          }
-
          viewModel.login.observe(this) { login ->
             if(login == true){
                 // loginin dia
                 startActivity(Intent(this, MainActivity::class.java))
                 // reset
                 viewModel.reset()
+                viewModel.getUserTerakhir()
             }
          }
+        viewModel.userlokal.observe(this) { lokal ->
+            if(lokal != null){
+                binding.etLoginIdentifier.setText(lokal.username)
+                binding.etLoginPassword.setText(lokal.password)
+            }
+        }
+
+
     }
 
     fun onListener() {

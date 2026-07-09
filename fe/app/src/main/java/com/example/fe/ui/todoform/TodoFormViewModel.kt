@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.fe.data.Course
 import com.example.fe.data.User
 import com.example.fe.data.repositories.TodoRepository
+import com.example.fe.data.source.local.UserEntity
 import com.example.fe.user
 import kotlinx.coroutines.launch
 
@@ -24,6 +25,27 @@ class TodoFormViewModel(
 
     private val _login = MutableLiveData<Boolean>(false)
     val login: LiveData<Boolean> = _login
+
+    private val _userlokal = MutableLiveData<User>()
+    val userlokal: LiveData<User> = _userlokal
+
+    fun getUserTerakhir(){
+        _loading.value = true
+        viewModelScope.launch {
+            try {
+                val result = todoRepository.getLastUserDESC()
+                if(result != null){ // kalau ngak kosonh
+                    _userlokal.value = result
+                }
+            } catch (e: Exception){
+                _message.value = "" // jangan munculin apa apa
+            }
+            finally {
+                _loading.value = false
+            }
+        }
+    }
+
     fun doLogin(usernameoremail:String, password:String){
         _loading.value = true
         viewModelScope.launch {
@@ -32,6 +54,7 @@ class TodoFormViewModel(
 
                 result
                     .onSuccess { userdata ->
+                        // lakukan login
                         user = userdata
                         currentUserId = userdata.id
                         _login.value = true
@@ -90,7 +113,7 @@ class TodoFormViewModel(
                     }
 
             } catch(e:Exception){
-                _message.value = "Terjadi Kesalahan Pada Backend"
+                _message.value = e.message
             }
             finally {
                 _loading.value = false

@@ -10,4 +10,3 @@ var courseDetail: Course ?=null // simpan buat buka
 var courseTopic: CourseTopic ?=null // simpan buat buka
 var materialTopic: TopicMaterial ?= null
 
-//https://www.w3schools.com/html/mov_bbb.mp4

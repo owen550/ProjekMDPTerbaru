@@ -1,6 +1,7 @@
 package com.example.fe
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -80,6 +81,11 @@ class RegisterPage : AppCompatActivity() {
             binding.etEmail.setText("")
             binding.etPassword.setText("")
             binding.etBirthday.setText("")
+        }
+
+        // back ke login
+        binding.tvLoginLink.setOnClickListener {
+            startActivity(Intent(this, LoginPage::class.java))
         }
     }
 
