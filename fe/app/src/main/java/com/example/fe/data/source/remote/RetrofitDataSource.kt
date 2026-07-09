@@ -1,5 +1,6 @@
 package com.example.fe.data.source.remote
 
+import com.example.fe.data.ActivityLog
 import com.example.fe.data.AdminMessage
 import com.example.fe.data.Course
 import com.example.fe.data.CourseEnrollment
@@ -1002,6 +1003,23 @@ class RetrofitDataSource(
             val response = retrofitService.deleteSubmission(userId, submissionId)
             if (response.isSuccessful) {
                 Result.success(Unit)
+            } else {
+                Result.failure(Exception(response.message()))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    // =======================
+    // Activity Log (Admin)
+    // =======================
+
+    override suspend fun getAllActivityLogs(userId: Int): Result<List<ActivityLog>> {
+        return try {
+            val response = retrofitService.getAllActivityLogs(userId)
+            if (response.isSuccessful && response.body() != null) {
+                Result.success(response.body()!!)
             } else {
                 Result.failure(Exception(response.message()))
             }

@@ -1,5 +1,6 @@
 package com.example.fe.data.remote
 
+import com.example.fe.data.ActivityLog
 import com.example.fe.data.AdminMessage
 import com.example.fe.data.Course
 import com.example.fe.data.CourseEnrollment
@@ -410,4 +411,11 @@ interface RemoteDataSource {
         userId: Int,
         submissionId: Int
     ): Result<Unit>
+
+    // =======================
+    // Activity Log (Admin)
+    // =======================
+    suspend fun getAllActivityLogs(
+        userId: Int
+    ): Result<List<ActivityLog>>
 }

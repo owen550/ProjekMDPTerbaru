@@ -1,6 +1,7 @@
 package com.example.fe.data.source.remote
 
 import android.os.Message
+import com.example.fe.data.ActivityLog
 import com.example.fe.data.AdminMessage
 import com.example.fe.data.Course
 import com.example.fe.data.CourseEnrollment
@@ -536,5 +537,14 @@ interface WebService {
     ): Response<Unit>
 
 //============================================================
+
+    // =======================
+    // Activity Log (Admin)
+    // =======================
+    @FormUrlEncoded
+    @POST("api/activitylogroutes/alldata")
+    suspend fun getAllActivityLogs(
+        @Field("userid") userId: Int
+    ): Response<List<ActivityLog>>
 
 }

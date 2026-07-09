@@ -1,5 +1,6 @@
 package com.example.fe.data.repositories
 
+import com.example.fe.data.ActivityLog
 import com.example.fe.data.AdminMessage
 import com.example.fe.data.Course
 import com.example.fe.data.CourseEnrollment
@@ -36,27 +37,13 @@ interface TodoRepository {
     // Course
     // =======================
 
-    suspend fun getAllCourses(
-        userId: Int
-    ): Result<List<Course>>
+    suspend fun getAllCourses(userId: Int): Result<List<Course>>
 
-    suspend fun getCourseById(
-        userId: Int,
-        courseId: Int
-    ): Result<Course>
+    suspend fun getCourseById(userId: Int, courseId: Int): Result<Course>
 
-    suspend fun insertCourse(
-        userId: Int,
-        title: String,
-        category: String
-    ): Result<Course>
+    suspend fun insertCourse(userId: Int, title: String, category: String): Result<Course>
 
-    suspend fun updateCourse(
-        userId: Int,
-        title: String,
-        category: String,
-        courseId: Int
-    ): Result<Course>
+    suspend fun updateCourse(userId: Int, title: String, category: String, courseId: Int): Result<Course>
 
     suspend fun deleteCourse(): Result<Unit>
 
@@ -88,13 +75,9 @@ interface TodoRepository {
     // Topic Material
     // =======================
 
-    suspend fun getAllMaterials(
-        userId: Int
-    ): Result<List<TopicMaterial>>
+    suspend fun getAllMaterials(userId: Int): Result<List<TopicMaterial>>
 
-    suspend fun getMaterialById(
-        userId: Int
-    ): Result<TopicMaterial>
+    suspend fun getMaterialById(userId: Int): Result<TopicMaterial>
 
     suspend fun insertMaterial(
         userId: Int,
@@ -110,9 +93,7 @@ interface TodoRepository {
         attachmentFile: String
     ): Result<TopicMaterial>
 
-    suspend fun deleteMaterial(
-        topicId: Int
-    ): Result<Unit>
+    suspend fun deleteMaterial(topicId: Int): Result<Unit>
 
     // =======================
     // Admin Message
@@ -132,27 +113,17 @@ interface TodoRepository {
         body: String
     ): Result<AdminMessage>
 
-    suspend fun getMessagesById(
-        userId: Int,
-        adminId: Int
-    ): Result<List<AdminMessage>>
+    suspend fun getMessagesById(userId: Int, adminId: Int): Result<List<AdminMessage>>
 
-    suspend fun getAdminChatList(
-        adminId: Int
-    ): Result<List<AdminMessage>>
+    suspend fun getAdminChatList(adminId: Int): Result<List<AdminMessage>>
 
     // =======================
     // Quizzes
     // =======================
 
-    suspend fun getAllQuizzes(
-        userId: Int
-    ): Result<List<Quizzes>>
+    suspend fun getAllQuizzes(userId: Int): Result<List<Quizzes>>
 
-    suspend fun getQuizById(
-        userId: Int,
-        quizId: Int
-    ): Result<Quizzes>
+    suspend fun getQuizById(userId: Int, quizId: Int): Result<Quizzes>
 
     suspend fun insertQuiz(
         userId: Int,
@@ -168,22 +139,15 @@ interface TodoRepository {
         id: Int,
     ): Result<Quizzes>
 
-    suspend fun deleteQuiz(
-        id: Int
-    ): Result<Unit>
+    suspend fun deleteQuiz(id: Int): Result<Unit>
 
     // =======================
     // Quiz Question
     // =======================
 
-    suspend fun getAllQuestions(
-        userId: Int
-    ): Result<List<QuizQuestion>>
+    suspend fun getAllQuestions(userId: Int): Result<List<QuizQuestion>>
 
-    suspend fun getQuestionById(
-        userId: Int,
-        questionId: Int
-    ): Result<QuizQuestion>
+    suspend fun getQuestionById(userId: Int, questionId: Int): Result<QuizQuestion>
 
     suspend fun insertQuestion(
         userId: Int,
@@ -199,23 +163,15 @@ interface TodoRepository {
         id: Int,
     ): Result<QuizQuestion>
 
-    suspend fun deleteQuestion(
-        userId: Int,
-        id: Int
-    ): Result<Unit>
+    suspend fun deleteQuestion(userId: Int, id: Int): Result<Unit>
 
     // =======================
     // Quiz Question Option
     // =======================
 
-    suspend fun getAllOptions(
-        userId: Int
-    ): Result<List<QuizQuestionOption>>
+    suspend fun getAllOptions(userId: Int): Result<List<QuizQuestionOption>>
 
-    suspend fun getOptionById(
-        userId: Int,
-        optionId: Int
-    ): Result<QuizQuestionOption>
+    suspend fun getOptionById(userId: Int, optionId: Int): Result<QuizQuestionOption>
 
     suspend fun insertOption(
         userId: Int,
@@ -231,44 +187,23 @@ interface TodoRepository {
         optionText: String,
     ): Result<QuizQuestionOption>
 
-    suspend fun deleteOption(
-        userId: Int,
-        id: Int
-    ): Result<Unit>
+    suspend fun deleteOption(userId: Int, id: Int): Result<Unit>
 
     // =======================
     // Chatbot
     // =======================
 
-    suspend fun createChat(
-        userId: Int,
-        sender: String,
-        message: String
-    ): Result<CsChatbotChat>
+    suspend fun createChat(userId: Int, sender: String, message: String): Result<CsChatbotChat>
 
-    suspend fun getAllChats(
-        userId: Int
-    ): Result<List<CsChatbotChat>>
+    suspend fun getAllChats(userId: Int): Result<List<CsChatbotChat>>
 
-    suspend fun getChats(
-        userId: Int
-    ): Result<List<CsChatbotChat>>
+    suspend fun getChats(userId: Int): Result<List<CsChatbotChat>>
 
-    suspend fun getChatDetail(
-        userId: Int,
-        chatId: Int
-    ): Result<CsChatbotChat>
+    suspend fun getChatDetail(userId: Int, chatId: Int): Result<CsChatbotChat>
 
-    suspend fun updateChat(
-        userId: Int,
-        chatId: Int,
-        message: String
-    ): Result<CsChatbotChat>
+    suspend fun updateChat(userId: Int, chatId: Int, message: String): Result<CsChatbotChat>
 
-    suspend fun deleteChat(
-        userId: Int,
-        chatId: Int
-    ): Result<Unit>
+    suspend fun deleteChat(userId: Int, chatId: Int): Result<Unit>
 
     // =======================
     // Payment
@@ -285,18 +220,11 @@ interface TodoRepository {
         status: String? = null
     ): Result<Payment>
 
-    suspend fun getAllPayments(
-        userId: Int
-    ): Result<List<Payment>>
+    suspend fun getAllPayments(userId: Int): Result<List<Payment>>
 
-    suspend fun getPayments(
-        userId: Int
-    ): Result<List<Payment>>
+    suspend fun getPayments(userId: Int): Result<List<Payment>>
 
-    suspend fun getPaymentDetail(
-        userId: Int,
-        paymentId: Int
-    ): Result<Payment>
+    suspend fun getPaymentDetail(userId: Int, paymentId: Int): Result<Payment>
 
     suspend fun updatePayment(
         userId: Int,
@@ -310,10 +238,7 @@ interface TodoRepository {
         qrUrl: String? = null
     ): Result<Payment>
 
-    suspend fun deletePayment(
-        userId: Int,
-        paymentId: Int
-    ): Result<Unit>
+    suspend fun deletePayment(userId: Int, paymentId: Int): Result<Unit>
 
     // =======================
     // Course Enrollment
@@ -328,20 +253,11 @@ interface TodoRepository {
         status: String?
     ): Result<CourseEnrollment>
 
-    suspend fun getAllEnrollments(
-        userId: Int
-    ): Result<List<CourseEnrollment>>
+    suspend fun getAllEnrollments(userId: Int): Result<List<CourseEnrollment>>
 
-    suspend fun getEnrollmentByStudent(
-        userId: Int,
-        studentId: Int
-    ): Result<List<CourseEnrollment>>
+    suspend fun getEnrollmentByStudent(userId: Int, studentId: Int): Result<List<CourseEnrollment>>
 
-    suspend fun getEnrollmentDetail(
-        userId: Int,
-        studentId: Int,
-        enrollmentId: Int
-    ): Result<CourseEnrollment>
+    suspend fun getEnrollmentDetail(userId: Int, studentId: Int, enrollmentId: Int): Result<CourseEnrollment>
 
     suspend fun updateEnrollment(
         userId: Int,
@@ -353,24 +269,15 @@ interface TodoRepository {
         status: String?
     ): Result<CourseEnrollment>
 
-    suspend fun deleteEnrollment(
-        userId: Int,
-        studentId: Int,
-        enrollmentId: Int
-    ): Result<Unit>
+    suspend fun deleteEnrollment(userId: Int, studentId: Int, enrollmentId: Int): Result<Unit>
 
     // =======================
     // Student Submission
     // =======================
 
-    suspend fun getAllSubmissions(
-        userId: Int
-    ): Result<List<StudentSubmission>>
+    suspend fun getAllSubmissions(userId: Int): Result<List<StudentSubmission>>
 
-    suspend fun getSubmissionById(
-        userId: Int,
-        submissionId: Int
-    ): Result<StudentSubmission>
+    suspend fun getSubmissionById(userId: Int, submissionId: Int): Result<StudentSubmission>
 
     suspend fun insertSubmission(
         userId: Int,
@@ -393,9 +300,11 @@ interface TodoRepository {
         status: String?
     ): Result<StudentSubmission>
 
-    suspend fun deleteSubmission(
-        userId: Int,
-        submissionId: Int
-    ): Result<Unit>
+    suspend fun deleteSubmission(userId: Int, submissionId: Int): Result<Unit>
 
+    // =======================
+    // Activity Log (Admin)
+    // =======================
+
+    suspend fun getAllActivityLogs(userId: Int): Result<List<ActivityLog>>
 }

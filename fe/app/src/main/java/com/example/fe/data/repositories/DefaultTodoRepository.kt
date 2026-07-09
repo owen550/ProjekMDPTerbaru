@@ -1,5 +1,6 @@
 package com.example.fe.data.repositories
 
+import com.example.fe.data.ActivityLog
 import com.example.fe.data.AdminMessage
 import com.example.fe.data.Course
 import com.example.fe.data.CourseEnrollment
@@ -428,5 +429,13 @@ class DefaultTodoRepository(
 
     override suspend fun deleteSubmission(userId: Int, submissionId: Int): Result<Unit> {
         return remoteDataSource.deleteSubmission(userId, submissionId)
+    }
+
+    // =======================
+    // Activity Log (Admin)
+    // =======================
+
+    override suspend fun getAllActivityLogs(userId: Int): Result<List<ActivityLog>> {
+        return remoteDataSource.getAllActivityLogs(userId)
     }
 }
