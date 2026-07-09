@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/dashboardFragmen"
+        android:title="Home"
+        android:icon="@android:drawable/ic_menu_today" />
+    <item
+        android:id="@+id/gradeSummary"
+        android:title="Grade"
+        android:icon="@android:drawable/ic_menu_manage" />
+    <item
+        android:id="@+id/chatFragment"
+        android:title="AI Chat"
+        android:icon="@android:drawable/ic_menu_send" />
+    <item
+        android:id="@+id/profileFragmen"
+        android:title="Profile"
+        android:icon="@android:drawable/ic_menu_myplaces" />
+</menu>
