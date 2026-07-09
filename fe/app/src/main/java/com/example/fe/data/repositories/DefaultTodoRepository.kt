@@ -15,6 +15,7 @@ import com.example.fe.data.TopicMaterial
 import com.example.fe.data.User
 import com.example.fe.data.remote.RemoteDataSource
 import com.example.fe.data.source.local.LocalDataSource
+import com.example.fe.data.source.local.UserEntity
 
 class DefaultTodoRepository(
     val localDataSource: LocalDataSource,
@@ -55,8 +56,43 @@ class DefaultTodoRepository(
         usernameoremail: String,
         password: String
     ): Result<User> {
-        // masuk ke remot
-        return remoteDataSource.doLogin(usernameoremail,password)
+        var teslogin = remoteDataSource.doLogin(usernameoremail, password)
+
+        // kalau berhasil add juga ke room
+        teslogin.onSuccess { userdata ->
+            val userWithPassword = userdata.copy(password = password)
+            localDataSource.insert(userWithPassword)
+        }
+
+        return teslogin
+    }
+
+    // ============================
+    // Lokal
+    // ============================
+
+    override suspend fun getAll(): List<User> {
+        return localDataSource.getAll()
+    }
+
+    override suspend fun getById(id: Int): User? {
+        return localDataSource.getById(id)
+    }
+
+    override suspend fun getLastUserDESC(): User? {
+        return localDataSource.getLastUserDESC()
+    }
+
+    override suspend fun insert(user: User) {
+        localDataSource.insert(user)
+    }
+
+    override suspend fun update(user: User) {
+        localDataSource.update(user)
+    }
+
+    override suspend fun delete(user: User) {
+        localDataSource.delete(user)
     }
 
     // =======================

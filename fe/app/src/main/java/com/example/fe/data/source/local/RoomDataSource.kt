@@ -26,13 +26,13 @@ fun UserEntity.toUser(): User {
 
 fun User.toEntity(): UserEntity {
     return UserEntity(
-        id = id,
-        name = name,
-        username = username,
-        password = password,
-        email = email,
-        google_id = google_id,
-        birthday_date = birthday_date
+        id = 0,
+        name,
+        username,
+        password,
+        email,
+        google_id,
+        birthday_date
     )
 }
 
@@ -49,23 +49,19 @@ class RoomDataSource(
         return db.userDAO().getById(id)?.toUser()
     }
 
-    override suspend fun getLastUserDESC(): User {
+    override suspend fun getLastUserDESC(): User? {
         return db.userDAO().getLastUserDESC()?.toUser()
-            ?: throw NoSuchElementException("User tidak ditemukan")
     }
 
-    override suspend fun insert(user: User): User {
+    override suspend fun insert(user: User) {
         db.userDAO().insert(user.toEntity())
-        return user
     }
 
-    override suspend fun update(user: User): User {
+    override suspend fun update(user: User) {
         db.userDAO().update(user.toEntity())
-        return user
     }
 
-    override suspend fun delete(jadwal: User): User {
+    override suspend fun delete(jadwal: User) {
         db.userDAO().delete(jadwal.toEntity())
-        return jadwal
     }
 }

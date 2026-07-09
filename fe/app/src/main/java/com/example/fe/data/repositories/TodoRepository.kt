@@ -33,6 +33,16 @@ interface TodoRepository {
         password: String
     ): Result<User>
 
+    // ============================
+    // UserEntity (User Lokal)
+    // ============================
+    suspend fun getAll(): List<User>
+    suspend fun getById(id: Int): User?
+    suspend fun getLastUserDESC(): User?
+    suspend fun insert(jadwal: User)
+    suspend fun update(jadwal: User)
+    suspend fun delete(jadwal: User)
+
     // =======================
     // Course
     // =======================

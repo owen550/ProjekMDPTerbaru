@@ -20,11 +20,11 @@ interface UserDao {
     suspend fun getLastUserDESC(): UserEntity?
     // insert room
     @Insert()
-    suspend fun insert(user: UserEntity): Long
+    suspend fun insert(user: UserEntity)
     // update room
     @Update
-    suspend fun update(user: UserEntity): Int
+    suspend fun update(user: UserEntity)
     // delete room
     @Delete
-    suspend fun delete(user: UserEntity): Int
+    suspend fun delete(user: UserEntity)
 }

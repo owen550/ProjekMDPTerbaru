@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.fe.data.source.local.UserDao
 import com.example.fe.data.source.local.UserEntity
 
-@Database(entities = [UserEntity::class], version = 1) // ganti veri == reset isi db
+@Database(entities = [UserEntity::class], version = 2) // ganti veri == reset isi db
 // Tambahkan @TypeConverters(DateConverter::class) di sini jika JadwalEntity kamu masih pakai tipe data Date
 abstract class AppDatabase : RoomDatabase() { // <-- Pastikan extends RoomDatabase()
 
@@ -26,7 +26,7 @@ abstract class AppDatabase : RoomDatabase() { // <-- Pastikan extends RoomDataba
                     AppDatabase::class.java,
                     "mdp_project" // Ini nama file database di storage
                 )
-                    // .fallbackToDestructiveMigration() // Buka komen ini jika nanti mau mengubah struktur tabel tanpa menaikkan versi DB secara manual, lek ragu jok dibukak sek !!!
+                     .fallbackToDestructiveMigration() // Buka komen ini jika nanti mau mengubah struktur tabel tanpa menaikkan versi DB secara manual, lek ragu jok dibukak sek !!!
                     .build()
                 INSTANCE = instance
                 instance
