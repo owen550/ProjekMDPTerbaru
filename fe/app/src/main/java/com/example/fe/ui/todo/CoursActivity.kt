@@ -20,7 +20,9 @@ import com.example.fe.databinding.FragmentCoursActivityBinding
 import com.example.fe.materialTopic
 
 class CoursActivity : Fragment() {
-    lateinit var binding: FragmentCoursActivityBinding
+    private var _binding: FragmentCoursActivityBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var topicAdapter: CourseTopicAdapter
 
     private val viewModel: TodosViewModel by viewModels {
@@ -30,21 +32,36 @@ class CoursActivity : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentCoursActivityBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentCoursActivityBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getAllCourseTopicByID(courseDetail!!.id)
 
+        uiSetup()
         setupRV()
         onObserve()
         onListener()
+
+        courseDetail?.let {
+            viewModel.getAllCourseTopicByID(it.id)
+            // Fetch teacher name
+            viewModel.fetchUserDetail(it.teacher_id)
+        }
     }
 
-    fun setupRV() {
+    private fun uiSetup() {
+        courseDetail?.let {
+            binding.txtCourseTitle.text = it.title
+            binding.txtCourseCategory.text = it.category
+            // Description placeholder as it's not in the data model yet
+            binding.txtCourseDescription.text = "Welcome to ${it.title}. This course will guide you through all the necessary steps to master this subject."
+        }
+    }
+
+    private fun setupRV() {
         topicAdapter = CourseTopicAdapter(
             { topic -> gotoCourseMaterial(topic) }
         )
@@ -55,49 +72,86 @@ class CoursActivity : Fragment() {
         }
     }
 
-    fun onObserve() {
+    private fun onObserve() {
         viewModel.message.observe(viewLifecycleOwner) { msg ->
-            if (!msg.isNullOrEmpty()) {
-                Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+            if (!msg.isNullOrEmpty() && msg != "User session invalid") {
+                // We don't want to toast every time, maybe just for errors
+                if (msg.contains("Gagal") || msg.contains("Error")) {
+                    Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
-        viewModel.coursedetail.observe(viewLifecycleOwner) { topicList ->
-            if (topicList != null) {
-                topicAdapter.submitList(topicList)
+        viewModel.coursedetail.observe(viewLifecycleOwner) {
+            viewModel.coursedetail.observe(viewLifecycleOwner) { topics ->
+
+                if (topics != null) {
+
+                    topicAdapter.submitList(topics)
+
+                    binding.txtTotalTopics.text =
+                        "${topics.size} Topics"
+                }
             }
         }
 
-//        viewModel.onetopicmaterial.observe(viewLifecycleOwner) { onetopicmaterial ->
-//            if (onetopicmaterial != null) {
-//                materialTopic = onetopicmaterial
-//                findNavController().navigate(R.id.activityCourseMateriFragmen)
-//                viewModel.reset()
-//            }
-//        }
+        viewModel.oneuser.observe(viewLifecycleOwner) { teacher ->
+            if (teacher != null) {
+                binding.txtTeacherName.text = "Teacher: ${teacher.name}"
+            }
+        }
 
         viewModel.onetopicmaterial.observe(viewLifecycleOwner) { material ->
             Log.d("FRAGMENT", "Observer dipanggil: $material")
 
             if (material != null) {
                 materialTopic = material
-                findNavController().navigate(R.id.activityCourseMateriFragmen)
+                findNavController().navigate(R.id.action_coursActivity_to_activityCourseMateriFragmen)
                 viewModel.reset()
             }
         }
-
     }
 
-    fun onListener() {
+    private fun onListener() {
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        binding.imgProfile.setOnClickListener {
+            findNavController().navigate(R.id.profileFragmen)
+        }
     }
 
-    fun gotoCourseMaterial(topic: CourseTopic){
+    private fun gotoCourseMaterial(topic: CourseTopic) {
+
         courseTopic = topic
-        if(topic.content_type == "material" ){ // Materi
-            viewModel.getTopicMaterialByIDCourseTopic(topic.id)
+
+        when (topic.content_type.lowercase()) {
+
+            "material" -> {
+                viewModel.getTopicMaterialByIDCourseTopic(topic.id)
+            }
+
+            "quiz" -> {
+                Toast.makeText(
+                    requireContext(),
+                    "Quiz coming soon.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            else -> {
+                Toast.makeText(
+                    requireContext(),
+                    "Unknown topic type.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
-        else{ // Quizz
-            Toast.makeText(requireContext(),"COMING SOON", Toast.LENGTH_SHORT).show()
-        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

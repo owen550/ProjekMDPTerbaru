@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_profileFragmen_to_paymentDetailFragment"
             app:destination="@id/paymentDetailFragment" />
+        <action
+            android:id="@+id/action_profileFragmen_to_adminListFragment"
+            app:destination="@id/adminListFragment" />
     </fragment>
 
 
@@ -92,15 +95,14 @@
         android:name="com.example.fe.ui.todo.GradeSummary"
         android:label="Grades" />
 
-
-    <fragment
-
-        android:id="@+id/profileFragmen"
-        android:name="com.example.fe.ui.todo.ProfileFragmen"
-        android:label="ProfileFragmen" />
     <fragment
         android:id="@+id/chatFragment2"
         android:name="com.example.fe.ui.todoform.ChatFragment"
         android:label="ChatFragment" />
+
+    <fragment
+        android:id="@+id/adminListFragment"
+        android:name="com.example.fe.ui.todo.AdminListFragment"
+        android:label="Support Admin" />
 
 </navigation>

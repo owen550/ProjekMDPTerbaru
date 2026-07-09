@@ -55,11 +55,9 @@ class ChatFragment : Fragment() {
     private fun setupTheme() {
         if (userRole == "admin") {
             binding.chatContainer.setBackgroundResource(R.drawable.bg_chat_container_admin)
-            binding.btnStopServer.visibility = View.VISIBLE
             binding.btnSend.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.admin_green_primary)
         } else {
             binding.chatContainer.setBackgroundResource(R.drawable.bg_chat_container_user)
-            binding.btnStopServer.visibility = View.GONE
             binding.btnSend.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.user_orange_primary)
         }
     }

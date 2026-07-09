@@ -56,14 +56,6 @@ class PaymentDetailFragment : Fragment() {
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
-
-        binding.btnStopServer.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "Stopping server...",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
     }
 
     private fun observeViewModel() {

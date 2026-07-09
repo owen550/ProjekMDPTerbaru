@@ -7,14 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.fe.R
-import com.example.fe.databinding.FragmentDashboardBinding
 import com.example.fe.databinding.FragmentProfileBinding
 import com.example.fe.user
 
 
 class ProfileFragmen : Fragment() {
 
-    lateinit var binding: FragmentProfileBinding // ini tolong disesiuaikan di masing masing !!!
+    lateinit var binding: FragmentProfileBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +25,6 @@ class ProfileFragmen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // === main kode di sini
         uiSetup()
         onObserve()
         onListener()
@@ -54,6 +52,10 @@ class ProfileFragmen : Fragment() {
         // subscribe
         binding.btnSubscription.setOnClickListener {
             findNavController().navigate(R.id.paymentDetailFragment)
+        }
+        // chat support
+        binding.btnChatSupport.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragmen_to_adminListFragment)
         }
         // log out
         binding.btnLogout.setOnClickListener {

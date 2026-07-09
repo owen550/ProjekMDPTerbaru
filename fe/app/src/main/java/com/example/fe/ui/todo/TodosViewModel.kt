@@ -46,7 +46,7 @@ class TodosViewModel(
     fun getTopicMaterialByIDCourseTopic(
         topicId: Int
     ) {
-        val userId = user?.id
+        val userId = currentUserId
         if (userId == null) {
             _message.value = "User session invalid"
             return
@@ -96,7 +96,7 @@ class TodosViewModel(
     }
 
     fun getAllCourseTopicByID(courseid: Int) {
-        val userId = user?.id
+        val userId = currentUserId
         if (userId == null) {
             _message.value = "User session invalid"
             return

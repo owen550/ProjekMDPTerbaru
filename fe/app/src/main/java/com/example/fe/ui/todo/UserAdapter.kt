@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fe.data.User
 import com.example.fe.databinding.ItemUserBinding
+import com.example.fe.user
 
 class UserAdapter(
     private var users: List<User>,
@@ -21,15 +22,26 @@ class UserAdapter(
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        val user = users[position]
+        val targetUser = users[position]
         holder.binding.apply {
-            txtName.text = user.name
+            txtName.text = targetUser.name
             
-            // Only show chat button for students
-            btnChat.visibility = if (user.role.lowercase() == "student") View.VISIBLE else View.GONE
+            val currentUserRole = user?.role?.lowercase() ?: ""
+            val targetUserRole = targetUser.role.lowercase()
 
-            btnChat.setOnClickListener { onChatClick(user) }
-            btnDetail.setOnClickListener { onDetailClick(user) }
+            // Logic: 
+            // - If Admin is looking, show Chat for Students.
+            // - If Student is looking, show Chat for Admins.
+            val canChat = (currentUserRole == "admin" && targetUserRole == "student") ||
+                         (currentUserRole == "student" && targetUserRole == "admin")
+
+            btnChat.visibility = if (canChat) View.VISIBLE else View.GONE
+
+            btnChat.setOnClickListener { onChatClick(targetUser) }
+            btnDetail.setOnClickListener { onDetailClick(targetUser) }
+            
+            // Hide detail button if it's admin list for support
+            btnDetail.visibility = if (currentUserRole == "student") View.GONE else View.VISIBLE
         }
     }
 

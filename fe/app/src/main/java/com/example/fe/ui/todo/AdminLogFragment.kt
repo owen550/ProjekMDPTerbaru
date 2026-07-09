@@ -57,10 +57,6 @@ class AdminLogFragment : Fragment() {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
-
-        binding.btnStopServer.setOnClickListener {
-            Toast.makeText(requireContext(), "Stopping server...", Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun observeViewModel() {
