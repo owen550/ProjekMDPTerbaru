@@ -19,29 +19,29 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ChatFragment : Fragment() {
-    lateinit var binding: FragmentChatBinding
+    private var _binding: FragmentChatBinding? = null
+    private val binding get() = _binding!!
+    
     private val viewModel: TodosViewModel by viewModels { TodoViewModelFactory }
     private lateinit var chatAdapter: ChatAdapter
     
     private var adminId: Int = 0
-    private var userId: Int = 0
-    private var userRole: String = "student" // Default
+    private var userId: Int = 0 // Refers to the student/user ID
+    private var userRole: String = "student"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentChatBinding.inflate(inflater, container, false)
+        _binding = FragmentChatBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        // Ambil data dari arguments (navigasi)
         adminId = arguments?.getInt("adminId") ?: 0
         userId = arguments?.getInt("userId") ?: 0
-        // Tentukan role untuk styling & logic bubble
         userRole = if (com.example.fe.user?.role == "admin") "admin" else "student"
 
         setupTheme()
@@ -49,6 +49,8 @@ class ChatFragment : Fragment() {
         setupListeners()
         observeViewModel()
         
+        // Clear old messages before polling to prevent "bleed" from previous session
+        viewModel.reset() 
         startPolling()
     }
 
@@ -81,8 +83,10 @@ class ChatFragment : Fragment() {
             val text = binding.etMessage.text.toString().trim()
             if (text.isNotEmpty()) {
                 if (userRole == "admin") {
+                    // Current user is Admin (adminId), sending to Student (userId)
                     viewModel.sendMessageFromAdmin(adminId, userId, "Admin Message", text)
                 } else {
+                    // Current user is Student (userId), sending to Admin (adminId)
                     viewModel.sendMessageFromUser(userId, adminId, "User Message", text)
                 }
                 binding.etMessage.text.clear()
@@ -92,9 +96,13 @@ class ChatFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.messages.observe(viewLifecycleOwner) { list ->
-            chatAdapter.submitList(list)
-            if (list.isNotEmpty()) {
-                binding.rvChat.smoothScrollToPosition(list.size - 1)
+            // Filter messages to strictly match this specific Admin-Student conversation
+            val filteredList = list.filter { 
+                it.admin_id == adminId && it.receiver_id == userId
+            }
+            chatAdapter.submitList(filteredList)
+            if (filteredList.isNotEmpty()) {
+                binding.rvChat.smoothScrollToPosition(filteredList.size - 1)
             }
         }
         
@@ -108,9 +116,16 @@ class ChatFragment : Fragment() {
     private fun startPolling() {
         viewLifecycleOwner.lifecycleScope.launch {
             while (true) {
-                viewModel.getMessagesById(userId, adminId)
-                delay(3000) // Poll setiap 3 detik
+                if (userId != 0 && adminId != 0) {
+                    viewModel.getMessagesById(userId, adminId)
+                }
+                delay(3000)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

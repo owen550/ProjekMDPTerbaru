@@ -7,9 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fe.LoginPage
+import com.example.fe.R
 import com.example.fe.TodoViewModelFactory
 import com.example.fe.databinding.FragmentAdminLogBinding
 import com.example.fe.ui.todoform.currentUserId
@@ -41,7 +44,10 @@ class AdminLogFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        logAdapter = LogAdapter()
+        logAdapter = LogAdapter { userId ->
+            val bundle = bundleOf("userId" to userId)
+            findNavController().navigate(R.id.action_adminLogFragment_to_userDetailFragment, bundle)
+        }
         binding.rvLogs.apply {
             adapter = logAdapter
             layoutManager = LinearLayoutManager(requireContext())

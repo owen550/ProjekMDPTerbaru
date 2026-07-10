@@ -47,16 +47,16 @@ class AdminUserListFragment : Fragment() {
     private fun setupRecyclerView() {
         userAdapter = UserAdapter(
             users = emptyList(),
-            onChatClick = { user ->
+            onChatClick = { targetUser ->
                 val bundle = Bundle().apply {
                     putInt("adminId", currentUserId ?: 0)
-                    putInt("userId", user.id ?: 0)
+                    putInt("userId", targetUser.id ?: 0)
                 }
-                findNavController().navigate(R.id.chatFragment2, bundle)
+                findNavController().navigate(R.id.action_adminUserListFragment_to_chatFragment, bundle)
             },
-            onDetailClick = { user ->
+            onDetailClick = { targetUser ->
                 val bundle = Bundle().apply {
-                    putInt("userId", user.id ?: 0)
+                    putInt("userId", targetUser.id ?: 0)
                 }
                 findNavController().navigate(R.id.action_adminUserListFragment_to_userDetailFragment, bundle)
             }

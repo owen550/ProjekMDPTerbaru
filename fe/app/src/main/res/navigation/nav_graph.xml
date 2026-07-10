@@ -67,18 +67,29 @@
         <action
             android:id="@+id/action_adminUserListFragment_to_userDetailFragment"
             app:destination="@id/userDetailFragment" />
+        <action
+            android:id="@+id/action_adminUserListFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/userDetailFragment"
         android:name="com.example.fe.ui.todo.UserDetailFragment"
-        android:label="User Detail" />
+        android:label="User Detail" >
+        <argument
+            android:name="userId"
+            app:argType="integer" />
+    </fragment>
 
 
     <fragment
         android:id="@+id/adminLogFragment"
         android:name="com.example.fe.ui.todo.AdminLogFragment"
-        android:label="Logs" />
+        android:label="Logs" >
+        <action
+            android:id="@+id/action_adminLogFragment_to_userDetailFragment"
+            app:destination="@id/userDetailFragment" />
+    </fragment>
 
 
     <fragment
@@ -110,9 +121,18 @@
         android:label="AI Chat" />
 
     <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.fe.ui.todoform.ChatFragment"
+        android:label="Chat" />
+
+    <fragment
         android:id="@+id/adminListFragment"
         android:name="com.example.fe.ui.todo.AdminListFragment"
-        android:label="Support Admin" />
+        android:label="Support Admin" >
+        <action
+            android:id="@+id/action_adminListFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/editProfileFragment"

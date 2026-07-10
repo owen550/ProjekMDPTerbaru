@@ -20,8 +20,8 @@ class TodoApplication: Application(){
         val retrofit = Retrofit.Builder().addConverterFactory(
             MoshiConverterFactory.create(moshi)
 
-        ).baseUrl("https://s5yk6lv2ja.execute-api.us-east-1.amazonaws.com/").build()//  10.10.5.202 || 192.168.1.5
-
+        ).baseUrl("http://192.168.1.39:3000/").build()//  10.10.5.202 || 192.168.1.5  + :3000
+        //https://s5yk6lv2ja.execute-api.us-east-1.amazonaws.com/
         val retrofitService = retrofit.create(WebService::class.java)
         todoRepository = DefaultTodoRepository( // ntik lek wes nyalakno lagi room me
             RoomDataSource(AppDatabase.getDatabase(baseContext)),
