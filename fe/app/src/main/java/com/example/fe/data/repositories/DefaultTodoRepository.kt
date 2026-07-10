@@ -16,10 +16,9 @@ import com.example.fe.data.TopicMaterial
 import com.example.fe.data.User
 import com.example.fe.data.remote.RemoteDataSource
 import com.example.fe.data.source.local.LocalDataSource
-<<<<<<< Updated upstream
+
 import com.example.fe.data.source.local.UserEntity
-=======
->>>>>>> Stashed changes
+
 
 class DefaultTodoRepository(
     val localDataSource: LocalDataSource,
@@ -64,7 +63,6 @@ class DefaultTodoRepository(
         usernameoremail: String,
         password: String
     ): Result<User> {
-<<<<<<< Updated upstream
         var teslogin = remoteDataSource.doLogin(usernameoremail, password)
 
         // kalau berhasil add juga ke room
@@ -102,10 +100,7 @@ class DefaultTodoRepository(
 
     override suspend fun delete(user: User) {
         localDataSource.delete(user)
-=======
-        // masuk ke remot
-        return remoteDataSource.doLogin(usernameoremail,password)
->>>>>>> Stashed changes
+
     }
 
     // =======================

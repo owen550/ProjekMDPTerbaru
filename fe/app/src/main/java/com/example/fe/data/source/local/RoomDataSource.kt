@@ -26,7 +26,6 @@ fun UserEntity.toUser(): User {
 
 fun User.toEntity(): UserEntity {
     return UserEntity(
-<<<<<<< Updated upstream
         id = 0,
         name,
         username,
@@ -34,15 +33,6 @@ fun User.toEntity(): UserEntity {
         email,
         google_id,
         birthday_date
-=======
-        id = id,
-        name = name,
-        username = username,
-        password = password,
-        email = email,
-        google_id = google_id,
-        birthday_date = birthday_date
->>>>>>> Stashed changes
     )
 }
 
@@ -59,7 +49,6 @@ class RoomDataSource(
         return db.userDAO().getById(id)?.toUser()
     }
 
-<<<<<<< Updated upstream
     override suspend fun getLastUserDESC(): User? {
         return db.userDAO().getLastUserDESC()?.toUser()
     }
@@ -74,25 +63,6 @@ class RoomDataSource(
 
     override suspend fun delete(jadwal: User) {
         db.userDAO().delete(jadwal.toEntity())
-=======
-    override suspend fun getLastUserDESC(): User {
-        return db.userDAO().getLastUserDESC()?.toUser()
-            ?: throw NoSuchElementException("User tidak ditemukan")
-    }
 
-    override suspend fun insert(user: User): User {
-        db.userDAO().insert(user.toEntity())
-        return user
-    }
-
-    override suspend fun update(user: User): User {
-        db.userDAO().update(user.toEntity())
-        return user
-    }
-
-    override suspend fun delete(jadwal: User): User {
-        db.userDAO().delete(jadwal.toEntity())
-        return jadwal
->>>>>>> Stashed changes
     }
 }

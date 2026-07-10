@@ -20,7 +20,6 @@ interface UserDao {
     suspend fun getLastUserDESC(): UserEntity?
     // insert room
     @Insert()
-<<<<<<< Updated upstream
     suspend fun insert(user: UserEntity)
     // update room
     @Update
@@ -28,13 +27,5 @@ interface UserDao {
     // delete room
     @Delete
     suspend fun delete(user: UserEntity)
-=======
-    suspend fun insert(user: UserEntity): Long
-    // update room
-    @Update
-    suspend fun update(user: UserEntity): Int
-    // delete room
-    @Delete
-    suspend fun delete(user: UserEntity): Int
->>>>>>> Stashed changes
+
 }
