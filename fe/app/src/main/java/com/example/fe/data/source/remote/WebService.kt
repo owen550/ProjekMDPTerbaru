@@ -64,7 +64,7 @@ interface WebService {
     ): Response<User>
 
     @FormUrlEncoded
-    @PUT("api/users/updateuser")
+    @POST("api/users/updateuser") // Changed from PUT to POST if your backend uses POST for update
     suspend fun updateUser(
         @Field("userid") userId: Int,
         @Field("name") name: String,
@@ -78,7 +78,7 @@ interface WebService {
     ): Response<User>
 
     @FormUrlEncoded
-    @PUT("api/users/deleteuser")
+    @POST("api/users/deleteuser") // Changed from PUT to POST if your backend uses POST for delete
     suspend fun deleteUser(
         @Field("userid") userId: Int
     ): Response<User>
@@ -108,7 +108,7 @@ interface WebService {
         ): Response<Course>
 
         @FormUrlEncoded
-        @PUT("api/course/update")
+        @POST("api/course/update")
         suspend fun updateCourse(
             @Field("userid") userId: Int,
             @Field("title") title: String,
@@ -116,7 +116,7 @@ interface WebService {
             @Field("courseid") courseId: Int
         ): Response<Course>
 
-        @PUT("api/course/delete")
+        @POST("api/course/delete")
         suspend fun deleteCourse(): Response<Unit>
 
     //==========================================================
@@ -133,7 +133,7 @@ interface WebService {
         @POST("api/coursetopic/insert")
         suspend fun insertTopic(
             @Field("userid") userId: Int,
-            @Field("courseid") courseId: Int,
+            @Field("courseId") courseId: Int,
             @Field("topic_number") topicNumber: Int,
             @Field("title") title: String,
             @Field("description") description: String,
@@ -141,7 +141,7 @@ interface WebService {
         ): Response<CourseTopic>
 
         @FormUrlEncoded
-        @PUT("api/coursetopic/update")
+        @POST("api/coursetopic/update")
         suspend fun updateTopic(
             @Field("userid") userId: Int,
             @Field("coursetopicid") topicNumber: Int,
@@ -149,7 +149,7 @@ interface WebService {
             @Field("title") title: String
         ): Response<CourseTopic>
 
-        @PUT("api/coursetopic/delete")
+        @POST("api/coursetopic/delete")
         suspend fun deleteTopic(): Response<Unit>
 
 
@@ -179,7 +179,7 @@ interface WebService {
         ): Response<TopicMaterial>
 
         @FormUrlEncoded
-        @PUT("api/topicmaterial/update")
+        @POST("api/topicmaterial/update")
         suspend fun updateMaterial(
             @Field("userid") userId: Int,
             @Field("topic_id") topicId: Int,
@@ -188,7 +188,7 @@ interface WebService {
         ): Response<TopicMaterial>
 
         @FormUrlEncoded
-        @PUT("api/topicmaterial/delete")
+        @POST("api/topicmaterial/delete")
         suspend fun deleteMaterial(
             @Field("topic_id") topicId: Int
         ): Response<Unit>
@@ -253,7 +253,7 @@ interface WebService {
         ): Response<Quizzes>
 
         @FormUrlEncoded
-        @PUT("api/quizz/update")
+        @POST("api/quizz/update")
         suspend fun updateQuiz(
             @Field("userid") userId: Int,
             @Field("quiz_category") category: String,
@@ -262,7 +262,7 @@ interface WebService {
         ): Response<Quizzes>
 
         @FormUrlEncoded
-        @PUT("api/quizz/delete")
+        @POST("api/quizz/delete")
         suspend fun deleteQuiz(
             @Field("id") id: Int
         ): Response<Unit>
@@ -291,7 +291,7 @@ interface WebService {
         ): Response<QuizQuestion>
 
         @FormUrlEncoded
-        @PUT("api/quizquestions/update")
+        @POST("api/quizquestions/update")
         suspend fun updateQuestion(
             @Field("userid") userId: Int,
             @Field("quiz_category") quizCategory: String,
@@ -300,7 +300,7 @@ interface WebService {
         ): Response<QuizQuestion>
 
         @FormUrlEncoded
-        @PUT("api/quizquestions/delete")
+        @POST("api/quizquestions/delete")
         suspend fun deleteQuestion(
             @Field("userid") userId: Int,
             @Field("id") id: Int
@@ -331,7 +331,7 @@ interface WebService {
         ): Response<QuizQuestionOption>
 
         @FormUrlEncoded
-        @PUT("api/quizquestionoptions/update")
+        @POST("api/quizquestionoptions/update")
         suspend fun updateOption(
             @Field("userid") userId: Int,
             @Field("id") id: Int,
@@ -341,7 +341,7 @@ interface WebService {
         ): Response<QuizQuestionOption>
 
         @FormUrlEncoded
-        @PUT("api/quizquestionoptions/delete")
+        @POST("api/quizquestionoptions/delete")
         suspend fun deleteOption(
             @Field("userid") userId: Int,
             @Field("id") id: Int
@@ -375,7 +375,7 @@ interface WebService {
         ): Response<CsChatbotChat>
 
         @FormUrlEncoded
-        @PUT("api/chatbot/{userId}/{chatId}")
+        @POST("api/chatbot/{userId}/{chatId}")
         suspend fun updateChat(
             @Path("userId") userId: Int,
             @Path("chatId") chatId: Int,
@@ -419,7 +419,7 @@ interface WebService {
     ): Response<DataResponse<Payment>>
 
     @FormUrlEncoded
-    @PUT("api/payments/{userId}/{paymentId}")
+    @POST("api/payments/{userId}/{paymentId}")
     suspend fun updatePayment(
         @Path("userId") userId: Int,
         @Path("paymentId") paymentId: Int,
@@ -450,28 +450,28 @@ interface WebService {
         @Field("course_id") courseId: Int,
         @Field("is_bookmarked") isBookmarked: Boolean?,
         @Field("status") status: String?
-    ): Response<CourseEnrollment>
+    ): Response<DataResponse<CourseEnrollment>>
 
     @GET("api/courseenrollments/all/{userId}")
     suspend fun getAllEnrollments(
         @Path("userId") userId: Int
-    ): Response<List<CourseEnrollment>>
+    ): Response<DataResponse<List<CourseEnrollment>>>
 
     @GET("api/courseenrollments/{userId}/{studentId}")
     suspend fun getEnrollmentByStudent(
         @Path("userId") userId: Int,
         @Path("studentId") studentId: Int
-    ): Response<List<CourseEnrollment>>
+    ): Response<DataResponse<List<CourseEnrollment>>>
 
     @GET("api/courseenrollments/{userId}/{studentId}/{enrollmentId}")
     suspend fun getEnrollmentDetail(
         @Path("userId") userId: Int,
         @Path("studentId") studentId: Int,
         @Path("enrollmentId") enrollmentId: Int
-    ): Response<CourseEnrollment>
+    ): Response<DataResponse<CourseEnrollment>>
 
     @FormUrlEncoded
-    @PUT("api/courseenrollments/{userId}/{studentId}/{enrollmentId}")
+    @POST("api/courseenrollments/{userId}/{studentId}/{enrollmentId}")
     suspend fun updateEnrollment(
         @Path("userId") userId: Int,
         @Path("studentId") studentId: Int,
@@ -480,14 +480,14 @@ interface WebService {
         @Field("course_id") courseId: Int,
         @Field("is_bookmarked") isBookmarked: Boolean?,
         @Field("status") status: String?
-    ): Response<CourseEnrollment>
+    ): Response<DataResponse<CourseEnrollment>>
 
     @DELETE("api/courseenrollments/{userId}/{studentId}/{enrollmentId}")
     suspend fun deleteEnrollment(
         @Path("userId") userId: Int,
         @Path("studentId") studentId: Int,
         @Path("enrollmentId") enrollmentId: Int
-    ): Response<Unit>
+    ): Response<DataResponse<Unit>>
 //==========================================================
 //StudentSubmission==================================================
 
@@ -518,7 +518,7 @@ interface WebService {
     ): Response<StudentSubmission>
 
     @FormUrlEncoded
-    @PUT("api/studentsubmissionsroutes/update")
+    @POST("api/studentsubmissionsroutes/update")
     suspend fun updateSubmission(
         @Field("userid") userId: Int,
         @Field("id") submissionId: Int,
@@ -530,7 +530,7 @@ interface WebService {
     ): Response<StudentSubmission>
 
     @FormUrlEncoded
-    @PUT("api/studentsubmissionsroutes/delete")
+    @POST("api/studentsubmissionsroutes/delete")
     suspend fun deleteSubmission(
         @Field("userid") userId: Int,
         @Field("id") submissionId: Int

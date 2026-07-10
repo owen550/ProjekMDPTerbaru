@@ -9,6 +9,7 @@ import com.example.fe.data.ActivityLog
 import com.example.fe.data.AdminMessage
 import com.example.fe.data.Payment
 import com.example.fe.data.Course
+import com.example.fe.data.CourseEnrollment
 import com.example.fe.data.CourseTopic
 import com.example.fe.data.CsChatbotChat
 import com.example.fe.data.TopicMaterial
@@ -47,6 +48,9 @@ class TodosViewModel(
 
     private val _insertSuccess = MutableLiveData<Boolean>()
     val insertSuccess: LiveData<Boolean> = _insertSuccess
+
+    private val _enrollments = MutableLiveData<List<CourseEnrollment>>()
+    val enrollments: LiveData<List<CourseEnrollment>> = _enrollments
 
     // ==== other func =======
     fun getTopicMaterialByIDCourseTopic(
@@ -541,6 +545,65 @@ class TodosViewModel(
         }
     }
 
+    // ============================
+    // COURSE ENROLLMENT
+    // ============================
+
+    fun fetchEnrollments(studentId: Int) {
+        val userId = currentUserId ?: return
+        viewModelScope.launch {
+            try {
+                val result = todoRepository.getEnrollmentByStudent(userId, studentId)
+                result
+                    .onSuccess { list ->
+                        _enrollments.value = list
+                    }
+                    .onFailure { error ->
+                        _message.value = error.message ?: "Failed to fetch enrollments"
+                    }
+            } catch (e: Exception) {
+                _message.value = e.message ?: "Terjadi kesalahan"
+            }
+        }
+    }
+
+    fun enrollCourse(studentId: Int, courseId: Int) {
+        val userId = currentUserId ?: return
+        
+        // Check if already enrolled
+        val isAlreadyEnrolled = _enrollments.value?.any { it.course_id == courseId } == true
+        if (isAlreadyEnrolled) {
+            _message.value = "You are already enrolled in this course!"
+            return
+        }
+
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                val result = todoRepository.createEnrollment(
+                    userId = userId,
+                    studentId = studentId,
+                    studentIdBody = studentId,
+                    courseId = courseId,
+                    isBookmarked = false,
+                    status = "active"
+                )
+                result
+                    .onSuccess {
+                        _message.value = "Successfully enrolled in course!"
+                        fetchEnrollments(studentId)
+                    }
+                    .onFailure { error ->
+                        _message.value = error.message ?: "Failed to enroll in course"
+                    }
+            } catch (e: Exception) {
+                _message.value = e.message ?: "Terjadi kesalahan"
+            } finally {
+                _loading.value = false
+            }
+        }
+    }
+
 
     fun reset() {
         _message.value = ""
@@ -553,5 +616,6 @@ class TodosViewModel(
         _oneuser.value = null
         _onetopicmaterial.value = null
         _insertSuccess.value = false
+        _enrollments.value = emptyList()
     }
 }

@@ -891,10 +891,11 @@ class RetrofitDataSource(
     ): Result<CourseEnrollment> {
         return try {
             val response = retrofitService.createEnrollment(userId, studentId, studentIdBody, courseId, isBookmarked, status)
-            if (response.isSuccessful && response.body() != null) {
-                Result.success(response.body()!!)
+            val body = response.body()
+            if (response.isSuccessful && body?.data != null) {
+                Result.success(body.data!!)
             } else {
-                Result.failure(Exception(response.message()))
+                Result.failure(Exception(body?.message ?: response.message()))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -904,10 +905,11 @@ class RetrofitDataSource(
     override suspend fun getAllEnrollments(userId: Int): Result<List<CourseEnrollment>> {
         return try {
             val response = retrofitService.getAllEnrollments(userId)
-            if (response.isSuccessful && response.body() != null) {
-                Result.success(response.body()!!)
+            val body = response.body()
+            if (response.isSuccessful && body?.data != null) {
+                Result.success(body.data!!)
             } else {
-                Result.failure(Exception(response.message()))
+                Result.failure(Exception(body?.message ?: response.message()))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -917,10 +919,11 @@ class RetrofitDataSource(
     override suspend fun getEnrollmentByStudent(userId: Int, studentId: Int): Result<List<CourseEnrollment>> {
         return try {
             val response = retrofitService.getEnrollmentByStudent(userId, studentId)
-            if (response.isSuccessful && response.body() != null) {
-                Result.success(response.body()!!)
+            val body = response.body()
+            if (response.isSuccessful && body?.data != null) {
+                Result.success(body.data!!)
             } else {
-                Result.failure(Exception(response.message()))
+                Result.failure(Exception(body?.message ?: response.message()))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -930,10 +933,11 @@ class RetrofitDataSource(
     override suspend fun getEnrollmentDetail(userId: Int, studentId: Int, enrollmentId: Int): Result<CourseEnrollment> {
         return try {
             val response = retrofitService.getEnrollmentDetail(userId, studentId, enrollmentId)
-            if (response.isSuccessful && response.body() != null) {
-                Result.success(response.body()!!)
+            val body = response.body()
+            if (response.isSuccessful && body?.data != null) {
+                Result.success(body.data!!)
             } else {
-                Result.failure(Exception(response.message()))
+                Result.failure(Exception(body?.message ?: response.message()))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -951,10 +955,11 @@ class RetrofitDataSource(
     ): Result<CourseEnrollment> {
         return try {
             val response = retrofitService.updateEnrollment(userId, studentId, enrollmentId, studentIdBody, courseId, isBookmarked, status)
-            if (response.isSuccessful && response.body() != null) {
-                Result.success(response.body()!!)
+            val body = response.body()
+            if (response.isSuccessful && body?.data != null) {
+                Result.success(body.data!!)
             } else {
-                Result.failure(Exception(response.message()))
+                Result.failure(Exception(body?.message ?: response.message()))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -964,10 +969,11 @@ class RetrofitDataSource(
     override suspend fun deleteEnrollment(userId: Int, studentId: Int, enrollmentId: Int): Result<Unit> {
         return try {
             val response = retrofitService.deleteEnrollment(userId, studentId, enrollmentId)
+            val body = response.body()
             if (response.isSuccessful) {
                 Result.success(Unit)
             } else {
-                Result.failure(Exception(response.message()))
+                Result.failure(Exception(body?.message ?: response.message()))
             }
         } catch (e: Exception) {
             Result.failure(e)

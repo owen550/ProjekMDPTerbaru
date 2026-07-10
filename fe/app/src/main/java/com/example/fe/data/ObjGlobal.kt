@@ -47,14 +47,14 @@ data class AdminMessage(
 
 // === CourseEnrollment ===
 data class CourseEnrollment(
-    val id: Int,
-    val student_id: Int,
-    val course_id: Int,
-    val is_bookmarked: Boolean,
-    val status: String,
-    val created_at: String,
-    val updated_at: String,
-    val deleted_at: String?
+    val id: Int? = null,
+    val student_id: Int? = null,
+    val course_id: Int? = null,
+    val is_bookmarked: Boolean? = null,
+    val status: String? = null,
+    val created_at: String? = null,
+    val updated_at: String? = null,
+    val deleted_at: String? = null
 )
 
 // === Course ===
