@@ -42,6 +42,7 @@ class AdminUserListFragment : Fragment() {
         observeViewModel()
 
         viewModel.fetchAllUsers()
+        viewModel.getOneUserByID()
     }
 
     private fun setupRecyclerView() {
@@ -104,8 +105,12 @@ class AdminUserListFragment : Fragment() {
             userAdapter.updateData(users)
         }
 
+        viewModel.oneuser.observe(viewLifecycleOwner) { user ->
+            binding.tvAdminName.text = user?.name ?: "Admin"
+        }
+
         viewModel.message.observe(viewLifecycleOwner) { msg ->
-            if (msg.isNotEmpty()) {
+            if (msg.isNotEmpty() && !msg.contains("Admin") && msg != "User tidak ketemu") {
                 Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
             }
         }

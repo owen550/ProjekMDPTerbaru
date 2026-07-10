@@ -41,6 +41,7 @@ class AdminLogFragment : Fragment() {
         setupListeners()
 
         viewModel.fetchAllActivityLogs()
+        viewModel.getOneUserByID()
     }
 
     private fun setupRecyclerView() {
@@ -70,13 +71,18 @@ class AdminLogFragment : Fragment() {
             logAdapter.submitList(logs)
         }
 
+        viewModel.oneuser.observe(viewLifecycleOwner) { user ->
+            binding.tvAdminName.text = user?.name ?: "Admin"
+        }
+
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
             // Handle loading state
         }
 
         viewModel.message.observe(viewLifecycleOwner) { message ->
-            if (message.isNotEmpty() && message != "User tidak ketemu") {
-                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            if (message.isNotEmpty() && message != "User tidak ketemu" && !message.contains("Admin")) {
+                 // Avoid showing name toast if it's just the name set in getOneUserByID
+                 // (Though getOneUserByID in ViewModel sets _message.value = user.name)
             }
         }
     }

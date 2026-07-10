@@ -504,45 +504,39 @@ class TodosViewModel(
     ) {
         viewModelScope.launch {
             try {
-
-                // 1. Save user's message
+                // 1. Simpan prompt user ke DB
                 todoRepository.createChat(
                     userId = userId,
                     sender = "user",
                     message = message
                 )
+                
+                // Refresh UI agar prompt muncul
+                getChatbotMessages(userId)
 
-                // 2. Ask AI
-                val aiResult = todoRepository.chatWithAi(role, message)
+                // 2. Ambil respon AI dari backend
+                // Kita gunakan userId.toString() sebagai identifier role di backend agar riwayat unik per user
+                val aiResult = todoRepository.chatWithAi(userId.toString(), message)
 
-                aiResult
-                    .onSuccess { aiResponse ->
-
-                        // 3. Save AI reply
+                if (aiResult.isSuccess) {
+                    val aiData = aiResult.getOrNull()
+                    if (aiData != null) {
+                        // 3. Simpan balasan AI ke DB dengan sender "ai"
+                        // Respon AI ada di aiData.data (sesuai backend response.text)
                         todoRepository.createChat(
                             userId = userId,
-                            sender = "ai",
-                            message = aiResponse.data
+                            sender = "bot",
+                            message = aiData.data
                         )
-
-                        // 4. Reload conversation
-                        val chatResult = todoRepository.getChats(userId)
-
-                        chatResult
-                            .onSuccess { chats ->
-                                _chatbotMessages.value = chats
-                            }
-                            .onFailure { error ->
-                                _message.value =
-                                    error.message ?: "Failed to refresh chat"
-                            }
+                        // 4. Reload percakapan
+                        getChatbotMessages(userId)
                     }
-                    .onFailure { error ->
-                        _message.value = error.message ?: "AI request failed"
-                    }
+                } else {
+                    _message.value = "AI Error: ${aiResult.exceptionOrNull()?.message}"
+                }
 
             } catch (e: Exception) {
-                _message.value = e.message ?: "Terjadi kesalahan"
+                _message.value = "Chat Error: ${e.message}"
             }
         }
     }
@@ -554,6 +548,8 @@ class TodosViewModel(
         _activityLogs.value = emptyList()
         _payments.value = emptyList()
         _users.value = emptyList()
+        _messages.value = emptyList()
+        _chatbotMessages.value = emptyList()
         _oneuser.value = null
         _onetopicmaterial.value = null
         _insertSuccess.value = false

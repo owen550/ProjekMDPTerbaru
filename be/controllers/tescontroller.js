@@ -15,23 +15,23 @@ const ai = new GoogleGenAI({});
 // };
 
 const data = [
-    {
-        id: 1,
-        nama: 'kumar'
-    },
-    {
-        id: 2,
-        nama: 'asep'
-    },
-    {
-        id: 3,
-        nama: 'yanto'
-    },
-]
+  {
+    id: 1,
+    nama: "kumar",
+  },
+  {
+    id: 2,
+    nama: "asep",
+  },
+  {
+    id: 3,
+    nama: "yanto",
+  },
+];
 var user = {
   username: null,
-  aicontent: []
-}
+  aicontent: [],
+};
 
 exports.tesapi = async (req, res) => {
   try {
@@ -41,53 +41,51 @@ exports.tesapi = async (req, res) => {
   }
 };
 
-var list_user = [] // simpamn percakapan user
+var list_user = []; // simpamn percakapan user
 // const chat = [
 //   {role:'model',parts:[{text: 'tes halo, saya suka pria solo'}]}
 // ]// ini buat simpan history chat, ntik pindah ke db
 
-exports.tesai = async(req,res) => {
-  try{
+exports.tesai = async (req, res) => {
+  try {
     // === tangkap isi body ===
-    const { role,pesan } = req.body;
+    const { role, pesan } = req.body;
 
     // === validasi ===
-    if(!pesan || !role){ //
+    if (!pesan || !role) {
+      //
       return res.status(400).json({
         success: false,
-        message: "Pesan Anda Tidak Valid atau Role Tak Valid"
-      })
+        message: "Pesan Anda Tidak Valid atau Role Tak Valid",
+      });
     }
 
     // === kalau user belum ada maka add user ===
-    if(list_user.find((it) => it.username == role) == null){ // tidak ada maka buat baru
-      var user_new = {...user}
-      user_new.username = role
+    if (list_user.find((it) => it.username == role) == null) {
+      // tidak ada maka buat baru
+      var user_new = { ...user };
+      user_new.username = role;
       user_new.aicontent = [
         {
-          role:'user',
-          parts:[
-            {text: pesan}
-          ]
-        }
-      ]
-      list_user.push(user_new)
-    }
-    else{ // ada, cari obj nya
-      for(var i = 0; i < list_user.length; i ++){
-        if(list_user[i].username == role){
+          role: "user",
+          parts: [{ text: pesan }],
+        },
+      ];
+      list_user.push(user_new);
+    } else {
+      // ada, cari obj nya
+      for (var i = 0; i < list_user.length; i++) {
+        if (list_user[i].username == role) {
           list_user[i].aicontent.push({
-            role:'user',
-            parts:[
-              {text: pesan}
-            ]
-          })
+            role: "user",
+            parts: [{ text: pesan }],
+          });
         }
       }
     }
-    
+
     // === filter chat user ===
-    var filterchat = list_user.find((it) => it.username == role)
+    var filterchat = list_user.find((it) => it.username == role);
 
     // === mulai api ke gemini ===
     const response = await ai.models.generateContent({
@@ -127,17 +125,16 @@ exports.tesai = async(req,res) => {
       "Saya tidak memiliki memori..."
       "Saya tidak dapat mengingat..."
       `,
-      contents: filterchat.aicontent
-    })
+      contents: filterchat.aicontent,
+    });
 
     // === respon gemini ===
     return res.status(200).json({
       success: true,
       message: "AI Berhasil Merespon",
-      data: response.text
-    })
+      data: response.text,
+    });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
   }
-  catch(error){
-    return res.status(500).json({error: error.message})
-  }
-}
+};

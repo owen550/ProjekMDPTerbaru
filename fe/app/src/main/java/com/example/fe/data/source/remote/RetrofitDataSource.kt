@@ -1078,6 +1078,7 @@ class RetrofitDataSource(
     }
 
     //=====================
+
     override suspend fun chatWithAi(
         role: String,
         pesan: String
@@ -1088,7 +1089,9 @@ class RetrofitDataSource(
             if (response.isSuccessful && response.body() != null) {
                 Result.success(response.body()!!)
             } else {
-                Result.failure(Exception(response.message()))
+                // MEMPERBAIKI INI: Ambil detail error dari server
+                val errorMsg = response.errorBody()?.string() ?: response.message()
+                Result.failure(Exception(errorMsg))
             }
         } catch (e: Exception) {
             Result.failure(e)
