@@ -6,7 +6,11 @@ import androidx.room.PrimaryKey
 @Entity (tableName = "user")
 data class UserEntity(
     @PrimaryKey(autoGenerate = true)
+<<<<<<< Updated upstream
     val id: Int = 0,
+=======
+    val id: Int? = null,
+>>>>>>> Stashed changes
     val name: String,
     val username: String? = null,
     val password: String? = null,

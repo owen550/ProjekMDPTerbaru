@@ -20,7 +20,7 @@ class TodoApplication: Application(){
         val retrofit = Retrofit.Builder().addConverterFactory(
             MoshiConverterFactory.create(moshi)
 
-        ).baseUrl("http://192.168.1.39:3000/").build()//  10.10.5.202 || 192.168.110.9
+        ).baseUrl("http://192.168.1.5:3000/").build()//  10.10.5.202 || 192.168.1.5
 
         val retrofitService = retrofit.create(WebService::class.java)
         todoRepository = DefaultTodoRepository( // ntik lek wes nyalakno lagi room me
