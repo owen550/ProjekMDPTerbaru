@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://tools.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/dashboardFragmen">
+
+    <fragment
+        android:id="@+id/dashboardFragmen"
+        android:name="com.example.fe.ui.todo.DashboardFragmen"
+        android:label="Dashboard">
+
+        <action
+            android:id="@+id/action_dashboardFragmen_to_coursActivity"
+            app:destination="@id/coursActivity" />
+
+        <action
+            android:id="@+id/action_dashboardFragmen_to_gradeSummary"
+            app:destination="@id/gradeSummary" />
+        <action
+            android:id="@+id/action_dashboardFragmen_to_addCourseFragment"
+            app:destination="@id/addCourseFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/profileFragmen"
+        android:name="com.example.fe.ui.todo.ProfileFragmen"
+        android:label="Profile" >
+        <action
+            android:id="@+id/action_profileFragmen_to_paymentDetailFragment"
+            app:destination="@id/paymentDetailFragment" />
+        <action
+            android:id="@+id/action_profileFragmen_to_adminListFragment"
+            app:destination="@id/adminListFragment" />
+        <action
+            android:id="@+id/action_profileFragmen_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/activityCourseMateriFragmen"
+        android:name="com.example.fe.ui.todo.ActivityCourseMateriFragmen"
+        android:label="Course Material" />
+
+
+    <fragment
+        android:id="@+id/coursActivity"
+        android:name="com.example.fe.ui.todo.CoursActivity"
+        android:label="Courses">
+
+        <action
+            android:id="@+id/action_coursActivity_to_activityCourseMateriFragmen"
+            app:destination="@id/activityCourseMateriFragmen" />
+        <action
+            android:id="@+id/action_coursActivity_to_addCourseTopicFragment"
+            app:destination="@id/addCourseTopicFragment" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/adminUserListFragment"
+        android:name="com.example.fe.ui.todo.AdminUserListFragment"
+        android:label="Users">
+        <action
+            android:id="@+id/action_adminUserListFragment_to_userDetailFragment"
+            app:destination="@id/userDetailFragment" />
+        <action
+            android:id="@+id/action_adminUserListFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userDetailFragment"
+        android:name="com.example.fe.ui.todo.UserDetailFragment"
+        android:label="User Detail" >
+        <argument
+            android:name="userId"
+            app:argType="integer" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/adminLogFragment"
+        android:name="com.example.fe.ui.todo.AdminLogFragment"
+        android:label="Logs" >
+        <action
+            android:id="@+id/action_adminLogFragment_to_userDetailFragment"
+            app:destination="@id/userDetailFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/adminPaymentFragment"
+        android:name="com.example.fe.ui.todo.AdminPaymentFragment"
+        android:label="Payments">
+
+        <action
+            android:id="@+id/action_adminPaymentFragment_to_paymentDetailFragment"
+            app:destination="@id/paymentDetailFragment" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/paymentDetailFragment"
+        android:name="com.example.fe.ui.todo.PaymentDetailFragment"
+        android:label="Payment Detail" />
+
+
+    <fragment
+        android:id="@+id/gradeSummary"
+        android:name="com.example.fe.ui.todo.GradeSummary"
+        android:label="Grades" />
+
+    <fragment
+        android:id="@+id/chatFragment2"
+        android:name="com.example.fe.ui.todoform.ChatbotFragment"
+        android:label="AI Chat" />
+
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.fe.ui.todoform.ChatFragment"
+        android:label="Chat" />
+
+    <fragment
+        android:id="@+id/adminListFragment"
+        android:name="com.example.fe.ui.todo.AdminListFragment"
+        android:label="Support Admin" >
+        <action
+            android:id="@+id/action_adminListFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.fe.ui.todoform.EditProfileFragment"
+        android:label="EditProfileFragment" />
+
+    <fragment
+        android:id="@+id/addCourseFragment"
+        android:name="com.example.fe.ui.todo.AddCourseFragment"
+        android:label="AddCourseFragment" />
+
+    <fragment
+        android:id="@+id/addCourseTopicFragment"
+        android:name="com.example.fe.ui.todo.AddCourseTopicFragment"
+        android:label="AddCourseTopicFragment" >
+        <action
+            android:id="@+id/action_addCourseTopicFragment_to_topicMaterialsFragment"
+            app:destination="@id/topicMaterialsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/topicMaterialsFragment"
+        android:name="com.example.fe.ui.todo.TopicMaterialsFragment"
+        android:label="TopicMaterialsFragment" >
+        <argument
+            android:name="courseTopicId"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_topicMaterialsFragment_to_coursActivity"
+            app:destination="@id/coursActivity" />
+    </fragment>
+
+</navigation>
