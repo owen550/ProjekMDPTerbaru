@@ -41,13 +41,13 @@ class TodoFormViewModel(
                     name = name
                 )
                 var result = todoRepository.updateUser(updatedUsers!!)
-                .onSuccess {
-                    user = updatedUsers // ganti update usernya
-                    _message.value = "Berhasil Mengupate User"
-                }
-                .onFailure { error ->
-                    _message.value = "Gagal : " + error.message
-                }
+                    .onSuccess {
+                        user = updatedUsers // ganti update usernya
+                        _message.value = "Berhasil Mengupate User"
+                    }
+                    .onFailure { error ->
+                        _message.value = "Gagal : " + error.message
+                    }
             } catch (e: Exception){
                 _message.value = "" // jangan munculin apa apa
             }

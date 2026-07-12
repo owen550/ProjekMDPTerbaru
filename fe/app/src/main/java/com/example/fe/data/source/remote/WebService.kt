@@ -64,7 +64,7 @@ interface WebService {
     ): Response<User>
 
     @FormUrlEncoded
-    @PUT("api/users/updateuser")
+    @POST("api/users/updateuser") // Changed from PUT to POST if your backend uses POST for update
     suspend fun updateUser(
         @Field("userid") userId: Int,
         @Field("name") name: String,
@@ -78,7 +78,7 @@ interface WebService {
     ): Response<User>
 
     @FormUrlEncoded
-    @PUT("api/users/deleteuser")
+    @POST("api/users/deleteuser") // Changed from PUT to POST if your backend uses POST for delete
     suspend fun deleteUser(
         @Field("userid") userId: Int
     ): Response<User>
@@ -86,112 +86,112 @@ interface WebService {
 
     //COURSE==================================================
 
-        @FormUrlEncoded
-        @POST("api/course/alldata")
-        suspend fun getAllCourses(
-            @Field("userid") userId: Int
-        ): Response<List<Course>>
+    @FormUrlEncoded
+    @POST("api/course/alldata")
+    suspend fun getAllCourses(
+        @Field("userid") userId: Int
+    ): Response<List<Course>>
 
-        @FormUrlEncoded
-        @POST("api/course/getbyid")
-        suspend fun getCourseById(
-            @Field("userid") userId: Int,
-            @Field("courseid") courseId: Int
-        ): Response<Course>
+    @FormUrlEncoded
+    @POST("api/course/getbyid")
+    suspend fun getCourseById(
+        @Field("userid") userId: Int,
+        @Field("courseid") courseId: Int
+    ): Response<Course>
 
-        @FormUrlEncoded
-        @POST("api/course/insert")
-        suspend fun insertCourse(
-            @Field("userid") userId: Int,
-            @Field("title") title: String,
-            @Field("category") category: String
-        ): Response<Course>
+    @FormUrlEncoded
+    @POST("api/course/insert")
+    suspend fun insertCourse(
+        @Field("userid") userId: Int,
+        @Field("title") title: String,
+        @Field("category") category: String
+    ): Response<Course>
 
-        @FormUrlEncoded
-        @PUT("api/course/update")
-        suspend fun updateCourse(
-            @Field("userid") userId: Int,
-            @Field("title") title: String,
-            @Field("category") category: String,
-            @Field("courseid") courseId: Int
-        ): Response<Course>
+    @FormUrlEncoded
+    @POST("api/course/update")
+    suspend fun updateCourse(
+        @Field("userid") userId: Int,
+        @Field("title") title: String,
+        @Field("category") category: String,
+        @Field("courseid") courseId: Int
+    ): Response<Course>
 
-        @PUT("api/course/delete")
-        suspend fun deleteCourse(): Response<Unit>
+    @POST("api/course/delete")
+    suspend fun deleteCourse(): Response<Unit>
 
     //==========================================================
     //COURSE TOPIC==================================================
 
-        @FormUrlEncoded
-        @POST("api/coursetopic/alldata")
-        suspend fun getAllTopics(
-            @Field("userid") userid: Int,
-            @Field("courseid") courseid: Int,
-        ): Response<List<CourseTopic>>
+    @FormUrlEncoded
+    @POST("api/coursetopic/alldata")
+    suspend fun getAllTopics(
+        @Field("userid") userid: Int,
+        @Field("courseid") courseid: Int,
+    ): Response<List<CourseTopic>>
 
-        @FormUrlEncoded
-        @POST("api/coursetopic/insert")
-        suspend fun insertTopic(
-            @Field("userid") userId: Int,
-            @Field("courseid") courseId: Int,
-            @Field("topic_number") topicNumber: Int,
-            @Field("title") title: String,
-            @Field("description") description: String,
-            @Field("content_type") contentType: String
-        ): Response<CourseTopic>
+    @FormUrlEncoded
+    @POST("api/coursetopic/insert")
+    suspend fun insertTopic(
+        @Field("userid") userId: Int,
+        @Field("courseId") courseId: Int,
+        @Field("topic_number") topicNumber: Int,
+        @Field("title") title: String,
+        @Field("description") description: String,
+        @Field("content_type") contentType: String
+    ): Response<CourseTopic>
 
-        @FormUrlEncoded
-        @PUT("api/coursetopic/update")
-        suspend fun updateTopic(
-            @Field("userid") userId: Int,
-            @Field("coursetopicid") topicNumber: Int,
-            @Field("description") description: String,
-            @Field("title") title: String
-        ): Response<CourseTopic>
+    @FormUrlEncoded
+    @POST("api/coursetopic/update")
+    suspend fun updateTopic(
+        @Field("userid") userId: Int,
+        @Field("coursetopicid") topicNumber: Int,
+        @Field("description") description: String,
+        @Field("title") title: String
+    ): Response<CourseTopic>
 
-        @PUT("api/coursetopic/delete")
-        suspend fun deleteTopic(): Response<Unit>
+    @POST("api/coursetopic/delete")
+    suspend fun deleteTopic(): Response<Unit>
 
 
     //==========================================================
     //Topic Material==================================================
 
-        @FormUrlEncoded
-        @POST("api/topicmaterial/alldata")
-        suspend fun getAllMaterials(
-            @Field("userid") userId: Int
-        ): Response<List<TopicMaterial>>
+    @FormUrlEncoded
+    @POST("api/topicmaterial/alldata")
+    suspend fun getAllMaterials(
+        @Field("userid") userId: Int
+    ): Response<List<TopicMaterial>>
 
-        @FormUrlEncoded
-        @POST("api/topicmaterial/getbyid")
-        suspend fun getMaterialById(
-            @Field("userid") userId: Int,
-            @Field("topic_id") topic_id: Int
-        ): Response<TopicMaterial>
+    @FormUrlEncoded
+    @POST("api/topicmaterial/getbyid")
+    suspend fun getMaterialById(
+        @Field("userid") userId: Int,
+        @Field("topic_id") topic_id: Int
+    ): Response<TopicMaterial>
 
-        @FormUrlEncoded
-        @POST("api/topicmaterial/insert")
-        suspend fun insertMaterial(
-            @Field("userid") userId: Int,
-            @Field("video_url") videoUrl: String,
-            @Field("attachment_file") attachmentFile: String,
-            @Field("topic_id") topicId: Int,
-        ): Response<TopicMaterial>
+    @FormUrlEncoded
+    @POST("api/topicmaterial/insert")
+    suspend fun insertMaterial(
+        @Field("userid") userId: Int,
+        @Field("video_url") videoUrl: String,
+        @Field("attachment_file") attachmentFile: String,
+        @Field("topic_id") topicId: Int,
+    ): Response<TopicMaterial>
 
-        @FormUrlEncoded
-        @PUT("api/topicmaterial/update")
-        suspend fun updateMaterial(
-            @Field("userid") userId: Int,
-            @Field("topic_id") topicId: Int,
-            @Field("video_url") videoUrl: String,
-            @Field("attachment_file") attachmentFile: String
-        ): Response<TopicMaterial>
+    @FormUrlEncoded
+    @POST("api/topicmaterial/update")
+    suspend fun updateMaterial(
+        @Field("userid") userId: Int,
+        @Field("topic_id") topicId: Int,
+        @Field("video_url") videoUrl: String,
+        @Field("attachment_file") attachmentFile: String
+    ): Response<TopicMaterial>
 
-        @FormUrlEncoded
-        @PUT("api/topicmaterial/delete")
-        suspend fun deleteMaterial(
-            @Field("topic_id") topicId: Int
-        ): Response<Unit>
+    @FormUrlEncoded
+    @POST("api/topicmaterial/delete")
+    suspend fun deleteMaterial(
+        @Field("topic_id") topicId: Int
+    ): Response<Unit>
 
     //==========================================================
     //AdminMessage  =======================================
@@ -230,163 +230,163 @@ interface WebService {
 
     //==========================================================
     //Quizzes=====================================================
-        @FormUrlEncoded
-        @POST("api/quizz/alldata")
-        suspend fun getAllQuizzes(
-            @Field("userid") userId: Int
-        ): Response<List<Quizzes>>
+    @FormUrlEncoded
+    @POST("api/quizz/alldata")
+    suspend fun getAllQuizzes(
+        @Field("userid") userId: Int
+    ): Response<List<Quizzes>>
 
-        @FormUrlEncoded
-        @POST("api/quizz/getbyid")
-        suspend fun getQuizById(
-            @Field("userid") userId: Int,
-            @Field("quizzid") quizId: Int
-        ): Response<Quizzes>
+    @FormUrlEncoded
+    @POST("api/quizz/getbyid")
+    suspend fun getQuizById(
+        @Field("userid") userId: Int,
+        @Field("quizzid") quizId: Int
+    ): Response<Quizzes>
 
-        @FormUrlEncoded
-        @POST("api/quizz/insert")
-        suspend fun insertQuiz(
-            @Field("userid") userId: Int,
-            @Field("topic_id") topicId: Int,
-            @Field("quiz_category") category: String,
-            @Field("question_type") questionType: String
-        ): Response<Quizzes>
+    @FormUrlEncoded
+    @POST("api/quizz/insert")
+    suspend fun insertQuiz(
+        @Field("userid") userId: Int,
+        @Field("topic_id") topicId: Int,
+        @Field("quiz_category") category: String,
+        @Field("question_type") questionType: String
+    ): Response<Quizzes>
 
-        @FormUrlEncoded
-        @PUT("api/quizz/update")
-        suspend fun updateQuiz(
-            @Field("userid") userId: Int,
-            @Field("quiz_category") category: String,
-            @Field("question_type") questionType: String,
-            @Field("id") id: Int,
-        ): Response<Quizzes>
+    @FormUrlEncoded
+    @POST("api/quizz/update")
+    suspend fun updateQuiz(
+        @Field("userid") userId: Int,
+        @Field("quiz_category") category: String,
+        @Field("question_type") questionType: String,
+        @Field("id") id: Int,
+    ): Response<Quizzes>
 
-        @FormUrlEncoded
-        @PUT("api/quizz/delete")
-        suspend fun deleteQuiz(
-            @Field("id") id: Int
-        ): Response<Unit>
+    @FormUrlEncoded
+    @POST("api/quizz/delete")
+    suspend fun deleteQuiz(
+        @Field("id") id: Int
+    ): Response<Unit>
 
     //==========================================================
     //QuizQuestions=============================================
 
-        @POST("api/quizquestions/alldata")
-        suspend fun getAllQuestions(
-            @Field("userid") userId: Int
-        ): Response<List<QuizQuestion>>
+    @POST("api/quizquestions/alldata")
+    suspend fun getAllQuestions(
+        @Field("userid") userId: Int
+    ): Response<List<QuizQuestion>>
 
-        @POST("api/quizquestions/getbyid")
-        suspend fun getQuestionById(
-            @Field("userid") userId: Int,
-            @Field("questionid") questionId: Int
-        ): Response<QuizQuestion>
+    @POST("api/quizquestions/getbyid")
+    suspend fun getQuestionById(
+        @Field("userid") userId: Int,
+        @Field("questionid") questionId: Int
+    ): Response<QuizQuestion>
 
-        @FormUrlEncoded
-        @POST("api/quizquestions/insert")
-        suspend fun insertQuestion(
-            @Field("userid") userId: Int,
-            @Field("quiz_id") quizId: Int,
-            @Field("question_text") questionText: String,
-            @Field("correct_answer") correctAnswer: String,
-        ): Response<QuizQuestion>
+    @FormUrlEncoded
+    @POST("api/quizquestions/insert")
+    suspend fun insertQuestion(
+        @Field("userid") userId: Int,
+        @Field("quiz_id") quizId: Int,
+        @Field("question_text") questionText: String,
+        @Field("correct_answer") correctAnswer: String,
+    ): Response<QuizQuestion>
 
-        @FormUrlEncoded
-        @PUT("api/quizquestions/update")
-        suspend fun updateQuestion(
-            @Field("userid") userId: Int,
-            @Field("quiz_category") quizCategory: String,
-            @Field("question_type") questionType: String,
-            @Field("id") id: Int,
-        ): Response<QuizQuestion>
+    @FormUrlEncoded
+    @POST("api/quizquestions/update")
+    suspend fun updateQuestion(
+        @Field("userid") userId: Int,
+        @Field("quiz_category") quizCategory: String,
+        @Field("question_type") questionType: String,
+        @Field("id") id: Int,
+    ): Response<QuizQuestion>
 
-        @FormUrlEncoded
-        @PUT("api/quizquestions/delete")
-        suspend fun deleteQuestion(
-            @Field("userid") userId: Int,
-            @Field("id") id: Int
-        ): Response<Unit>
+    @FormUrlEncoded
+    @POST("api/quizquestions/delete")
+    suspend fun deleteQuestion(
+        @Field("userid") userId: Int,
+        @Field("id") id: Int
+    ): Response<Unit>
 
 
     //==========================================================
     //QuizQuestionOption=================================================
 
-        @POST("api/quizquestionoptions/alldata")
-        suspend fun getAllOptions(
-            @Field("userid") userId: Int
-        ): Response<List<QuizQuestionOption>>
+    @POST("api/quizquestionoptions/alldata")
+    suspend fun getAllOptions(
+        @Field("userid") userId: Int
+    ): Response<List<QuizQuestionOption>>
 
-        @POST("api/quizquestionoptions/getbyid")
-        suspend fun getOptionById(
-            @Field("userid") userId: Int,
-            @Field("optionid") optionId: Int
+    @POST("api/quizquestionoptions/getbyid")
+    suspend fun getOptionById(
+        @Field("userid") userId: Int,
+        @Field("optionid") optionId: Int
+    ): Response<QuizQuestionOption>
+
+    @FormUrlEncoded
+    @POST("api/quizquestionoptions/insert")
+    suspend fun insertOption(
+        @Field("userid") userId: Int,
+        @Field("quiz_id") quizId: Int,
+        @Field("question_text") questionText: String,
+        @Field("correct_answer") correctAnswer: String,
+    ): Response<QuizQuestionOption>
+
+    @FormUrlEncoded
+    @POST("api/quizquestionoptions/update")
+    suspend fun updateOption(
+        @Field("userid") userId: Int,
+        @Field("id") id: Int,
+        @Field("option_letter") optionLetter: String,
+        @Field("option_text") optionText: String,
+
         ): Response<QuizQuestionOption>
 
-        @FormUrlEncoded
-        @POST("api/quizquestionoptions/insert")
-        suspend fun insertOption(
-            @Field("userid") userId: Int,
-            @Field("quiz_id") quizId: Int,
-            @Field("question_text") questionText: String,
-            @Field("correct_answer") correctAnswer: String,
-        ): Response<QuizQuestionOption>
-
-        @FormUrlEncoded
-        @PUT("api/quizquestionoptions/update")
-        suspend fun updateOption(
-            @Field("userid") userId: Int,
-            @Field("id") id: Int,
-            @Field("option_letter") optionLetter: String,
-            @Field("option_text") optionText: String,
-
-        ): Response<QuizQuestionOption>
-
-        @FormUrlEncoded
-        @PUT("api/quizquestionoptions/delete")
-        suspend fun deleteOption(
-            @Field("userid") userId: Int,
-            @Field("id") id: Int
-        ): Response<Unit>
+    @FormUrlEncoded
+    @POST("api/quizquestionoptions/delete")
+    suspend fun deleteOption(
+        @Field("userid") userId: Int,
+        @Field("id") id: Int
+    ): Response<Unit>
 
     //==========================================================
     //CHAT BOT=================================================
 
-        @FormUrlEncoded
-        @POST("api/chatbot/{userId}")
-        suspend fun createChat(
-            @Path("userId") userId: Int,
-            @Field("sender") sender: String,
-            @Field("message") message: String
-        ): Response<CsChatbotChat>
+    @FormUrlEncoded
+    @POST("api/chatbot/{userId}")
+    suspend fun createChat(
+        @Path("userId") userId: Int,
+        @Field("sender") sender: String,
+        @Field("message") message: String
+    ): Response<CsChatbotChat>
 
-        @GET("api/chatbot/all/{userId}")
-        suspend fun getAllChats(
-            @Path("userId") userId: Int
-        ): Response<List<CsChatbotChat>>
+    @GET("api/chatbot/all/{userId}")
+    suspend fun getAllChats(
+        @Path("userId") userId: Int
+    ): Response<List<CsChatbotChat>>
 
-        @GET("api/chatbot/{userId}")
-        suspend fun getChats(
-            @Path("userId") userId: Int
-        ): Response<List<CsChatbotChat>>
+    @GET("api/chatbot/{userId}")
+    suspend fun getChats(
+        @Path("userId") userId: Int
+    ): Response<List<CsChatbotChat>>
 
-        @GET("api/chatbot/{userId}/{chatId}")
-        suspend fun getChatDetail(
-            @Path("userId") userId: Int,
-            @Path("chatId") chatId: Int
-        ): Response<CsChatbotChat>
+    @GET("api/chatbot/{userId}/{chatId}")
+    suspend fun getChatDetail(
+        @Path("userId") userId: Int,
+        @Path("chatId") chatId: Int
+    ): Response<CsChatbotChat>
 
-        @FormUrlEncoded
-        @PUT("api/chatbot/{userId}/{chatId}")
-        suspend fun updateChat(
-            @Path("userId") userId: Int,
-            @Path("chatId") chatId: Int,
-            @Field("message") message: String
-        ): Response<CsChatbotChat>
+    @FormUrlEncoded
+    @POST("api/chatbot/{userId}/{chatId}")
+    suspend fun updateChat(
+        @Path("userId") userId: Int,
+        @Path("chatId") chatId: Int,
+        @Field("message") message: String
+    ): Response<CsChatbotChat>
 
-        @DELETE("api/chatbot/{userId}/{chatId}")
-        suspend fun deleteChat(
-            @Path("userId") userId: Int,
-            @Path("chatId") chatId: Int
-        ): Response<Unit>
+    @DELETE("api/chatbot/{userId}/{chatId}")
+    suspend fun deleteChat(
+        @Path("userId") userId: Int,
+        @Path("chatId") chatId: Int
+    ): Response<Unit>
     //==========================================================
     //Payment==================================================
     @FormUrlEncoded
@@ -419,7 +419,7 @@ interface WebService {
     ): Response<DataResponse<Payment>>
 
     @FormUrlEncoded
-    @PUT("api/payments/{userId}/{paymentId}")
+    @POST("api/payments/{userId}/{paymentId}")
     suspend fun updatePayment(
         @Path("userId") userId: Int,
         @Path("paymentId") paymentId: Int,
@@ -450,28 +450,28 @@ interface WebService {
         @Field("course_id") courseId: Int,
         @Field("is_bookmarked") isBookmarked: Boolean?,
         @Field("status") status: String?
-    ): Response<CourseEnrollment>
+    ): Response<DataResponse<CourseEnrollment>>
 
     @GET("api/courseenrollments/all/{userId}")
     suspend fun getAllEnrollments(
         @Path("userId") userId: Int
-    ): Response<List<CourseEnrollment>>
+    ): Response<DataResponse<List<CourseEnrollment>>>
 
     @GET("api/courseenrollments/{userId}/{studentId}")
     suspend fun getEnrollmentByStudent(
         @Path("userId") userId: Int,
         @Path("studentId") studentId: Int
-    ): Response<List<CourseEnrollment>>
+    ): Response<DataResponse<List<CourseEnrollment>>>
 
     @GET("api/courseenrollments/{userId}/{studentId}/{enrollmentId}")
     suspend fun getEnrollmentDetail(
         @Path("userId") userId: Int,
         @Path("studentId") studentId: Int,
         @Path("enrollmentId") enrollmentId: Int
-    ): Response<CourseEnrollment>
+    ): Response<DataResponse<CourseEnrollment>>
 
     @FormUrlEncoded
-    @PUT("api/courseenrollments/{userId}/{studentId}/{enrollmentId}")
+    @POST("api/courseenrollments/{userId}/{studentId}/{enrollmentId}")
     suspend fun updateEnrollment(
         @Path("userId") userId: Int,
         @Path("studentId") studentId: Int,
@@ -480,14 +480,14 @@ interface WebService {
         @Field("course_id") courseId: Int,
         @Field("is_bookmarked") isBookmarked: Boolean?,
         @Field("status") status: String?
-    ): Response<CourseEnrollment>
+    ): Response<DataResponse<CourseEnrollment>>
 
     @DELETE("api/courseenrollments/{userId}/{studentId}/{enrollmentId}")
     suspend fun deleteEnrollment(
         @Path("userId") userId: Int,
         @Path("studentId") studentId: Int,
         @Path("enrollmentId") enrollmentId: Int
-    ): Response<Unit>
+    ): Response<DataResponse<Unit>>
 //==========================================================
 //StudentSubmission==================================================
 
@@ -518,7 +518,7 @@ interface WebService {
     ): Response<StudentSubmission>
 
     @FormUrlEncoded
-    @PUT("api/studentsubmissionsroutes/update")
+    @POST("api/studentsubmissionsroutes/update")
     suspend fun updateSubmission(
         @Field("userid") userId: Int,
         @Field("id") submissionId: Int,
@@ -530,7 +530,7 @@ interface WebService {
     ): Response<StudentSubmission>
 
     @FormUrlEncoded
-    @PUT("api/studentsubmissionsroutes/delete")
+    @POST("api/studentsubmissionsroutes/delete")
     suspend fun deleteSubmission(
         @Field("userid") userId: Int,
         @Field("id") submissionId: Int

@@ -42,21 +42,22 @@ class AdminUserListFragment : Fragment() {
         observeViewModel()
 
         viewModel.fetchAllUsers()
+        viewModel.getOneUserByID()
     }
 
     private fun setupRecyclerView() {
         userAdapter = UserAdapter(
             users = emptyList(),
-            onChatClick = { user ->
+            onChatClick = { targetUser ->
                 val bundle = Bundle().apply {
                     putInt("adminId", currentUserId ?: 0)
-                    putInt("userId", user.id ?: 0)
+                    putInt("userId", targetUser.id ?: 0)
                 }
-                findNavController().navigate(R.id.chatFragment2, bundle)
+                findNavController().navigate(R.id.action_adminUserListFragment_to_chatFragment, bundle)
             },
-            onDetailClick = { user ->
+            onDetailClick = { targetUser ->
                 val bundle = Bundle().apply {
-                    putInt("userId", user.id ?: 0)
+                    putInt("userId", targetUser.id ?: 0)
                 }
                 findNavController().navigate(R.id.action_adminUserListFragment_to_userDetailFragment, bundle)
             }
@@ -87,7 +88,7 @@ class AdminUserListFragment : Fragment() {
         binding.btnStudent.setOnClickListener {
             filterByRole("student")
         }
-        
+
         binding.imgProfile.setOnClickListener {
             // Logout
             user = null
@@ -104,8 +105,12 @@ class AdminUserListFragment : Fragment() {
             userAdapter.updateData(users)
         }
 
+        viewModel.oneuser.observe(viewLifecycleOwner) { user ->
+            binding.tvAdminName.text = user?.name ?: "Admin"
+        }
+
         viewModel.message.observe(viewLifecycleOwner) { msg ->
-            if (msg.isNotEmpty()) {
+            if (msg.isNotEmpty() && !msg.contains("Admin") && msg != "User tidak ketemu") {
                 Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
             }
         }
@@ -113,7 +118,7 @@ class AdminUserListFragment : Fragment() {
 
     private fun filterData() {
         val query = binding.etSearch.text.toString().lowercase()
-        val filteredList = allUsers.filter { 
+        val filteredList = allUsers.filter {
             it.name.lowercase().contains(query) || (it.username?.lowercase()?.contains(query) == true)
         }
         userAdapter.updateData(filteredList)

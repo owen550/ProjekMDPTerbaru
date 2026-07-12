@@ -7,9 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fe.LoginPage
+import com.example.fe.R
 import com.example.fe.TodoViewModelFactory
 import com.example.fe.databinding.FragmentAdminLogBinding
 import com.example.fe.ui.todoform.currentUserId
@@ -38,10 +41,14 @@ class AdminLogFragment : Fragment() {
         setupListeners()
 
         viewModel.fetchAllActivityLogs()
+        viewModel.getOneUserByID()
     }
 
     private fun setupRecyclerView() {
-        logAdapter = LogAdapter()
+        logAdapter = LogAdapter { userId ->
+            val bundle = bundleOf("userId" to userId)
+            findNavController().navigate(R.id.action_adminLogFragment_to_userDetailFragment, bundle)
+        }
         binding.rvLogs.apply {
             adapter = logAdapter
             layoutManager = LinearLayoutManager(requireContext())
@@ -64,13 +71,18 @@ class AdminLogFragment : Fragment() {
             logAdapter.submitList(logs)
         }
 
+        viewModel.oneuser.observe(viewLifecycleOwner) { user ->
+            binding.tvAdminName.text = user?.name ?: "Admin"
+        }
+
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
             // Handle loading state
         }
 
         viewModel.message.observe(viewLifecycleOwner) { message ->
-            if (message.isNotEmpty() && message != "User tidak ketemu") {
-                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            if (message.isNotEmpty() && message != "User tidak ketemu" && !message.contains("Admin")) {
+                // Avoid showing name toast if it's just the name set in getOneUserByID
+                // (Though getOneUserByID in ViewModel sets _message.value = user.name)
             }
         }
     }

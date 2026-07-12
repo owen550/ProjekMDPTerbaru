@@ -52,6 +52,7 @@ class AdminPaymentFragment : Fragment() {
         observeViewModel()
 
         viewModel.fetchAllPayments()
+        viewModel.getOneUserByID()
 
         binding.imgProfile.setOnClickListener {
             // Logout logic
@@ -90,16 +91,16 @@ class AdminPaymentFragment : Fragment() {
     private fun observeViewModel() {
 
         viewModel.payments.observe(viewLifecycleOwner) { payments ->
-
             paymentAdapter.submitList(payments)
+        }
 
+        viewModel.oneuser.observe(viewLifecycleOwner) { user ->
+            binding.tvAdminName.text = user?.name ?: "Admin"
         }
 
 
         viewModel.message.observe(viewLifecycleOwner) { message ->
-
-            if (!message.isNullOrEmpty()) {
-
+            if (!message.isNullOrEmpty() && !message.contains("Admin") && message != "User tidak ketemu") {
                 Toast.makeText(
                     requireContext(),
                     message,

@@ -22,7 +22,7 @@ class ChatFragment : Fragment() {
     lateinit var binding: FragmentChatBinding
     private val viewModel: TodosViewModel by viewModels { TodoViewModelFactory }
     private lateinit var chatAdapter: ChatAdapter
-    
+
     private var adminId: Int = 0
     private var userId: Int = 0
     private var userRole: String = "student" // Default
@@ -37,7 +37,7 @@ class ChatFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
         // Ambil data dari arguments (navigasi)
         adminId = arguments?.getInt("adminId") ?: 0
         userId = arguments?.getInt("userId") ?: 0
@@ -48,7 +48,7 @@ class ChatFragment : Fragment() {
         setupRecyclerView()
         setupListeners()
         observeViewModel()
-        
+
         startPolling()
     }
 
@@ -97,7 +97,7 @@ class ChatFragment : Fragment() {
                 binding.rvChat.smoothScrollToPosition(list.size - 1)
             }
         }
-        
+
         viewModel.message.observe(viewLifecycleOwner) { msg ->
             if (msg.isNotEmpty() && msg.contains("Gagal")) {
                 Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()

@@ -25,7 +25,7 @@ class UserAdapter(
         val targetUser = users[position]
         holder.binding.apply {
             txtName.text = targetUser.name
-            
+
             val currentUserRole = user?.role?.lowercase() ?: ""
             val targetUserRole = targetUser.role.lowercase()
 
@@ -33,13 +33,13 @@ class UserAdapter(
             // - If Admin is looking, show Chat for Students.
             // - If Student is looking, show Chat for Admins.
             val canChat = (currentUserRole == "admin" && targetUserRole == "student") ||
-                         (currentUserRole == "student" && targetUserRole == "admin")
+                    (currentUserRole == "student" && targetUserRole == "admin")
 
             btnChat.visibility = if (canChat) View.VISIBLE else View.GONE
 
             btnChat.setOnClickListener { onChatClick(targetUser) }
             btnDetail.setOnClickListener { onDetailClick(targetUser) }
-            
+
             // Hide detail button if it's admin list for support
             btnDetail.visibility = if (currentUserRole == "student") View.GONE else View.VISIBLE
         }

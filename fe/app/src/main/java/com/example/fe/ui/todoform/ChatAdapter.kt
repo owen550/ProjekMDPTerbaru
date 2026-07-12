@@ -19,7 +19,7 @@ class ChatAdapter(private val userRole: String) : ListAdapter<AdminMessage, Recy
     override fun getItemViewType(position: Int): Int {
         val message = getItem(position)
         val isFromAdmin = message.message_title.contains("Admin", ignoreCase = true)
-        
+
         return if (userRole == "admin") {
             if (isFromAdmin) VIEW_TYPE_SENT else VIEW_TYPE_RECEIVED
         } else {

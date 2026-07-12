@@ -17,6 +17,7 @@ import com.example.fe.R
 import com.example.fe.TodoViewModelFactory
 import com.example.fe.courseDetail
 import com.example.fe.data.Course
+import com.example.fe.data.CourseEnrollment
 import com.example.fe.databinding.FragmentDashboardBinding
 import com.example.fe.user
 
@@ -25,7 +26,9 @@ class DashboardFragmen : Fragment() {
     private lateinit var binding: FragmentDashboardBinding
     private lateinit var courseAdapter: CourseAdapter
 
-    private var originalList: List<Course> = emptyList()
+    private var allCourses: List<Course> = emptyList()
+    private var myEnrollments: List<CourseEnrollment> = emptyList()
+    private var isShowingOnlyEnrolled = false
 
     private val viewModel: TodosViewModel by viewModels {
         TodoViewModelFactory
@@ -47,6 +50,11 @@ class DashboardFragmen : Fragment() {
         setupRoleUI()
 
         viewModel.getAllCourse()
+        user?.let {
+            if (it.role.equals("student", ignoreCase = true)) {
+                viewModel.fetchEnrollments(it.id!!)
+            }
+        }
 
         onObserve()
         onListen()
@@ -54,21 +62,22 @@ class DashboardFragmen : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        // bagian siapin rv nya
         courseAdapter = CourseAdapter(object : CourseAdapter.OnCourseClickListener {
             override fun onBookmark(course: Course) {
-                // add ke course_enrolment
-                Toast.makeText(requireContext(), "Bookmark: ${course.title}", Toast.LENGTH_SHORT).show()
+                val currentUser = user
+                if (currentUser != null && currentUser.role.equals("student", ignoreCase = true)) {
+                    viewModel.enrollCourse(currentUser.id!!, course.id)
+                } else {
+                    Toast.makeText(requireContext(), "Only students can enroll", Toast.LENGTH_SHORT).show()
+                }
             }
 
             override fun onOpenDetail(course: Course) {
-                // buka activity nya
                 courseDetail = course
                 findNavController().navigate(R.id.coursActivity)
             }
         })
 
-        // bagian pasanh ke rv nya
         binding.rvCourse.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = courseAdapter
@@ -92,7 +101,16 @@ class DashboardFragmen : Fragment() {
         val searchCategory = binding.etCategory.text.toString().trim()
         val searchTitle = binding.etTitle.text.toString().trim()
 
-        val filteredList = originalList.filter { course ->
+        val baseList = if (isShowingOnlyEnrolled && user?.role?.equals("student", ignoreCase = true) == true) {
+            val enrolledCourseIds = myEnrollments.mapNotNull { it.course_id }.toSet()
+            allCourses.filter { it.id in enrolledCourseIds }
+        } else if (user?.role?.equals("teacher", ignoreCase = true) == true) {
+            allCourses.filter { it.teacher_id == user?.id }
+        } else {
+            allCourses
+        }
+
+        val filteredList = baseList.filter { course ->
             val matchCategory = course.category.contains(searchCategory, ignoreCase = true)
             val matchTitle = course.title.contains(searchTitle, ignoreCase = true)
             matchCategory && matchTitle
@@ -126,7 +144,7 @@ class DashboardFragmen : Fragment() {
                 binding.btnSort.backgroundTintList = ColorStateList.valueOf(secondaryColor)
                 binding.btnSort.setTextColor(primaryColor)
 
-                binding.btnMyCourse.text = "My Courses"
+                binding.btnMyCourse.text = if (isShowingOnlyEnrolled) "Show All" else "My Courses"
                 binding.btnMyCourse.backgroundTintList = ColorStateList.valueOf(secondaryColor)
                 binding.btnMyCourse.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
             }
@@ -142,18 +160,28 @@ class DashboardFragmen : Fragment() {
 
         viewModel.course.observe(viewLifecycleOwner) { courseList ->
             if (courseList != null) {
-                val currentUser = user
-
-                if (currentUser != null && currentUser.role.lowercase() == "teacher") {
-                    originalList = courseList.filter { course -> course.teacher_id == currentUser.id }
-                } else {
-                    originalList = courseList
-                }
-
+                allCourses = courseList
+                updateAdapterEnrollments()
                 applyFilterAndSort()
             }
         }
+
+        viewModel.enrollments.observe(viewLifecycleOwner) { enrollments ->
+            if (enrollments != null) {
+                myEnrollments = enrollments
+                updateAdapterEnrollments()
+                if (isShowingOnlyEnrolled) {
+                    applyFilterAndSort()
+                }
+            }
         }
+    }
+
+    private fun updateAdapterEnrollments() {
+        val enrolledIds = myEnrollments.mapNotNull { it.course_id }.toSet()
+        val isTeacher = user?.role?.equals("teacher", ignoreCase = true) == true
+        courseAdapter.updateEnrollmentData(enrolledIds, isTeacher)
+    }
 
 
     private fun onListen() {
@@ -161,7 +189,9 @@ class DashboardFragmen : Fragment() {
             if (user?.role?.lowercase() == "teacher") {
                 findNavController().navigate(R.id.action_dashboardFragmen_to_addCourseFragment)
             } else {
-                Toast.makeText(requireContext(), "My Courses Clicked", Toast.LENGTH_SHORT).show()
+                isShowingOnlyEnrolled = !isShowingOnlyEnrolled
+                binding.btnMyCourse.text = if (isShowingOnlyEnrolled) "Show All" else "My Courses"
+                applyFilterAndSort()
             }
         }
     }

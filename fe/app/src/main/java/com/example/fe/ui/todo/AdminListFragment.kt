@@ -18,7 +18,7 @@ import com.example.fe.ui.todoform.currentUserId
 class AdminListFragment : Fragment() {
     private var _binding: FragmentAdminListBinding? = null
     private val binding get() = _binding!!
-    
+
     private val viewModel: TodosViewModel by viewModels { TodoViewModelFactory }
     private lateinit var adapter: UserAdapter
 
@@ -37,6 +37,7 @@ class AdminListFragment : Fragment() {
         observeViewModel()
 
         viewModel.fetchAllUsers()
+        viewModel.getOneUserByID()
 
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
@@ -51,7 +52,8 @@ class AdminListFragment : Fragment() {
                     putInt("adminId", admin.id ?: 0)
                     putInt("userId", currentUserId ?: 0)
                 }
-                findNavController().navigate(R.id.chatFragment2, bundle)
+                // Fix: Navigate to the correct human chat fragment
+                findNavController().navigate(R.id.action_adminListFragment_to_chatFragment, bundle)
             },
             onDetailClick = { /* No detail for admin list usually */ }
         )
@@ -68,8 +70,12 @@ class AdminListFragment : Fragment() {
             adapter.updateData(admins)
         }
 
+        viewModel.oneuser.observe(viewLifecycleOwner) { user ->
+            binding.tvAdminName.text = user?.name ?: "Admin"
+        }
+
         viewModel.message.observe(viewLifecycleOwner) { msg ->
-            if (msg.isNotEmpty()) {
+            if (msg.isNotEmpty() && !msg.contains("Admin") && msg != "User tidak ketemu") {
                 Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
             }
         }

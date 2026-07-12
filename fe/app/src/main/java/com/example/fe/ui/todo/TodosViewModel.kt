@@ -9,6 +9,7 @@ import com.example.fe.data.ActivityLog
 import com.example.fe.data.AdminMessage
 import com.example.fe.data.Payment
 import com.example.fe.data.Course
+import com.example.fe.data.CourseEnrollment
 import com.example.fe.data.CourseTopic
 import com.example.fe.data.CsChatbotChat
 import com.example.fe.data.TopicMaterial
@@ -47,6 +48,9 @@ class TodosViewModel(
 
     private val _insertSuccess = MutableLiveData<Boolean>()
     val insertSuccess: LiveData<Boolean> = _insertSuccess
+
+    private val _enrollments = MutableLiveData<List<CourseEnrollment>>()
+    val enrollments: LiveData<List<CourseEnrollment>> = _enrollments
 
     // ==== other func =======
     fun getTopicMaterialByIDCourseTopic(
@@ -504,45 +508,98 @@ class TodosViewModel(
     ) {
         viewModelScope.launch {
             try {
-
-                // 1. Save user's message
+                // 1. Simpan prompt user ke DB
                 todoRepository.createChat(
                     userId = userId,
                     sender = "user",
                     message = message
                 )
 
-                // 2. Ask AI
-                val aiResult = todoRepository.chatWithAi(role, message)
+                // Refresh UI agar prompt muncul
+                getChatbotMessages(userId)
 
-                aiResult
-                    .onSuccess { aiResponse ->
+                // 2. Ambil respon AI dari backend
+                // Kita gunakan userId.toString() sebagai identifier role di backend agar riwayat unik per user
+                val aiResult = todoRepository.chatWithAi(userId.toString(), message)
 
-                        // 3. Save AI reply
+                if (aiResult.isSuccess) {
+                    val aiData = aiResult.getOrNull()
+                    if (aiData != null) {
+                        // 3. Simpan balasan AI ke DB dengan sender "ai"
+                        // Respon AI ada di aiData.data (sesuai backend response.text)
                         todoRepository.createChat(
                             userId = userId,
-                            sender = "ai",
-                            message = aiResponse.data
+                            sender = "bot",
+                            message = aiData.data
                         )
-
-                        // 4. Reload conversation
-                        val chatResult = todoRepository.getChats(userId)
-
-                        chatResult
-                            .onSuccess { chats ->
-                                _chatbotMessages.value = chats
-                            }
-                            .onFailure { error ->
-                                _message.value =
-                                    error.message ?: "Failed to refresh chat"
-                            }
+                        // 4. Reload percakapan
+                        getChatbotMessages(userId)
                     }
-                    .onFailure { error ->
-                        _message.value = error.message ?: "AI request failed"
-                    }
+                } else {
+                    _message.value = "AI Error: ${aiResult.exceptionOrNull()?.message}"
+                }
 
             } catch (e: Exception) {
+                _message.value = "Chat Error: ${e.message}"
+            }
+        }
+    }
+
+    // ============================
+    // COURSE ENROLLMENT
+    // ============================
+
+    fun fetchEnrollments(studentId: Int) {
+        val userId = currentUserId ?: return
+        viewModelScope.launch {
+            try {
+                val result = todoRepository.getEnrollmentByStudent(userId, studentId)
+                result
+                    .onSuccess { list ->
+                        _enrollments.value = list
+                    }
+                    .onFailure { error ->
+                        _message.value = error.message ?: "Failed to fetch enrollments"
+                    }
+            } catch (e: Exception) {
                 _message.value = e.message ?: "Terjadi kesalahan"
+            }
+        }
+    }
+
+    fun enrollCourse(studentId: Int, courseId: Int) {
+        val userId = currentUserId ?: return
+
+        // Check if already enrolled
+        val isAlreadyEnrolled = _enrollments.value?.any { it.course_id == courseId } == true
+        if (isAlreadyEnrolled) {
+            _message.value = "You are already enrolled in this course!"
+            return
+        }
+
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                val result = todoRepository.createEnrollment(
+                    userId = userId,
+                    studentId = studentId,
+                    studentIdBody = studentId,
+                    courseId = courseId,
+                    isBookmarked = false,
+                    status = "active"
+                )
+                result
+                    .onSuccess {
+                        _message.value = "Successfully enrolled in course!"
+                        fetchEnrollments(studentId)
+                    }
+                    .onFailure { error ->
+                        _message.value = error.message ?: "Failed to enroll in course"
+                    }
+            } catch (e: Exception) {
+                _message.value = e.message ?: "Terjadi kesalahan"
+            } finally {
+                _loading.value = false
             }
         }
     }
@@ -554,8 +611,11 @@ class TodosViewModel(
         _activityLogs.value = emptyList()
         _payments.value = emptyList()
         _users.value = emptyList()
+        _messages.value = emptyList()
+        _chatbotMessages.value = emptyList()
         _oneuser.value = null
         _onetopicmaterial.value = null
         _insertSuccess.value = false
+        _enrollments.value = emptyList()
     }
 }
