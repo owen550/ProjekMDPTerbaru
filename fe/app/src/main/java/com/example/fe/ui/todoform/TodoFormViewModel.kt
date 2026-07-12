@@ -1,5 +1,6 @@
 package com.example.fe.ui.todoform
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,7 @@ import com.example.fe.data.Course
 import com.example.fe.data.User
 import com.example.fe.data.repositories.TodoRepository
 import com.example.fe.data.source.local.UserEntity
+import com.example.fe.orderid
 import com.example.fe.statusUser
 import com.example.fe.user
 import kotlinx.coroutines.launch
@@ -96,6 +98,36 @@ class TodoFormViewModel(
             finally {
                 _loading.value = false
             }
+        }
+    }
+
+    fun rechekPayment() {
+        // 1. Langsung ambil dari properti class (misal bernama 'orderid')
+        // Gunakan safe let untuk memastikan dia tidak null dan tidak kosong
+        val currentOrderId = orderid
+
+        if (!currentOrderId.isNullOrEmpty()) {
+            Log.d("tes", "Isi Order ID: $currentOrderId")
+            _loading.value = true
+
+            viewModelScope.launch {
+                try {
+                    val result = todoRepository.rechekPayment(currentOrderId)
+                    result
+                        .onSuccess { status ->
+                            Log.d("tes", "Status transaksi saat ini: $status")
+                        }
+                        .onFailure {
+                            Log.e("tes", "Gagal recheck status")
+                        }
+                } catch (e: Exception) {
+                    Log.e("tes", "Error: ${e.message}")
+                } finally {
+                    _loading.value = false
+                }
+            }
+        } else {
+            Log.d("tes", "Order ID ternyata null atau kosong!")
         }
     }
 

@@ -7,6 +7,7 @@ import com.example.fe.data.Course
 import com.example.fe.data.CourseEnrollment
 import com.example.fe.data.CourseTopic
 import com.example.fe.data.CsChatbotChat
+import com.example.fe.data.MidtransResponse
 import com.example.fe.data.Payment
 import com.example.fe.data.QuizQuestion
 import com.example.fe.data.QuizQuestionOption
@@ -405,6 +406,17 @@ class DefaultTodoRepository(
 
     override suspend fun cekStatusFreePre(userid: Int): Result<Boolean> {
         return remoteDataSource.cekStatusFreePre(userid)
+    }
+
+    override suspend fun createMidtrans(
+        userid: Int,
+        amount: Int
+    ): Result<MidtransResponse> {
+        return remoteDataSource.createMidtrans(userid,amount)
+    }
+
+    override suspend fun rechekPayment(orderid: String): Result<String> {
+        return remoteDataSource.rechekPayment(orderid)
     }
 
     // =======================

@@ -7,6 +7,7 @@ import com.example.fe.data.Course
 import com.example.fe.data.CourseEnrollment
 import com.example.fe.data.CourseTopic
 import com.example.fe.data.CsChatbotChat
+import com.example.fe.data.MidtransResponse
 import com.example.fe.data.Payment
 import com.example.fe.data.QuizQuestion
 import com.example.fe.data.QuizQuestionOption
@@ -15,6 +16,7 @@ import com.example.fe.data.StudentSubmission
 import com.example.fe.data.TopicMaterial
 import com.example.fe.data.User
 import com.example.fe.data.remote.RemoteDataSource
+import com.example.fe.user
 
 class RetrofitDataSource(
     private val retrofitService: WebService
@@ -800,6 +802,38 @@ class RetrofitDataSource(
                 Result.success(body.data!!)
             } else {
                 Result.failure(Exception(body?.message ?: response.message()))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun createMidtrans(
+        userid: Int,
+        amount: Int
+    ): Result<MidtransResponse> {
+        return try {
+            val response = retrofitService.createMidtrans(userid, amount)
+            val body = response.body()
+            if (response.isSuccessful && body != null) {
+                Result.success(body)
+            } else {
+                Result.failure(Exception(response.message() ?: "Gagal mendapatkan data transaksi"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun rechekPayment(orderid: String): Result<String> {
+        return try {
+            val response = retrofitService.rechekPayment(orderid)
+            val body = response.body()
+
+            if (response.isSuccessful && body != null && body.data != null) {
+                Result.success(body.data)
+            } else {
+                Result.failure(Exception(response.message() ?: "Gagal mengecek status pembayaran"))
             }
         } catch (e: Exception) {
             Result.failure(e)

@@ -1,5 +1,6 @@
 package com.example.fe.ui.todo
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,6 +17,7 @@ import com.example.fe.data.TopicMaterial
 import com.example.fe.data.User
 import com.example.fe.data.repositories.TodoRepository
 import com.example.fe.materialTopic
+import com.example.fe.orderid
 import com.example.fe.ui.todoform.currentUserId
 import com.example.fe.user
 import kotlinx.coroutines.launch
@@ -51,6 +53,38 @@ class TodosViewModel(
 
     private val _enrollments = MutableLiveData<List<CourseEnrollment>>()
     val enrollments: LiveData<List<CourseEnrollment>> = _enrollments
+
+    private val _redirectToPayment = MutableLiveData<String>()
+    val redirectToPayment: LiveData<String> get() = _redirectToPayment
+
+    fun buatTransaksi(amount: Int) {
+        _loading.value = true
+        viewModelScope.launch {
+            try {
+                val result = todoRepository.createMidtrans(user!!.id!!.toInt(), amount)
+                result
+                    .onSuccess { midtransResponse -> // Sekarang tipenya adalah MidtransResponse
+                        // Ambil string URL dari properti redirect_url milik objek MidtransResponse
+                        val urlString = midtransResponse.redirect_url
+
+                        if (!urlString.isNullOrEmpty()) {
+                            _redirectToPayment.value = urlString
+                            orderid = midtransResponse.orderid
+                            Log.d("TesOrderId", "isi orderid: ${midtransResponse.orderid}")
+                        } else {
+                            _message.value = "Link pembayaran kosong"
+                        }
+                    }
+                    .onFailure {
+                        _message.value = "Terjadi Kesalahan Pada Saat Subscribe"
+                    }
+            } catch (e: Exception) {
+                _message.value = "Terjadi Kesalahan Pada Backend: ${e.message}"
+            } finally {
+                _loading.value = false
+            }
+        }
+    }
 
     // ==== other func =======
     fun getTopicMaterialByIDCourseTopic(

@@ -1,25 +1,30 @@
 package com.example.fe.ui.todo
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.fe.R
 import com.example.fe.TodoViewModelFactory
 import com.example.fe.databinding.FragmentPaymentDetailBinding
+import com.example.fe.ui.todoform.TodoFormViewModel
+import com.example.fe.user
+import kotlin.getValue
 
 class PaymentDetailFragment : Fragment() {
 
     private var _binding: FragmentPaymentDetailBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: TodosViewModel by viewModels { TodoViewModelFactory }
-
-    private var userId: Int = 0
-    private var paymentId: Int = 0
+    private val viewModel: TodosViewModel by viewModels {
+        TodoViewModelFactory
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,72 +44,49 @@ class PaymentDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
+        // main code
+        onSetup()
+        onListener()
+        onObserve()
+    }
 
-        userId = arguments?.getInt("userId") ?: 0
-        paymentId = arguments?.getInt("paymentId") ?: 0
-
-        observeViewModel()
-
-        // Avoid redundant fetching if data is already present in ViewModel
-        if (viewModel.paymentDetail.value?.id != paymentId) {
-            viewModel.fetchPaymentDetail(
-                userId,
-                paymentId
-            )
+    fun onSetup(){
+        if(user!!.tier == "free"){ // free
+            binding.tvMemberStatus.setText("You're a Free Member")
+            binding.tvSubtitle.setText("Unlock all premium features and enjoy a better learning experience.")
+            binding.btnSubscribe.visibility = View.VISIBLE
         }
+        else if(user!!.tier == "premium"){
+            binding.tvMemberStatus.setText("You're a Premium Member")
+            binding.tvSubtitle.setText("Now You Unlock all premium features and enjoy a better learning experience.")
+            binding.btnSubscribe.visibility = View.GONE
+        }
+        else{ // admin
+            binding.tvMemberStatus.setText("You're a Admin")
+            binding.tvSubtitle.setText("The premium features we had now is")
+            binding.btnSubscribe.visibility = View.GONE
+        }
+    }
 
+    fun onListener(){
         binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigate(R.id.profileFragmen)
+        }
+
+        binding.btnSubscribe.setOnClickListener {
+            var amount = 100000 // biaya subscribe
+            viewModel.buatTransaksi(amount)
         }
     }
 
-    private fun observeViewModel() {
-        viewModel.paymentDetail.observe(
-            viewLifecycleOwner
-        ) { payment ->
-            payment?.let {
-                updateUI(it)
+    fun onObserve(){
+        viewModel.redirectToPayment.observe(viewLifecycleOwner) { url ->
+            if (!url.isNullOrEmpty()) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(intent)
+                // === lek udah suru logout ===
+                requireActivity().finish()
             }
-        }
-
-        viewModel.message.observe(
-            viewLifecycleOwner
-        ) { message ->
-            if (!message.isNullOrEmpty()) {
-                Toast.makeText(
-                    requireContext(),
-                    message,
-                    Toast.LENGTH_SHORT
-                ).show()
-                // Reset message to avoid redundant toasts on configuration changes
-                viewModel.reset()
-            }
-        }
-
-        viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
-            // You can implement a progress bar here if one exists in the layout
-            // binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        }
-    }
-
-    private fun updateUI(payment: com.example.fe.data.Payment) {
-        binding.apply {
-            tvNameLarge.text = "Payment Detail"
-
-            tvPaymentIdValue.text = payment.id.toString()
-            tvUserIdValue.text = payment.user_id.toString()
-            tvOrderIdValue.text = payment.order_id
-            tvPaymentTokenValue.text = payment.payment_token
-            tvAmountValue.text = payment.amount.toString()
-            tvPaymentMethodValue.text = payment.payment_method
-
-            tvVaNumberValue.text = payment.va_number ?: "-"
-            tvQrUrlValue.text = payment.qr_url ?: "-"
-            tvStatusValue.text = payment.status
-
-            tvCreatedAtValue.text = payment.created_at
-            tvUpdatedAtValue.text = payment.updated_at
-            tvDeletedAtValue.text = payment.deleted_at ?: "-"
         }
     }
 

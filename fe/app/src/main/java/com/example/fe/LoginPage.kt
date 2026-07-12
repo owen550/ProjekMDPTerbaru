@@ -42,7 +42,10 @@ class LoginPage : AppCompatActivity() {
             if(login == true){
                 // loginin dia
                 viewModel.cekStatusPremiFreeUser()
+
+                // pindah halaman
                 startActivity(Intent(this, MainActivity::class.java))
+
                 // reset
                 viewModel.reset()
                 viewModel.getUserTerakhir()
@@ -60,6 +63,10 @@ class LoginPage : AppCompatActivity() {
 
     fun onListener() {
         binding.btnLogin.setOnClickListener {
+            // langsung cek order id klo ada
+            viewModel.rechekPayment()
+
+            // coba login
             val emailOrUser = binding.etLoginIdentifier.text.toString().trim()
             val password = binding.etLoginPassword.text.toString().trim()
 

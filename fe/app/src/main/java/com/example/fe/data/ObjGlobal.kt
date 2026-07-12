@@ -107,6 +107,12 @@ data class Payment(
     val deleted_at: String?
 )
 
+data class MidtransResponse(
+    val redirect_url: String,
+    val orderid: String,
+)
+
+
 // === QuizQuestion ===
 data class QuizQuestion(
     val id: Int,

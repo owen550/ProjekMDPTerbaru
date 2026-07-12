@@ -7,7 +7,6 @@
     android:background="@color/white"
     android:padding="24dp">
 
-    <!-- Header -->
     <ImageView
         android:id="@+id/btnBack"
         android:layout_width="24dp"
@@ -30,296 +29,99 @@
         app:layout_constraintStart_toEndOf="@id/btnBack"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imgProfile"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:src="@android:drawable/ic_menu_myplaces"
-        app:layout_constraintBottom_toBottomOf="@id/txtLogo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/txtLogo" />
-
-    <!-- Name Label -->
-    <TextView
-        android:id="@+id/tvNameLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Nama"
-        android:textColor="#444444"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtLogo" />
-
-    <!-- Details ScrollView to handle long list -->
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvNameLarge">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/btnSubscribe"
+        app:layout_constraintTop_toBottomOf="@id/txtLogo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="24dp">
+
+        <TextView
+            android:id="@+id/tvCrownIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="👑"
+            android:textSize="64sp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvMemberStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You're a Free Member"
+            android:textColor="#222222"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unlock all premium features and\nenjoy a better learning experience."
+            android:textColor="#666666"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginBottom="32dp"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="start">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
+                android:text="Benefits"
+                android:textColor="#222222"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp"/>
 
-                <TextView
-                    android:id="@+id/tvPaymentIdLabel"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:text="Payment ID:"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"/>
-
-                <TextView
-                    android:id="@+id/tvPaymentIdValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
+                android:text="✓  Unlimited Quiz Access"
+                android:textColor="#444444"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
 
-                <TextView
-                    android:id="@+id/tvUserIdLabel"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:text="User ID:"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/tvUserIdValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textStyle="bold"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
+                android:text="✓  Full Course Access"
+                android:textColor="#444444"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
 
-                <TextView
-                    android:id="@+id/tvOrderIdLabel"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:text="Order ID:"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/tvOrderIdValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textStyle="bold"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:id="@+id/tvPaymentTokenLabel"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:text="Payment Token:"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/tvPaymentTokenValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textStyle="bold"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:id="@+id/tvAmountLabel"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:text="Amount:"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/tvAmountValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textStyle="bold"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:id="@+id/tvPaymentMethodLabel"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:text="Payment Method:"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/tvPaymentMethodValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textStyle="bold"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:id="@+id/tvVaNumberLabel"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:text="VA Number:"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/tvVaNumberValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textStyle="bold"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:id="@+id/tvQrUrlLabel"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:text="QR URL:"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/tvQrUrlValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textStyle="bold"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:id="@+id/tvStatusLabel"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:text="Status:"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/tvStatusValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textStyle="bold"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:id="@+id/tvCreatedAtLabel"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:text="Created At:"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/tvCreatedAtValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textStyle="bold"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:id="@+id/tvUpdatedAtLabel"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:text="Updated At:"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/tvUpdatedAtValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textStyle="bold"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:id="@+id/tvDeletedAtLabel"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:text="Deleted At:"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/tvDeletedAtValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textStyle="bold"/>
-            </LinearLayout>
+                android:text="✓  Priority Learning Experience"
+                android:textColor="#444444"
+                android:textSize="16sp"/>
 
         </LinearLayout>
-    </ScrollView>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSubscribe"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="Click to Subscribe"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:backgroundTint="#007AFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

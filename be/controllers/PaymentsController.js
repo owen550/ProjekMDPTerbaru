@@ -126,11 +126,9 @@ const createPaymentMidtrans = async (req, res) => {
             ip_address: req.ip,
         });
 
-        res.status(200).json({
-            status: "success",
-            token: transaction.token,
+        return res.status(200).json({
             redirect_url: transaction.redirect_url,
-            data: newPayment
+            orderid: newPayment.order_id
         });
     } catch (error) {
         res.status(500).json({ error: error.message });

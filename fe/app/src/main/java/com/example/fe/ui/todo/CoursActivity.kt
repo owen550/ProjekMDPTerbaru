@@ -101,8 +101,24 @@ class CoursActivity : Fragment() {
                     val filteredTopics = topics.filter { topic ->
                         topic.course_id == currentCourse.id
                     }
-                    topicAdapter.submitList(filteredTopics)
-                    binding.txtTotalTopics.text = "${filteredTopics.size} Topics"
+
+                    // Pengecekan tier user
+                    val currentUser = user
+                    if (currentUser != null && currentUser.tier!!.lowercase() == "free") {
+                        // Jika free dan data tidak kosong, ambil 1 data pertama saja
+                        if (filteredTopics.isNotEmpty()) {
+                            topicAdapter.submitList(listOf(filteredTopics.first()))
+                            binding.txtTotalTopics.text = "1 Topic (Free Tier)"
+                        } else {
+                            topicAdapter.submitList(emptyList())
+                            binding.txtTotalTopics.text = "0 Topics"
+                        }
+                    } else {
+                        // Jika premium/teacher, kirim semua data
+                        topicAdapter.submitList(filteredTopics)
+                        binding.txtTotalTopics.text = "${filteredTopics.size} Topics"
+                    }
+
                 } else {
                     topicAdapter.submitList(emptyList())
                     binding.txtTotalTopics.text = "0 Topics"

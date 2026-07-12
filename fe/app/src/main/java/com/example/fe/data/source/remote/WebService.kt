@@ -8,6 +8,7 @@ import com.example.fe.data.CourseEnrollment
 import com.example.fe.data.CourseTopic
 import com.example.fe.data.CsChatbotChat
 import com.example.fe.data.DataResponse
+import com.example.fe.data.MidtransResponse
 import com.example.fe.data.Payment
 import com.example.fe.data.QuizQuestion
 import com.example.fe.data.QuizQuestionOption
@@ -411,6 +412,19 @@ interface WebService {
     suspend fun cekStatusFreePre(
         @Path("userid") userId: Int
     ): Response<DataResponse<Boolean>>
+
+    @FormUrlEncoded
+    @POST("api/payments/midtrans/{userId}")
+    suspend fun createMidtrans(
+        @Path("userId") userId: Int,
+        @Field("amount") amount: Int
+    ): Response<MidtransResponse>
+
+
+    @GET("api/payments/midtrans-check/{orderid}")
+    suspend fun rechekPayment(
+        @Path("orderid") orderid: String,
+    ): Response<DataResponse<String>>
 
     @GET("api/payments/{userId}")
     suspend fun getPayments(

@@ -7,6 +7,7 @@ import com.example.fe.data.Course
 import com.example.fe.data.CourseEnrollment
 import com.example.fe.data.CourseTopic
 import com.example.fe.data.CsChatbotChat
+import com.example.fe.data.MidtransResponse
 import com.example.fe.data.Payment
 import com.example.fe.data.QuizQuestion
 import com.example.fe.data.QuizQuestionOption
@@ -262,6 +263,15 @@ interface TodoRepository {
     suspend fun cekStatusFreePre(
         userid: Int,
     ): Result<Boolean>
+
+    suspend fun createMidtrans(
+        userid: Int,
+        amount: Int,
+    ): Result<MidtransResponse>
+
+    suspend fun rechekPayment(
+        orderid: String,
+    ): Result<String>
 
     // =======================
     // Course Enrollment
