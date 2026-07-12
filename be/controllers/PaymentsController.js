@@ -4,14 +4,14 @@ const axios = require('axios');
 
 const snap = new midtransClient.Snap({
     isProduction: false,
-    serverKey: 'Mid-server-WpdVl7Iuga96MRP31IeKtMK3'
+    serverKey: process.env.MIDTRANS_SERVER_KEY
 });
 
 const checkPaymentStatusAxios = async (req, res) => {
     try {
         const { orderId } = req.params;
 
-        const serverKey = 'Mid-server-WpdVl7Iuga96MRP31IeKtMK3';
+        const serverKey = '';
         const base64Key = Buffer.from(serverKey + ':').toString('base64');
 
         const response = await axios.get(
