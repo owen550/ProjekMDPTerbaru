@@ -407,6 +407,11 @@ interface WebService {
         @Path("userId") userId: Int
     ): Response<DataResponse<List<Payment>>>
 
+    @POST("api/payments/midtrans-status/cekuser")
+    suspend fun cekStatusFreePre(
+        @Path("userid") userId: Int
+    ): Response<DataResponse<Boolean>>
+
     @GET("api/payments/{userId}")
     suspend fun getPayments(
         @Path("userId") userId: Int

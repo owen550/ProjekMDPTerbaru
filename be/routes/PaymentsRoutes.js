@@ -5,6 +5,11 @@ const PaymentsController = require("../controllers/PaymentsController");
 const PaymentsMiddleware = require("../middleware/PaymentsMiddleware");
 
 router.post(
+  "/midtrans-status/cekuser",
+  PaymentsController.cekStatusUserFreePremi
+);
+
+router.post(
   "/midtrans-notification",
   PaymentsController.midtransNotification
 );
@@ -55,5 +60,7 @@ router.post(
   PaymentsMiddleware.validatePaymentAccess,
   PaymentsController.createPaymentMidtrans,
 );
+
+
 
 module.exports = router;

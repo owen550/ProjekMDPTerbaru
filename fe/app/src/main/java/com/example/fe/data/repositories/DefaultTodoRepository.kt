@@ -403,6 +403,10 @@ class DefaultTodoRepository(
         return remoteDataSource.deletePayment(userId, paymentId)
     }
 
+    override suspend fun cekStatusFreePre(userid: Int): Result<Boolean> {
+        return remoteDataSource.cekStatusFreePre(userid)
+    }
+
     // =======================
     // Course Enrollment
     // =======================

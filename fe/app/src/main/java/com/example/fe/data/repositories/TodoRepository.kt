@@ -259,6 +259,10 @@ interface TodoRepository {
 
     suspend fun deletePayment(userId: Int, paymentId: Int): Result<Unit>
 
+    suspend fun cekStatusFreePre(
+        userid: Int,
+    ): Result<Boolean>
+
     // =======================
     // Course Enrollment
     // =======================

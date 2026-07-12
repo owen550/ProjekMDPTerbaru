@@ -41,6 +41,7 @@ class LoginPage : AppCompatActivity() {
          viewModel.login.observe(this) { login ->
             if(login == true){
                 // loginin dia
+                viewModel.cekStatusPremiFreeUser()
                 startActivity(Intent(this, MainActivity::class.java))
                 // reset
                 viewModel.reset()

@@ -8,6 +8,7 @@ import com.example.fe.data.Course
 import com.example.fe.data.User
 import com.example.fe.data.repositories.TodoRepository
 import com.example.fe.data.source.local.UserEntity
+import com.example.fe.statusUser
 import com.example.fe.user
 import kotlinx.coroutines.launch
 
@@ -98,6 +99,26 @@ class TodoFormViewModel(
         }
     }
 
+    fun cekStatusPremiFreeUser(){
+        _loading.value = true
+        viewModelScope.launch {
+            try {
+                val result = todoRepository.cekStatusFreePre(user!!.id!!.toInt())
+                result
+                    .onSuccess { userdata ->
+                        statusUser = userdata // kalau false berarti free, kalau true berarti premi
+                    }
+                    .onFailure {
+                        statusUser = false
+                    }
+            } catch (e: Exception){
+                _message.value = "Terjadi Kesalahan Pada Backend"
+            }
+            finally {
+                _loading.value = false
+            }
+        }
+    }
 
     fun register(
         name:String,

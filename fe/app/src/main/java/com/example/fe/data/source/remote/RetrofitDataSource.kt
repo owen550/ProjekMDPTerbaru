@@ -791,6 +791,21 @@ class RetrofitDataSource(
         }
     }
 
+    override suspend fun cekStatusFreePre(userid: Int): Result<Boolean> {
+        return try {
+            val response = retrofitService.cekStatusFreePre(userid)
+            val body = response.body()
+
+            if (response.isSuccessful && body?.data != null) {
+                Result.success(body.data!!)
+            } else {
+                Result.failure(Exception(body?.message ?: response.message()))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
     override suspend fun getPayments(userId: Int): Result<List<Payment>> {
         return try {
             val response = retrofitService.getPayments(userId)

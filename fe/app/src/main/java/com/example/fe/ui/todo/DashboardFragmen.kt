@@ -19,6 +19,7 @@ import com.example.fe.courseDetail
 import com.example.fe.data.Course
 import com.example.fe.data.CourseEnrollment
 import com.example.fe.databinding.FragmentDashboardBinding
+import com.example.fe.statusUser
 import com.example.fe.user
 
 class DashboardFragmen : Fragment() {
@@ -45,6 +46,8 @@ class DashboardFragmen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Toast.makeText(requireContext(),"Status User: ${user!!.tier}", Toast.LENGTH_SHORT).show()
 
         setupRecyclerView()
         setupRoleUI()

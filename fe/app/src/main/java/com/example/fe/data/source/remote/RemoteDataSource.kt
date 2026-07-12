@@ -308,6 +308,10 @@ interface RemoteDataSource {
         userId: Int
     ): Result<List<Payment>>
 
+    suspend fun cekStatusFreePre(
+        userid: Int
+    ): Result<Boolean>
+
     suspend fun getPayments(
         userId: Int
     ): Result<List<Payment>>

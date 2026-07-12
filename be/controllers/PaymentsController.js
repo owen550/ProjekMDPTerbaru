@@ -1,6 +1,7 @@
 const { Payments, Users, ActivityLogs } = require("../models/index");
 const midtransClient = require('midtrans-client');
 const axios = require('axios');
+const { Op } = require("sequelize");
 
 const snap = new midtransClient.Snap({
     isProduction: false,
@@ -11,7 +12,7 @@ const checkPaymentStatusAxios = async (req, res) => {
     try {
         const { orderId } = req.params;
 
-        const serverKey = '';
+        const serverKey = process.env.MIDTRANS_SERVER_KEY;
         const base64Key = Buffer.from(serverKey + ':').toString('base64');
 
         const response = await axios.get(
@@ -42,6 +43,12 @@ const checkPaymentStatusAxios = async (req, res) => {
         const payment = await Payments.findOne({ where: { order_id: orderId } });
         
         if (payment) {
+            // update user
+            var cariUser = await Users.findByPk(payment.user_id)
+            cariUser.tier = "premium"
+            await cariUser.save()
+
+            // update payment
             payment.status = localStatus;
             payment.payment_method = paymentType;
             
@@ -74,7 +81,7 @@ const checkPaymentStatusAxios = async (req, res) => {
 
 const createPaymentMidtrans = async (req, res) => {
     try {
-        const userId = req.paymentUserId;
+        const { userId } = req.params;
         const { amount } = req.body;
 
         if (!userId || !amount) {
@@ -171,6 +178,49 @@ const midtransNotification = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
+};
+
+const cekStatusUserFreePremi = async (req, res) => {
+  console.log("=== MASUK cekStatusUserFreePremi ===");
+  try {
+    const { userid } = req.body
+    if(userid == null){
+      return res.status(200).json("userid tidak ada")
+    }
+
+    // === cek status jika ada premi ===
+    var cekStatusUser = await Payments.findOne({
+      where: {
+        user_id: userid,
+        status: {
+          [Op.ne]: "pending"
+        }
+      }
+    });
+
+    // === log ===
+    await ActivityLogs.create({
+      user_id: Number(userid),
+      activity: `User id ${userid} melakikan pengecekan status`,
+      ip_address: req.ip,
+    });
+
+    // return 
+    if(cekStatusUser == null){ // gak ada
+      return res.status(200).json(false); // berarti free
+    }
+    else{
+      return res.status(200).json(true); // berarti premium
+    }
+
+  } catch (error) {
+    console.error("PaymentsController.createPayment", error);
+    return res.status(500).json({
+      status: "error",
+      message: "Failed to create payment",
+      details: error.message,
+    });
+  }
 };
 
 const createPayment = async (req, res) => {
@@ -449,5 +499,6 @@ module.exports = {
   deletePayment,
   createPaymentMidtrans,
   midtransNotification,
-  checkPaymentStatusAxios
+  checkPaymentStatusAxios,
+  cekStatusUserFreePremi
 };
