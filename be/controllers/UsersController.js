@@ -1,29 +1,33 @@
 // === semua model yang dipakai ===
 require("dotenv").config();
-const {Users,ActivityLogs} = require("../models/index");
-const bcrypt = require('bcrypt');
+const { Users, ActivityLogs } = require("../models/index");
+const bcrypt = require("bcrypt");
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 exports.GetAllUser = async (req, res) => {
   try {
     // === find id user ===
-    let { userid } = req.body 
-    if(userid == null){
-      return res.status(400).json({message: "ID Tidak Valid"})
+    let { userid } = req.body;
+    if (userid == null) {
+      return res.status(400).json({ message: "ID Tidak Valid" });
     }
     let finduserbyid = await Users.findByPk(userid);
-    if(finduserbyid == null){
-      return res.status(400).json({message: "User yang dicari tidak ketemu !!!"})
+    if (finduserbyid == null) {
+      return res
+        .status(400)
+        .json({ message: "User yang dicari tidak ketemu !!!" });
     }
 
     // === get all user ===
     let getAllDataUser = await Users.findAll();
 
-    // === activity log ===    
+    // === activity log ===
     await ActivityLogs.create({
       user_id: finduserbyid.id,
       activity: "Get All User",
-      ip_address: req.ip // cara dapetin ip clien
-    })
+      ip_address: req.ip, // cara dapetin ip clien
+    });
 
     // === return ===
     return res.status(200).json(getAllDataUser);
@@ -33,36 +37,55 @@ exports.GetAllUser = async (req, res) => {
 };
 
 exports.AddUser = async (req, res) => {
-  try { // ntik lewatin middleware dulu jangan lupa !!!
-    const { name,username,password_user,email,google_id,birthday_date,role,tier } = req.body; // ntik dirubah
-   
+  try {
+    // ntik lewatin middleware dulu jangan lupa !!!
+    const {
+      name,
+      username,
+      password_user,
+      email,
+      google_id,
+      birthday_date,
+      role,
+      tier,
+    } = req.body; // ntik dirubah
+
     // === proses password ===
-    let passwordnow = password_user // password user sekarang
-    let saltpassword = parseInt(process.env.SALTROUNDS) // panjang bcrypt
-    const password = await bcrypt.hash(passwordnow,saltpassword) // enkripsinya
-    
-    // === cek jika ada nama user yang sama ? tolak 
-    let allUserData = await Users.findOne({where: {username}})
-    let allUserDataEmail = await Users.findOne({where: {email}})
-    if(allUserData != null || allUserDataEmail != null){
+    let passwordnow = password_user; // password user sekarang
+    let saltpassword = parseInt(process.env.SALTROUNDS); // panjang bcrypt
+    const password = await bcrypt.hash(passwordnow, saltpassword); // enkripsinya
+
+    // === cek jika ada nama user yang sama ? tolak
+    let allUserData = await Users.findOne({ where: { username } });
+    let allUserDataEmail = await Users.findOne({ where: { email } });
+    if (allUserData != null || allUserDataEmail != null) {
       return res.status(400).json({
         message: "Username Atau Email Telah Dipakai !!!",
       });
     }
 
     // === inputkan ke db jika lolos ===
-    let newUser = await Users.create({name,username,password,email,google_id,birthday_date,role,tier});
+    let newUser = await Users.create({
+      name,
+      username,
+      password,
+      email,
+      google_id,
+      birthday_date,
+      role,
+      tier,
+    });
 
-    // === activity log ===    
+    // === activity log ===
     await ActivityLogs.create({
       user_id: newUser.id,
       activity: "Mendaftar Sebagai User Baru",
-      ip_address: req.ip // cara dapetin ip clien
-    })
-    
+      ip_address: req.ip, // cara dapetin ip clien
+    });
+
     return res.status(200).json(newUser);
   } catch (error) {
-    return res.status(500).json({ 
+    return res.status(500).json({
       message: error.message,
     });
   }
@@ -70,32 +93,34 @@ exports.AddUser = async (req, res) => {
 
 exports.GetUserById = async (req, res) => {
   try {
-    let { userid, userpencari } = req.body
+    let { userid, userpencari } = req.body;
 
-    // cari userpencari 
-    if(userpencari == null){
-      return res.status(400).json({message: "ID Tidak Valid pencari"})
+    // cari userpencari
+    if (userpencari == null) {
+      return res.status(400).json({ message: "ID Tidak Valid pencari" });
     }
     let finduserpencari = await Users.findByPk(userpencari);
-    if(finduserpencari == null){
-      return res.status(400).json({message: "User pencari tidak ketemu !!!"})
+    if (finduserpencari == null) {
+      return res.status(400).json({ message: "User pencari tidak ketemu !!!" });
     }
 
     // cari user target
-    if(userid == null){
-      return res.status(400).json({message: "ID Tidak Valid dicari"})
+    if (userid == null) {
+      return res.status(400).json({ message: "ID Tidak Valid dicari" });
     }
     let finduserbyid = await Users.findByPk(userid);
-    if(finduserbyid == null){
-      return res.status(400).json({message: "User yang dicari tidak ketemu !!!"})
+    if (finduserbyid == null) {
+      return res
+        .status(400)
+        .json({ message: "User yang dicari tidak ketemu !!!" });
     }
 
-    // === activity log ===    
+    // === activity log ===
     await ActivityLogs.create({
       user_id: userpencari,
       activity: "Get Seorang User",
-      ip_address: req.ip // cara dapetin ip clien
-    })
+      ip_address: req.ip, // cara dapetin ip clien
+    });
 
     return res.status(200).json(finduserbyid);
   } catch (error) {
@@ -105,14 +130,7 @@ exports.GetUserById = async (req, res) => {
 
 exports.UpdateUserById = async (req, res) => {
   try {
-    const {
-      userid,
-      name,
-      username,
-      email,
-      role,
-      tier
-    } = req.body;
+    const { userid, name, username, email, role, tier } = req.body;
     const user = await Users.findByPk(userid);
     if (!user) {
       return res.status(404).json({ message: "User tidak ditemukan" });
@@ -125,43 +143,44 @@ exports.UpdateUserById = async (req, res) => {
     user.tier = tier;
     await user.save();
 
-    // === activity log ===    
+    // === activity log ===
     await ActivityLogs.create({
       user_id: user.id,
       activity: "User Melakukan Update Data Diri",
-      ip_address: req.ip // cara dapetin ip clien
-    })
+      ip_address: req.ip, // cara dapetin ip clien
+    });
 
     return res.status(200).json(user);
-  }
-  catch (error) {
+  } catch (error) {
     return res.status(500).json(error);
   }
 };
 
 exports.DeleteUser = async (req, res) => {
   try {
-    let { userid } = req.body 
-    if(userid == null){
-      return res.status(400).json({message: "ID Tidak Valid"})
+    let { userid } = req.body;
+    if (userid == null) {
+      return res.status(400).json({ message: "ID Tidak Valid" });
     }
     let finduserbyid = await Users.findByPk(userid);
-    if(finduserbyid == null){
-      return res.status(400).json({message: "User yang dicari tidak ketemu !!!"})
+    if (finduserbyid == null) {
+      return res
+        .status(400)
+        .json({ message: "User yang dicari tidak ketemu !!!" });
     }
 
-    // === activity log ===    
+    // === activity log ===
     await ActivityLogs.create({
       user_id: finduserbyid.id,
       activity: "User Didelete",
-      ip_address: req.ip // cara dapetin ip clien
-    })
+      ip_address: req.ip, // cara dapetin ip clien
+    });
 
     // kalau ketemu maka delete
-    await finduserbyid.destroy()
+    await finduserbyid.destroy();
     return res.status(200).json({
       message: "Berhasil Delete User",
-      data: finduserbyid
+      data: finduserbyid,
     });
   } catch (error) {
     return res.status(500).json(error);
@@ -170,57 +189,115 @@ exports.DeleteUser = async (req, res) => {
 
 exports.LoginUser = async (req, res) => {
   try {
-    let { usernameoremail,password } = req.body 
-    if(usernameoremail == null || password == ""){
-      return res.status(400).json({message: "Usermname/Email/Password Tidak Valid"})
+    let { usernameoremail, password } = req.body;
+    if (usernameoremail == null || password == "") {
+      return res
+        .status(400)
+        .json({ message: "Usermname/Email/Password Tidak Valid" });
     }
 
-    let userdata = false
+    let userdata = false;
 
     // cek username
     let cariuserbyusername = await Users.findOne({
-      where:{
+      where: {
         username: usernameoremail,
-      }
-    })
+      },
+    });
     // simpan user
-    if(cariuserbyusername != null){
-      userdata = cariuserbyusername
+    if (cariuserbyusername != null) {
+      userdata = cariuserbyusername;
     }
-    let cariuserbyemail= await Users.findOne({
-      where:{
+    let cariuserbyemail = await Users.findOne({
+      where: {
         email: usernameoremail,
-      }
-    })
+      },
+    });
     // simpan user
-    if(cariuserbyemail != null){
-      userdata = cariuserbyemail
+    if (cariuserbyemail != null) {
+      userdata = cariuserbyemail;
     }
     // cek kalau keduanya kosong maka g ketemu
-    if(userdata == null){
+    if (userdata == null) {
       return res.status(400).json({
-        message: "Login Gagal"
-      })
+        message: "Login Gagal",
+      });
     }
     // berarti ketemu, lakukan bcry
-    let passcomp = await bcrypt.compare(password,userdata.password)
-    if(!passcomp){ // berarti gagal login
+    let passcomp = await bcrypt.compare(password, userdata.password);
+    if (!passcomp) {
+      // berarti gagal login
       return res.status(400).json({
-        message: "Login Gagal"
-      })
+        message: "Login Gagal",
+      });
     }
 
     // === activity log ===
     await ActivityLogs.create({
       user_id: userdata.id,
       activity: `User dengan id ${userdata.id} Login`,
-      ip_address: req.ip // cara dapetin ip clien
-    })
+      ip_address: req.ip, // cara dapetin ip clien
+    });
 
     // klo sampek sini berarti berhasil
-    return res.status(200).json(userdata)
-    
+    return res.status(200).json(userdata);
   } catch (error) {
     return res.status(500).json(error);
+  }
+};
+
+exports.GoogleAuth = async (req, res) => {
+  try {
+    const { idToken } = req.body;
+    if (!idToken) {
+      return res.status(400).json({ message: "Token Google tidak ditemukan" });
+    }
+    const ticket = await client.verifyIdToken({
+      idToken: idToken,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+
+    const googleId = payload["sub"];
+    const email = payload["email"];
+    const name = payload["name"];
+
+    let user = await Users.findOne({
+      where: { email: email },
+    });
+
+    let activityType = "";
+
+    if (!user) {
+      user = await Users.create({
+        name: name,
+        email: email,
+        google_id: googleId,
+        username: email.split("@")[0],
+        password: null,
+        role: "student",
+        tier: "free",
+        birthday_date: null,
+      });
+      activityType = "Mendaftar Menggunakan Google";
+    } else {
+      if (!user.google_id) {
+        user.google_id = googleId;
+        await user.save();
+      }
+      activityType = "Login Menggunakan Google";
+    }
+
+    await ActivityLogs.create({
+      user_id: user.id,
+      activity: activityType,
+      ip_address: req.ip,
+    });
+
+    return res.status(200).json(user);
+  } catch (error) {
+    return res
+      .status(401)
+      .json({ message: "Autentikasi Google Gagal!", error: error.message });
   }
 };

@@ -166,7 +166,8 @@ interface RemoteDataSource {
     // =======================
 
     suspend fun getAllQuizzes(
-        userId: Int
+        userId: Int,
+        topicId: Int
     ): Result<List<Quizzes>>
 
     suspend fun getQuizById(
@@ -189,6 +190,7 @@ interface RemoteDataSource {
     ): Result<Quizzes>
 
     suspend fun deleteQuiz(
+        userId: Int,
         id: Int
     ): Result<Unit>
 
@@ -196,9 +198,7 @@ interface RemoteDataSource {
     // Quiz Question
     // =======================
 
-    suspend fun getAllQuestions(
-        userId: Int
-    ): Result<List<QuizQuestion>>
+    suspend fun getAllQuestions(userId: Int, quizId: Int): Result<List<QuizQuestion>>
 
     suspend fun getQuestionById(
         userId: Int,
@@ -214,9 +214,9 @@ interface RemoteDataSource {
 
     suspend fun updateQuestion(
         userId: Int,
-        quizCategory: String,
-        questionType: String,
         id: Int,
+        questionText: String,
+        correctAnswer: String,
     ): Result<QuizQuestion>
 
     suspend fun deleteQuestion(
@@ -228,9 +228,7 @@ interface RemoteDataSource {
     // Quiz Question Option
     // =======================
 
-    suspend fun getAllOptions(
-        userId: Int
-    ): Result<List<QuizQuestionOption>>
+    suspend fun getAllOptions(userId: Int, quizId: Int): Result<List<QuizQuestionOption>>
 
     suspend fun getOptionById(
         userId: Int,
@@ -239,9 +237,9 @@ interface RemoteDataSource {
 
     suspend fun insertOption(
         userId: Int,
-        quizId: Int,
-        questionText: String,
-        correctAnswer: String,
+        quizQuestionId: Int,
+        optionLetter: String,
+        optionText: String,
     ): Result<QuizQuestionOption>
 
     suspend fun updateOption(
@@ -409,13 +407,12 @@ interface RemoteDataSource {
         userId: Int,
         quizId: Int,
         studentId: Int,
-        essayAnswer: String,
+        essayAnswer: String?,
         fileUrl: String?,
         score: Int?,
         teacherComment: String?,
         status: String?
     ): Result<StudentSubmission>
-
     suspend fun updateSubmission(
         userId: Int,
         submissionId: Int,
@@ -443,4 +440,11 @@ interface RemoteDataSource {
         role: String,
         pesan: String
     ): Result<AiChatResponse>
+
+    // Google Auth
+// ================
+
+    suspend fun doGoogleAuth(idToken: String): Result<User>
 }
+
+

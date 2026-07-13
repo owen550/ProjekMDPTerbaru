@@ -426,9 +426,9 @@ class RetrofitDataSource(
     // Quizzes
     // =======================
 
-    override suspend fun getAllQuizzes(userId: Int): Result<List<Quizzes>> {
+    override suspend fun getAllQuizzes(userId: Int, topicId: Int): Result<List<Quizzes>> {
         return try {
-            val response = retrofitService.getAllQuizzes(userId)
+            val response = retrofitService.getAllQuizzes(userId, topicId)
             if (response.isSuccessful && response.body() != null) {
                 Result.success(response.body()!!)
             } else {
@@ -488,9 +488,9 @@ class RetrofitDataSource(
         }
     }
 
-    override suspend fun deleteQuiz(id: Int): Result<Unit> {
+    override suspend fun deleteQuiz(userId: Int, id: Int): Result<Unit> {
         return try {
-            val response = retrofitService.deleteQuiz(id)
+            val response = retrofitService.deleteQuiz(userId, id)
             if (response.isSuccessful) {
                 Result.success(Unit)
             } else {
@@ -505,9 +505,9 @@ class RetrofitDataSource(
     // Quiz Questions
     // =======================
 
-    override suspend fun getAllQuestions(userId: Int): Result<List<QuizQuestion>> {
+    override suspend fun getAllQuestions(userId: Int, quizId: Int): Result<List<QuizQuestion>> {
         return try {
-            val response = retrofitService.getAllQuestions(userId)
+            val response = retrofitService.getAllQuestions(userId, quizId)
             if (response.isSuccessful && response.body() != null) {
                 Result.success(response.body()!!)
             } else {
@@ -551,12 +551,12 @@ class RetrofitDataSource(
 
     override suspend fun updateQuestion(
         userId: Int,
-        quizCategory: String,
-        questionType: String,
-        id: Int
+        id: Int,
+        questionText: String,
+        correctAnswer: String
     ): Result<QuizQuestion> {
         return try {
-            val response = retrofitService.updateQuestion(userId, quizCategory, questionType, id)
+            val response = retrofitService.updateQuestion(userId, id, questionText, correctAnswer)
             if (response.isSuccessful && response.body() != null) {
                 Result.success(response.body()!!)
             } else {
@@ -584,9 +584,9 @@ class RetrofitDataSource(
     // Quiz Question Option
     // =======================
 
-    override suspend fun getAllOptions(userId: Int): Result<List<QuizQuestionOption>> {
+    override suspend fun getAllOptions(userId: Int, quizId: Int): Result<List<QuizQuestionOption>> {
         return try {
-            val response = retrofitService.getAllOptions(userId)
+            val response = retrofitService.getAllOptions(userId, quizId)
             if (response.isSuccessful && response.body() != null) {
                 Result.success(response.body()!!)
             } else {
@@ -612,12 +612,12 @@ class RetrofitDataSource(
 
     override suspend fun insertOption(
         userId: Int,
-        quizId: Int,
-        questionText: String,
-        correctAnswer: String
+        quizQuestionId: Int,
+        optionLetter: String,
+        optionText: String
     ): Result<QuizQuestionOption> {
         return try {
-            val response = retrofitService.insertOption(userId, quizId, questionText, correctAnswer)
+            val response = retrofitService.insertOption(userId, quizQuestionId, optionLetter, optionText)
             if (response.isSuccessful && response.body() != null) {
                 Result.success(response.body()!!)
             } else {
@@ -1063,7 +1063,7 @@ class RetrofitDataSource(
         userId: Int,
         quizId: Int,
         studentId: Int,
-        essayAnswer: String,
+        essayAnswer: String?,
         fileUrl: String?,
         score: Int?,
         teacherComment: String?,
@@ -1147,6 +1147,21 @@ class RetrofitDataSource(
                 // MEMPERBAIKI INI: Ambil detail error dari server
                 val errorMsg = response.errorBody()?.string() ?: response.message()
                 Result.failure(Exception(errorMsg))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    // Google Auth
+    // ===================
+    override suspend fun doGoogleAuth(idToken: String): Result<User> {
+        return try {
+            val response = retrofitService.doGoogleAuth(idToken)
+            if (response.isSuccessful && response.body() != null) {
+                Result.success(response.body()!!)
+            } else {
+                Result.failure(Exception(response.message()))
             }
         } catch (e: Exception) {
             Result.failure(e)

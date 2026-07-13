@@ -231,8 +231,8 @@ class DefaultTodoRepository(
     // Quizzes
     // =======================
 
-    override suspend fun getAllQuizzes(userId: Int): Result<List<Quizzes>> {
-        return remoteDataSource.getAllQuizzes(userId)
+    override suspend fun getAllQuizzes(userId: Int, topicId: Int): Result<List<Quizzes>> {
+        return remoteDataSource.getAllQuizzes(userId, topicId)
     }
 
     override suspend fun getQuizById(userId: Int, quizId: Int): Result<Quizzes> {
@@ -257,16 +257,16 @@ class DefaultTodoRepository(
         return remoteDataSource.updateQuiz(userId, category, questionType, id)
     }
 
-    override suspend fun deleteQuiz(id: Int): Result<Unit> {
-        return remoteDataSource.deleteQuiz(id)
+    override suspend fun deleteQuiz(userId: Int, id: Int): Result<Unit> {
+        return remoteDataSource.deleteQuiz(userId, id)
     }
 
     // =======================
     // Quiz Question
     // =======================
 
-    override suspend fun getAllQuestions(userId: Int): Result<List<QuizQuestion>> {
-        return remoteDataSource.getAllQuestions(userId)
+    override suspend fun getAllQuestions(userId: Int, quizId: Int): Result<List<QuizQuestion>> {
+        return remoteDataSource.getAllQuestions(userId, quizId)
     }
 
     override suspend fun getQuestionById(userId: Int, questionId: Int): Result<QuizQuestion> {
@@ -284,11 +284,11 @@ class DefaultTodoRepository(
 
     override suspend fun updateQuestion(
         userId: Int,
-        quizCategory: String,
-        questionType: String,
-        id: Int
+        id: Int,
+        questionText: String,
+        correctAnswer: String
     ): Result<QuizQuestion> {
-        return remoteDataSource.updateQuestion(userId, quizCategory, questionType, id)
+        return remoteDataSource.updateQuestion(userId, id, questionText, correctAnswer)
     }
 
     override suspend fun deleteQuestion(userId: Int, id: Int): Result<Unit> {
@@ -299,8 +299,8 @@ class DefaultTodoRepository(
     // Quiz Question Option
     // =======================
 
-    override suspend fun getAllOptions(userId: Int): Result<List<QuizQuestionOption>> {
-        return remoteDataSource.getAllOptions(userId)
+    override suspend fun getAllOptions(userId: Int, quizId: Int): Result<List<QuizQuestionOption>> {
+        return remoteDataSource.getAllOptions(userId, quizId)
     }
 
     override suspend fun getOptionById(userId: Int, optionId: Int): Result<QuizQuestionOption> {
@@ -309,11 +309,11 @@ class DefaultTodoRepository(
 
     override suspend fun insertOption(
         userId: Int,
-        quizId: Int,
-        questionText: String,
-        correctAnswer: String
+        quizQuestionId: Int,
+        optionLetter: String,
+        optionText: String
     ): Result<QuizQuestionOption> {
-        return remoteDataSource.insertOption(userId, quizId, questionText, correctAnswer)
+        return remoteDataSource.insertOption(userId, quizQuestionId, optionLetter, optionText)
     }
 
     override suspend fun updateOption(
@@ -478,7 +478,7 @@ class DefaultTodoRepository(
         userId: Int,
         quizId: Int,
         studentId: Int,
-        essayAnswer: String,
+        essayAnswer: String?,
         fileUrl: String?,
         score: Int?,
         teacherComment: String?,
@@ -517,5 +517,17 @@ class DefaultTodoRepository(
         pesan: String
     ): Result<AiChatResponse> {
         return remoteDataSource.chatWithAi(role, pesan)
+    }
+
+    // Google Auth
+    // ====================
+
+    override suspend fun doGoogleAuth(idToken: String): Result<User> {
+        val googleLogin = remoteDataSource.doGoogleAuth(idToken)
+        googleLogin.onSuccess { userdata ->
+            // Simpan ke Room local storage
+            localDataSource.insert(userdata)
+        }
+        return googleLogin
     }
 }

@@ -15,6 +15,7 @@ import com.example.fe.data.CourseTopic
 import com.example.fe.data.CsChatbotChat
 import com.example.fe.data.TopicMaterial
 import com.example.fe.data.User
+import com.example.fe.data.GradeUiModel
 import com.example.fe.data.repositories.TodoRepository
 import com.example.fe.materialTopic
 import com.example.fe.orderid
@@ -36,9 +37,6 @@ class TodosViewModel(
     private val _oneuser = MutableLiveData<User?>()
     val oneuser: LiveData<User?> = _oneuser
 
-    private val _gradesumary = MutableLiveData<GradeSummary>()
-    val gradesumary: LiveData<GradeSummary> = _gradesumary
-
     private val _course = MutableLiveData<List<Course>>()
     val course: LiveData<List<Course>> = _course
 
@@ -56,6 +54,11 @@ class TodosViewModel(
 
     private val _redirectToPayment = MutableLiveData<String>()
     val redirectToPayment: LiveData<String> get() = _redirectToPayment
+
+    private val _gradesumary = MutableLiveData<List<GradeUiModel>>()
+    val gradesumary: LiveData<List<GradeUiModel>> = _gradesumary
+
+
 
     fun buatTransaksi(amount: Int) {
         _loading.value = true
@@ -638,6 +641,32 @@ class TodosViewModel(
         }
     }
 
+    fun fetchGradeSummary() {
+        val userId = currentUserId
+        if (userId == null) {
+            _message.value = "User session invalid"
+            return
+        }
+        _loading.value = true
+        viewModelScope.launch {
+            try {
+                // Memanggil fungsi fetch dari repository
+                val result = todoRepository.getSubmissionById(userId)
+                result
+                    .onSuccess { gradeData ->
+                        _gradesumary.value = gradeData
+                    }
+                    .onFailure { err ->
+                        _message.value = err.message ?: "Gagal memuat rangkuman nilai"
+                    }
+            } catch (e: Exception) {
+                _message.value = "Terjadi Kesalahan Pada Backend: ${e.message}"
+            } finally {
+                _loading.value = false
+            }
+        }
+    }
+
 
     fun reset() {
         _message.value = ""
@@ -650,6 +679,8 @@ class TodosViewModel(
         _oneuser.value = null
         _onetopicmaterial.value = null
         _insertSuccess.value = false
+        _enrollments.value = emptyList()
+        _gradesumary.value = emptyList()
         _enrollments.value = emptyList()
     }
 }

@@ -15,6 +15,7 @@ import com.example.fe.data.Quizzes
 import com.example.fe.data.StudentSubmission
 import com.example.fe.data.TopicMaterial
 import com.example.fe.data.User
+import com.example.fe.data.GradeUiModel
 
 interface TodoRepository {
 
@@ -141,7 +142,7 @@ interface TodoRepository {
     // Quizzes
     // =======================
 
-    suspend fun getAllQuizzes(userId: Int): Result<List<Quizzes>>
+    suspend fun getAllQuizzes(userId: Int, topicId: Int): Result<List<Quizzes>>
 
     suspend fun getQuizById(userId: Int, quizId: Int): Result<Quizzes>
 
@@ -159,13 +160,13 @@ interface TodoRepository {
         id: Int,
     ): Result<Quizzes>
 
-    suspend fun deleteQuiz(id: Int): Result<Unit>
+    suspend fun deleteQuiz(userId: Int, id: Int): Result<Unit>
 
     // =======================
     // Quiz Question
     // =======================
 
-    suspend fun getAllQuestions(userId: Int): Result<List<QuizQuestion>>
+    suspend fun getAllQuestions(userId: Int, quizId: Int): Result<List<QuizQuestion>>
 
     suspend fun getQuestionById(userId: Int, questionId: Int): Result<QuizQuestion>
 
@@ -178,9 +179,9 @@ interface TodoRepository {
 
     suspend fun updateQuestion(
         userId: Int,
-        quizCategory: String,
-        questionType: String,
         id: Int,
+        questionText: String,
+        correctAnswer: String,
     ): Result<QuizQuestion>
 
     suspend fun deleteQuestion(userId: Int, id: Int): Result<Unit>
@@ -189,15 +190,15 @@ interface TodoRepository {
     // Quiz Question Option
     // =======================
 
-    suspend fun getAllOptions(userId: Int): Result<List<QuizQuestionOption>>
+    suspend fun getAllOptions(userId: Int, quizId: Int): Result<List<QuizQuestionOption>>
 
     suspend fun getOptionById(userId: Int, optionId: Int): Result<QuizQuestionOption>
 
     suspend fun insertOption(
         userId: Int,
-        quizId: Int,
-        questionText: String,
-        correctAnswer: String,
+        quizQuestionId: Int,
+        optionLetter: String,
+        optionText: String,
     ): Result<QuizQuestionOption>
 
     suspend fun updateOption(
@@ -316,7 +317,7 @@ interface TodoRepository {
         userId: Int,
         quizId: Int,
         studentId: Int,
-        essayAnswer: String,
+        essayAnswer: String?,
         fileUrl: String?,
         score: Int?,
         teacherComment: String?,
@@ -347,4 +348,9 @@ interface TodoRepository {
         pesan: String
     ): Result<AiChatResponse>
 
+    // Google Auth
+    // ===================
+
+    suspend fun doGoogleAuth(idToken: String): Result<User>
+    suspend fun getGradeSummary(userId: Int): Result<List<GradeUiModel>>
 }

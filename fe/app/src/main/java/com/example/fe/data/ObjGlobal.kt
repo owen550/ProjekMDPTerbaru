@@ -180,3 +180,14 @@ data class AiChatResponse(
     val message: String,
     val data: String
 )
+
+data class QuestionWithOptions(
+    val question: QuizQuestion,
+    val options: List<QuizQuestionOption>
+)
+
+data class GradeUiModel(
+    val submission: StudentSubmission,
+    val course: Course,
+    val studentUser: User // Data user (mahasiswa) untuk mengambil properti .points
+)

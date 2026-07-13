@@ -1,29 +1,40 @@
 // === semua model yang dipakai ===
 require("dotenv").config();
-const {Quizzes,ActivityLogs,Users} = require("../models/index");
-const bcrypt = require('bcrypt');
+const { Quizzes, ActivityLogs, Users } = require("../models/index");
+const bcrypt = require("bcrypt");
 
-exports.GetAllQuizzesByTopicId = async (req, res) => { 
+exports.GetAllQuizzesByTopicId = async (req, res) => {
   try {
     // === find id user ===
-    let { userid } = req.body
-    if(userid == null){
-      return res.status(400).json({message: "ID Tidak Valid"})
-    }
-    let finduserbyid = await Users.findByPk(userid);
-    if(finduserbyid == null){
-      return res.status(400).json({message: "User yang dicari tidak ketemu !!!"})
+    let { userid, topic_id } = req.body;
+
+    if (userid == null) {
+      return res.status(400).json({ message: "ID Tidak Valid" });
     }
 
-    // === get all quizz === 
-    let allquizz = await Quizzes.findAll()
+    let finduserbyid = await Users.findByPk(userid);
+    if (finduserbyid == null) {
+      return res
+        .status(400)
+        .json({ message: "User yang dicari tidak ketemu !!!" });
+    }
+
+    // === validasi topic_id ===
+    if (topic_id == null) {
+      return res.status(400).json({ message: "Topic ID Tidak Valid" });
+    }
+
+    // === get all quizz by topic id ===
+    let allquizz = await Quizzes.findAll({
+      where: { topic_id },
+    });
 
     // === activity log ===
     await ActivityLogs.create({
       user_id: finduserbyid.id,
-      activity: `Get All Quizzes`,
-      ip_address: req.ip // cara dapetin ip clien
-    })
+      activity: `Get All Quizzes By Topic ID : ${topic_id}`,
+      ip_address: req.ip,
+    });
 
     // === return ===
     return res.status(200).json(allquizz);
@@ -32,30 +43,34 @@ exports.GetAllQuizzesByTopicId = async (req, res) => {
   }
 };
 
-exports.GetQuizzesById = async (req, res) => { 
+exports.GetQuizzesById = async (req, res) => {
   try {
     // === find id user ===
-    let { userid, quizzid } = req.body 
-    if(userid == null){
-      return res.status(400).json({message: "ID Tidak Valid"})
+    let { userid, quizzid } = req.body;
+    if (userid == null) {
+      return res.status(400).json({ message: "ID Tidak Valid" });
     }
     let finduserbyid = await Users.findByPk(userid);
-    if(finduserbyid == null){
-      return res.status(400).json({message: "User yang dicari tidak ketemu !!!"})
+    if (finduserbyid == null) {
+      return res
+        .status(400)
+        .json({ message: "User yang dicari tidak ketemu !!!" });
     }
 
-    // === get all by topic id === 
-    let allquizz = await Quizzes.findByPk(quizzid)
-    if(allquizz == null){
-      return res.status(400).json({message: `quizz dengan id ${quizzid} tidak ditemukan`})
+    // === get all by topic id ===
+    let allquizz = await Quizzes.findByPk(quizzid);
+    if (allquizz == null) {
+      return res
+        .status(400)
+        .json({ message: `quizz dengan id ${quizzid} tidak ditemukan` });
     }
 
-    // === activity log ===    
+    // === activity log ===
     await ActivityLogs.create({
       user_id: finduserbyid.id,
       activity: "Get Quizz By ID",
-      ip_address: req.ip // cara dapetin ip clien
-    })
+      ip_address: req.ip, // cara dapetin ip clien
+    });
 
     // === return ===
     return res.status(200).json(allquizz);
@@ -70,20 +85,22 @@ exports.GetQuizzesById = async (req, res) => {
 exports.InsertQuizzes = async (req, res) => {
   try {
     // === tangkap id user ===
-    let { topic_id,quiz_category,question_type } = req.body
-    let user = req.user
+    let { topic_id, quiz_category, question_type } = req.body;
+    let user = req.user;
 
     // === insert course === !!! MAIN CODE ON FUNCTION
     let createquizz = await Quizzes.create({
-        topic_id,quiz_category,question_type
-    })
+      topic_id,
+      quiz_category,
+      question_type,
+    });
 
     // === activity log ===
     await ActivityLogs.create({
       user_id: user.id,
       activity: `Membuat Quizz Baru Dengan ID : ${createquizz.id}`,
-      ip_address: req.ip // cara dapetin ip clien
-    })
+      ip_address: req.ip, // cara dapetin ip clien
+    });
 
     // === return ===
     return res.status(200).json(createquizz);
@@ -95,34 +112,25 @@ exports.InsertQuizzes = async (req, res) => {
 // update
 exports.UpdateQuizzes = async (req, res) => {
   try {
-    // === find id user ===
-    let user = req.user
-    let { id,quiz_category,question_type } = req.body
+    let user = req.user;
+    let { id, quiz_category, question_type } = req.body;
 
-    // === cari quizz ===
-    let cariquizz = await Quizzes.findByPk(id)
-    if(cariquizz == null){
-        return res.status(400).json({message: "Topic Course Tidak Ketemu"}) // cek g ketemu
+    let cariquizz = await Quizzes.findByPk(id);
+    if (cariquizz == null) {
+      return res.status(400).json({ message: "Topic Course Tidak Ketemu" });
     }
 
-    // === ubah isinya dan save
-    cariquizz.quiz_category = quiz_category
-    cariquizz.question_type = question_type
-    await cariquizz.save()
+    cariquizz.quiz_category = quiz_category;
+    cariquizz.question_type = question_type;
+    await cariquizz.save();
 
-    // return
-    return res.status(200).json(cariquizz);
-
-    // === activity log ===
     await ActivityLogs.create({
       user_id: user.id,
       activity: `Quizz dengan id: ${id} telah dirubah`,
-      ip_address: req.ip // cara dapetin ip clien
-    })
+      ip_address: req.ip,
+    });
 
-    // === return ===
-    return res.status(200).json(course);
-
+    return res.status(200).json(cariquizz);
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -132,25 +140,25 @@ exports.UpdateQuizzes = async (req, res) => {
 exports.DeleteQuizzes = async (req, res) => {
   try {
     // === find id user ===
-    let user = req.user
-    let { id } = req.body
+    let user = req.user;
+    let { id } = req.body;
 
     // === cari quizz ===
-    let cariquizz = await Quizzes.findByPk(id)
-    if(cariquizz == null){
-        return res.status(400).json({message: "Topic Course Tidak Ketemu"}) // cek g ketemu
+    let cariquizz = await Quizzes.findByPk(id);
+    if (cariquizz == null) {
+      return res.status(400).json({ message: "Topic Course Tidak Ketemu" }); // cek g ketemu
     }
-    temp = cariquizz
-    
-    // === delete quizz
-    await cariquizz.destroy()
+    temp = cariquizz;
 
-    // === activity log ===    
+    // === delete quizz
+    await cariquizz.destroy();
+
+    // === activity log ===
     await ActivityLogs.create({
       user_id: user.id,
       activity: `Quizz dengan id ${id} telah didelete`,
-      ip_address: req.ip // cara dapetin ip clien
-    })
+      ip_address: req.ip, // cara dapetin ip clien
+    });
 
     // === return ===
     return res.status(200).json(temp);

@@ -99,6 +99,7 @@ class AddCourseTopicFragment : Fragment() {
                 ) {
                     val selectedType = types[position]
                     binding.btnAddCourseTopic.isEnabled = selectedType == "material"
+                    binding.btnAddCourseTopic.isEnabled = selectedType == "quiz"
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {

@@ -2,4 +2,5 @@
     <string name="app_name">fe</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_web_client_id">12988961301-95kuha92qhrq4qgkr1nd7r6btsns8b8c.apps.googleusercontent.com</string>
 </resources>

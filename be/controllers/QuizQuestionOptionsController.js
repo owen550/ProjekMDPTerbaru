@@ -12,28 +12,39 @@ const {
 // =======================================================
 exports.GetAllQuizQuestionOptions = async (req, res) => {
   try {
-    // === find id user ===
-    let { userid } = req.body;
+    let { userid, quiz_id } = req.body;
 
     if (userid == null) {
       return res.status(400).json({ message: "ID Tidak Valid" });
     }
 
     let finduserbyid = await Users.findByPk(userid);
-
     if (finduserbyid == null) {
       return res
         .status(400)
         .json({ message: "User yang dicari tidak ketemu !!!" });
     }
 
-    // === get all ===
-    let alloptions = await QuizQuestionOptions.findAll();
+    // === filter lewat relasi ke quiz_questions kalau quiz_id dikirim ===
+    let includeClause = {
+      model: QuizQuestions,
+      as: "question",
+      attributes: [],
+    };
+    if (quiz_id != null) {
+      includeClause.where = { quiz_id };
+    }
 
-    // === activity log ===
+    let alloptions = await QuizQuestionOptions.findAll({
+      include: [includeClause],
+    });
+
     await ActivityLogs.create({
       user_id: finduserbyid.id,
-      activity: "Get All Quiz Question Options",
+      activity:
+        quiz_id != null
+          ? `Get All Quiz Question Options By Quiz ID : ${quiz_id}`
+          : "Get All Quiz Question Options",
       ip_address: req.ip,
     });
 

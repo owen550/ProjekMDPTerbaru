@@ -1,34 +1,43 @@
 // === semua model yang dipakai ===
 require("dotenv").config();
-const { QuizQuestions, Quizzes, ActivityLogs, Users } = require("../models/index");
+const {
+  QuizQuestions,
+  Quizzes,
+  ActivityLogs,
+  Users,
+} = require("../models/index");
 
 // =======================================================
 // Get All Quiz Questions
 // =======================================================
 exports.GetAllQuizQuestions = async (req, res) => {
   try {
-    // === find id user ===
-    let { userid } = req.body;
+    let { userid, quiz_id } = req.body;
+
     if (userid == null) {
       return res.status(400).json({ message: "ID Tidak Valid" });
     }
 
     let finduserbyid = await Users.findByPk(userid);
     if (finduserbyid == null) {
-      return res.status(400).json({ message: "User yang dicari tidak ketemu !!!" });
+      return res
+        .status(400)
+        .json({ message: "User yang dicari tidak ketemu !!!" });
     }
 
-    // === get all quiz questions ===
-    let allquizquestions = await QuizQuestions.findAll();
+    // === filter berdasarkan quiz_id kalau dikirim ===
+    let whereClause = quiz_id != null ? { quiz_id } : {};
+    let allquizquestions = await QuizQuestions.findAll({ where: whereClause });
 
-    // === activity log ===
     await ActivityLogs.create({
       user_id: finduserbyid.id,
-      activity: "Get All Quiz Questions",
+      activity:
+        quiz_id != null
+          ? `Get All Quiz Questions By Quiz ID : ${quiz_id}`
+          : "Get All Quiz Questions",
       ip_address: req.ip,
     });
 
-    // === return ===
     return res.status(200).json(allquizquestions);
   } catch (error) {
     return res.status(500).json({ error: error.message });
@@ -49,7 +58,9 @@ exports.GetQuizQuestionById = async (req, res) => {
 
     let finduserbyid = await Users.findByPk(userid);
     if (finduserbyid == null) {
-      return res.status(400).json({ message: "User yang dicari tidak ketemu !!!" });
+      return res
+        .status(400)
+        .json({ message: "User yang dicari tidak ketemu !!!" });
     }
 
     // === get quiz question ===

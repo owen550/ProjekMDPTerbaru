@@ -234,7 +234,8 @@ interface WebService {
     @FormUrlEncoded
     @POST("api/quizz/alldata")
     suspend fun getAllQuizzes(
-        @Field("userid") userId: Int
+        @Field("userid") userId: Int,
+        @Field("topic_id") topicId: Int
     ): Response<List<Quizzes>>
 
     @FormUrlEncoded
@@ -254,7 +255,7 @@ interface WebService {
     ): Response<Quizzes>
 
     @FormUrlEncoded
-    @POST("api/quizz/update")
+    @PUT("api/quizz/update")
     suspend fun updateQuiz(
         @Field("userid") userId: Int,
         @Field("quiz_category") category: String,
@@ -263,19 +264,23 @@ interface WebService {
     ): Response<Quizzes>
 
     @FormUrlEncoded
-    @POST("api/quizz/delete")
+    @PUT("api/quizz/delete")
     suspend fun deleteQuiz(
+        @Field("userid") userId: Int,
         @Field("id") id: Int
-    ): Response<Unit>
+    ): Response<Quizzes>
 
     //==========================================================
     //QuizQuestions=============================================
 
+    @FormUrlEncoded
     @POST("api/quizquestions/alldata")
     suspend fun getAllQuestions(
-        @Field("userid") userId: Int
+        @Field("userid") userId: Int,
+        @Field("quiz_id") quizId: Int
     ): Response<List<QuizQuestion>>
 
+    @FormUrlEncoded
     @POST("api/quizquestions/getbyid")
     suspend fun getQuestionById(
         @Field("userid") userId: Int,
@@ -292,30 +297,33 @@ interface WebService {
     ): Response<QuizQuestion>
 
     @FormUrlEncoded
-    @POST("api/quizquestions/update")
+    @PUT("api/quizquestions/update")
     suspend fun updateQuestion(
         @Field("userid") userId: Int,
-        @Field("quiz_category") quizCategory: String,
-        @Field("question_type") questionType: String,
         @Field("id") id: Int,
+        @Field("question_text") questionText: String,
+        @Field("correct_answer") correctAnswer: String,
     ): Response<QuizQuestion>
 
     @FormUrlEncoded
-    @POST("api/quizquestions/delete")
+    @PUT("api/quizquestions/delete")
     suspend fun deleteQuestion(
         @Field("userid") userId: Int,
         @Field("id") id: Int
-    ): Response<Unit>
+    ): Response<QuizQuestion>
 
 
     //==========================================================
     //QuizQuestionOption=================================================
 
+    @FormUrlEncoded
     @POST("api/quizquestionoptions/alldata")
     suspend fun getAllOptions(
-        @Field("userid") userId: Int
+        @Field("userid") userId: Int,
+        @Field("quiz_id") quizId: Int
     ): Response<List<QuizQuestionOption>>
 
+    @FormUrlEncoded
     @POST("api/quizquestionoptions/getbyid")
     suspend fun getOptionById(
         @Field("userid") userId: Int,
@@ -326,27 +334,26 @@ interface WebService {
     @POST("api/quizquestionoptions/insert")
     suspend fun insertOption(
         @Field("userid") userId: Int,
-        @Field("quiz_id") quizId: Int,
-        @Field("question_text") questionText: String,
-        @Field("correct_answer") correctAnswer: String,
+        @Field("quiz_question_id") quizQuestionId: Int,
+        @Field("option_letter") optionLetter: String,
+        @Field("option_text") optionText: String,
     ): Response<QuizQuestionOption>
 
     @FormUrlEncoded
-    @POST("api/quizquestionoptions/update")
+    @PUT("api/quizquestionoptions/update")
     suspend fun updateOption(
         @Field("userid") userId: Int,
         @Field("id") id: Int,
         @Field("option_letter") optionLetter: String,
         @Field("option_text") optionText: String,
-
-        ): Response<QuizQuestionOption>
+    ): Response<QuizQuestionOption>
 
     @FormUrlEncoded
-    @POST("api/quizquestionoptions/delete")
+    @PUT("api/quizquestionoptions/delete")
     suspend fun deleteOption(
         @Field("userid") userId: Int,
         @Field("id") id: Int
-    ): Response<Unit>
+    ): Response<QuizQuestionOption>
 
     //==========================================================
     //CHAT BOT=================================================
@@ -529,7 +536,7 @@ interface WebService {
         @Field("userid") userId: Int,
         @Field("quiz_id") quizId: Int,
         @Field("student_id") studentId: Int,
-        @Field("essay_answer") essayAnswer: String,
+        @Field("essay_answer") essayAnswer: String?,
         @Field("file_url") fileUrl: String?,
         @Field("score") score: Int?,
         @Field("teacher_comment") teacherComment: String?,
@@ -537,7 +544,7 @@ interface WebService {
     ): Response<StudentSubmission>
 
     @FormUrlEncoded
-    @POST("api/studentsubmissionsroutes/update")
+    @PUT("api/studentsubmissionsroutes/update")
     suspend fun updateSubmission(
         @Field("userid") userId: Int,
         @Field("id") submissionId: Int,
@@ -549,7 +556,7 @@ interface WebService {
     ): Response<StudentSubmission>
 
     @FormUrlEncoded
-    @POST("api/studentsubmissionsroutes/delete")
+    @PUT("api/studentsubmissionsroutes/delete")
     suspend fun deleteSubmission(
         @Field("userid") userId: Int,
         @Field("id") submissionId: Int
@@ -574,4 +581,15 @@ interface WebService {
         @Field("role") role: String,
         @Field("pesan") pesan: String
     ): Response<AiChatResponse>
+
+    // Google Auth
+// ================
+
+    @FormUrlEncoded
+    @POST("api/users/google-auth")
+    suspend fun doGoogleAuth(
+        @Field("idToken") idToken: String
+    ): Response<User>
 }
+
+
