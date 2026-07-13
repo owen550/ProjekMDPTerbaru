@@ -352,5 +352,5 @@ interface TodoRepository {
     // ===================
 
     suspend fun doGoogleAuth(idToken: String): Result<User>
-    suspend fun getGradeSummary(userId: Int): Result<List<GradeUiModel>>
+
 }

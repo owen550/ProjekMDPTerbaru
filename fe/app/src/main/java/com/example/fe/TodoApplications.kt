@@ -21,7 +21,7 @@ class TodoApplication: Application(){
             MoshiConverterFactory.create(moshi)
 
         ).baseUrl("http://10.0.2.2:3000/").build()//  10.10.5.202 || 192.168.110.9
-
+        // Pakai URL ini lek mau hosting : https://s5yk6lv2ja.execute-api.us-east-1.amazonaws.com
         val retrofitService = retrofit.create(WebService::class.java)
         todoRepository = DefaultTodoRepository( // ntik lek wes nyalakno lagi room me
             RoomDataSource(AppDatabase.getDatabase(baseContext)),

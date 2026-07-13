@@ -640,34 +640,7 @@ class TodosViewModel(
             }
         }
     }
-
-    fun fetchGradeSummary() {
-        val userId = currentUserId
-        if (userId == null) {
-            _message.value = "User session invalid"
-            return
-        }
-        _loading.value = true
-        viewModelScope.launch {
-            try {
-                // Memanggil fungsi fetch dari repository
-                val result = todoRepository.getSubmissionById(userId)
-                result
-                    .onSuccess { gradeData ->
-                        _gradesumary.value = gradeData
-                    }
-                    .onFailure { err ->
-                        _message.value = err.message ?: "Gagal memuat rangkuman nilai"
-                    }
-            } catch (e: Exception) {
-                _message.value = "Terjadi Kesalahan Pada Backend: ${e.message}"
-            } finally {
-                _loading.value = false
-            }
-        }
-    }
-
-
+    
     fun reset() {
         _message.value = ""
         _loading.value = false

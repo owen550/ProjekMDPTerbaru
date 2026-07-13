@@ -40,8 +40,7 @@ class GradeSummary : Fragment() {
         // 2. Setup Observer untuk mendengarkan perubahan data LiveData dari ViewModel
         setupObservers()
 
-        // 3. Panggil data nilai dari Backend API
-        viewModel.fetchGradeSummary()
+
     }
 
     private fun setupRecyclerView() {
